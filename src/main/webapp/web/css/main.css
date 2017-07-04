@@ -1,0 +1,35 @@
+
+.logo{
+	padding: 0 10px;
+}
+.loginout{
+	margin-right: 20px;
+	margin-top: 10px;
+}
+#time{
+		font-weight: bolder;
+		margin-right: 30px;
+		margin-top:30px; 
+}
+.tab-pos{
+	position: absolute;
+	top:50px;
+	z-index:-2;
+}
+.footer{
+	position:absolute;
+	width:100%;	
+	bottom:0;
+}
+.footer p{
+	margin-top:10px;
+	margin-bottom:0;
+	font-size:16px;
+	font-weight:500;
+}
+.footer .beginTime{
+	font-size:14px;
+	margin-top:5px;
+	margin-bottom:5px;
+	font-weight:200;
+}

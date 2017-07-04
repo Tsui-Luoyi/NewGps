@@ -1,0 +1,58 @@
+body{
+	background-color: #c8d3d4;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+p{
+	margin: 0;
+	padding: 0;
+}
+.loginBg{
+margin-top: 5%;
+}
+#loginForm .form-group label{
+	padding: 0;
+}
+#loginForm .form-control{
+	padding-left: 5px;
+}
+#checkNum{
+	padding-right: 0;
+}
+.checkNumDiv{
+padding-right:0;
+}
+.login{
+	min-height: 100%;
+	padding-bottom: -50px;
+}
+.loginFooter{
+	position:absolute;
+	width:100%;	
+	bottom:0;
+}
+.loginFooter p{
+	margin-top:10px;
+	margin-bottom:0;
+	font-size:16px;
+	font-weight:500;
+}
+.loginFooter .beginTime{
+	font-size:14px;
+	margin-top:5px;
+	margin-bottom:5px;
+	font-weight:200;
+}
+#findPassword{
+	height:27px;
+	line-height:34px;
+	padding:0 5px;
+	text-align:center;
+}
+#loginForm label{
+	margin-bottom:0;
+}
+.userName,.pwd,.checkNum{
+	line-height:34px;
+}

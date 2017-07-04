@@ -1,0 +1,30 @@
+body{
+	background-color: #DBDEDB;
+}
+.bg-blue,footer{
+	background: #000000; 
+				background: -moz-linear-gradient(top, #99CCFF 0%, #6699CC 100%); 
+				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#99CCFF), color-stop(100%,lightgreen)); 
+				background: -webkit-linear-gradient(top, #99CCFF 0%,#6699CC 100%); 
+				background: -o-linear-gradient(top,#99CCFF 0%,#6699CC 100%); 
+				background: -ms-linear-gradient(top, #99CCFF 0%,#6699CC 100%); 
+				background: linear-gradient(to bottom, #99CCFF 0%,#6699CC 100%); 
+				filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99CCFF', endColorstr='#6699CC',GradientType=0 ); 
+			} 
+:root .gradient{filter:none;} 
+
+.panel-heading{
+	background-color: #337ab7;
+	color:#fff;
+}
+.panel-heading .glyphicon{
+	color:white;
+}
+/* 时间 */
+#time{
+	color:#000;
+}
+/* 导航栏公司名称颜色 */
+#comName h1{
+	color:#fff;
+}
