@@ -1,4 +1,7 @@
 /* 导航图标和下拉菜单 */
+html,body{
+	height:100%;
+}
 .logo{
 	padding: 0 10px;
 }
@@ -13,7 +16,7 @@
 		margin-top:30px; 
 }
 .navPos{
-	margin-bottom:5px;
+	margin-bottom:0px;
 }
 /* 导航按钮 */
 #navMenu .active a{

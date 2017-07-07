@@ -1,7 +1,7 @@
 body{
 	background-color: #DBDEDB;
 }
-.bg-blue,footer{
+.bg-blue,footer,.panel-heading,.panel .nav-pills>li.active>a{
 	background: #000000; 
 				background: -moz-linear-gradient(top, #99CCFF 0%, #6699CC 100%); 
 				background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#99CCFF), color-stop(100%,lightgreen)); 

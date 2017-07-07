@@ -26,32 +26,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <!-- 页面按原比例显示 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="imgs/5.ico" type="image/x-icon" />
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="css/media.css">
     <link rel="stylesheet" href="css/color.css">
-     <link rel="stylesheet" href="css/headerFooter.css">
-     <link rel="stylesheet" href="css/color.css">
-     <link rel="stylesheet" href="css/media.css">
+     <!-- <link rel="stylesheet" href="css/footer.css"> -->
      <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
        <script src="js/response.js"></script>
        <![endif]-->
 </head>
 <body>
-<div>
-	<jsp:include page="headerFooter/header.jsp" flush="true" />
-</div>
-<!--登录信息  -->
-<div class="footer">
-	<!-- 引入底部 -->
-<%-- <%@ include file="header-footer/footer.jsp" %> --%>
-	<jsp:include page="headerFooter/footer.jsp" flush="true" />
-</div>
+<div>系统管理页面</div>
 	<script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/header.js"></script>
-    <!--[if lt IE 9]>
-       <script src="js/header1.js"></script>
-       <![endif]-->
 </body>
 </html>

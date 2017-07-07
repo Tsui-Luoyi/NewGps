@@ -23,6 +23,23 @@ margin-top: 5%;
 .checkNumDiv{
 padding-right:0;
 }
+/*验证码刷新*/
+.checkRefreshDiv{
+	padding-right:0;
+	padding-left:15px;
+}
+
+.checkRefreshDiv #inputCheckNum{
+	border:1px red solid;
+	padding:0;
+}
+.checkRefreshDiv>.row{
+	margin-left:0;
+}
+/*刷新按钮  */
+.checkRefreshDiv #refreshBtn{
+	padding:0;
+}
 .login{
 	min-height: 100%;
 	padding-bottom: -50px;

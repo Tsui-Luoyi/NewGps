@@ -1,0 +1,54 @@
+/*上部padding  */
+html,body{
+	width:100%;
+	height:100%;
+}
+.container-fluit,.row-fluit,#mB1{
+	height:100%;
+}
+#mB1{
+	background-color:#FFFFCC;
+	padding-top:20px;
+}
+/*小屏幕菜单按钮  */
+
+#mcMenu{
+	position:absolute;
+	top:5px;
+	left:0px;;
+	font-size:10px;
+	z-index:999;
+}
+#mcMenu .fontMenu{
+	color:black;
+	transition:all 0.5s 0s linear;
+}
+/*折叠面板样式  */
+#managerParent .panel-heading{
+	padding:0; 
+	height:30px;
+	line-height: 30px;
+}
+#managerParent .panel-title{
+	height:30px;
+	line-height: 30px;
+}
+#managerParent .panel-title a{
+	width: 100%;
+	height: 100%;
+	display: block;
+	text-indent: 10px;
+}
+#managerParent .panel li{
+	height: 20px;
+	margin-top: 5px;
+}
+#managerParent .panel .panel-body{
+	padding-right: 0;
+	padding-top: 0;
+}
+#managerParent .panel li a{
+	height: 20px;
+	padding:0;
+	text-align: center;
+}

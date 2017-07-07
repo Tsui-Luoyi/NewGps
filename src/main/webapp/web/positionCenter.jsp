@@ -36,7 +36,7 @@
        <![endif]-->
 </head>
 <body>
-</div>
+<div>位置管理页面</div>
 	<script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>

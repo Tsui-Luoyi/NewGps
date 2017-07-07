@@ -1,4 +1,4 @@
-@media screen and (max-width: 767px){
+@media screen and (max-width:767px){
 	/*头部退出登录*/
 	.loginOut{
 		float:right;
@@ -15,8 +15,13 @@
 		margin-top: 5px;
 		margin-bottom: 5px;
 	}
+	/*  */
+	#mB1{
+	display:none;
+	background-color:#666666;
+	}
 }
-@media screen and (min-width: 767px){
+@media screen and (min-width:767px){
 	/*登录界面右边表单*/
 	#loginForm{
 		padding: 100px 20px;
@@ -27,4 +32,25 @@
 	.login .loginBg .bgImg{
 		margin-left: 5%;
 	}	
+}
+@media screen and (max-width:420px){ 
+	/*中间左边按钮  */
+	#mB1{
+	width:50%;
+	}
+}
+	
+@media screen and (max-width:350px){
+	
+	.login h2{
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	#loginForm .form-group{
+		margin-bottom:10px;
+	}
+	/*记住我换行  */
+	.rememberMe{
+	padding:0;
+	}
 }
