@@ -3,17 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>GPS监控</title>
+<meta http-equiv="Content-Type" content="text/html;">
 <!-- 编码格式 -->
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="author">
+<meta name="author" content="Tsui">
 <!-- 网页描述 -->
-<meta name="description" content="hello">
+<meta name="description" content="北京金圣达电气有限公司官网">
 <!-- 关键字使用","分隔 -->
-<meta name="keywords" content="a,b,c">
+<meta name="keywords" content="GPS,金圣达,位置,首页">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
@@ -28,8 +27,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="shortcut icon" href="imgs/5.ico" type="image/x-icon" />
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/headerFooter.css">
-<link rel="stylesheet" href="css/menagerCenter.css">
 <link rel="stylesheet" href="css/color.css">
 <link rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/media.css">
@@ -45,8 +42,9 @@
 		<div class="navbar navbar-default bg-blue navPos" role="navigation">
 			<div class="navbar-header">
 				<!-- 小屏幕三个横线 -->
-				<button type="button" class="navbar-toggle in"
-					data-toggle="collapse" data-target="#navMenu">
+				<button type="button" id="navButton" class="navbar-toggle in"
+					data-toggle="collapse" data-target="#navMenu"
+					data-collapsing="false">
 					<span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
@@ -57,7 +55,6 @@
 			<div class="pull-left" id="comName">
 				<h1 class="hidden-sm hidden-xs ">金圣达电气信息技术有限公司</h1>
 			</div>
-
 			<!-- 登录用户管理 -->
 			<div class="btn-group loginOut">
 				<button class="btn btn-default dropdown-toggle"
@@ -72,25 +69,33 @@
 					<li><a href="login.jsp">退出</a></li>
 				</ul>
 			</div>
-
 			<!-- <div class=" pull-right hidden-xs" id="time">时间：2017.6.20 15:59:05</div> -->
 			<!-- 导航内容 -->
 			<div class="collapse navbar-collapse pull-right" id="navMenu">
 				<ul class="nav nav-pills">
-					<li class="active"><a href="javascript:void(0);">管理中心</a></li>
-					<li><a href="javascript:void(0);">位置监测</a></li>
-					<li><a href="javascript:void(0);">统计报表</a></li>
-					<li><a href="javascript:void(0);">系统管理</a></li>
+					<li class="active"><a
+						onClick="changeIframe('#mainIframe','menagerCenter.jsp')"
+						href="javascript:void(0);">管理中心</a></li>
+					<li><a
+						onClick="changeIframe('#mainIframe','positionCenter.jsp')"
+						href="javascript:void(0);">位置监测</a></li>
+					<li><a
+						onClick="changeIframe('#mainIframe','statisticalTable.jsp')"
+						href="javascript:void(0);">统计报表</a></li>
+					<li><a
+						onClick="changeIframe('#mainIframe','systemCenter.jsp')"
+						href="javascript:void(0);">系统管理</a></li>
 				</ul>
 			</div>
 		</div>
-	</header>
+	</header> 
 	<!--中間部分  -->
 	<div class="outerIframeContainer">
-		<iframe id="mainIframe" src="menagerCenter.jsp" frameborder="0" scrolling="yes" style="width: 100%; height: 100%">浏览器不支持，请升级或更换浏览器</iframe>
+		<iframe id="mainIframe" src="menagerCenter.jsp" frameborder="0"
+			scrolling="yes" style="width: 100%; height: 100%">浏览器不支持，请升级或更换浏览器</iframe>
 	</div>
 	<!--底部  -->
-	<footer class="container-fluid">
+	<footer class="container-fluid" id="indexFooter">
 		<div class="row-fluid text-center">
 			<p>&copy;北京金圣达电气信息技术有限公司</p>
 			<p class="beginTime hidden-xs">2006-2017</p>

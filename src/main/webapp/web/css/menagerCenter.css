@@ -5,10 +5,7 @@ html,body{
 }
 .container-fluit,.row-fluit,#mB1{
 	height:100%;
-}
-#mB1{
-	background-color:#FFFFCC;
-	padding-top:20px;
+	position:relative;
 }
 /*小屏幕菜单按钮  */
 
@@ -28,7 +25,8 @@ html,body{
 	padding:0; 
 	height:30px;
 	line-height: 30px;
-}
+	border-radius:5px;
+} 
 #managerParent .panel-title{
 	height:30px;
 	line-height: 30px;
@@ -51,4 +49,25 @@ html,body{
 	height: 20px;
 	padding:0;
 	text-align: center;
+}
+/*内部的iframe  padding是为了中间那个按钮*/
+#innerIframeContainer1{
+	background-color:#eee;
+	height:100%;
+	padding:0 0 0 6px;	
+	position:relative;
+}
+/* 中间的点击框 */
+#midToggleBar{
+	position:absolute;
+	background-color:#ff00ff;
+	height:0;
+	width:0px;
+	border:8px white solid;
+	border-right:8px red solid;
+	top:48%;
+	left:-10px;
+}
+#managerInnerIframe{
+	display:block;
 }

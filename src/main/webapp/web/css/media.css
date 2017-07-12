@@ -15,11 +15,17 @@
 		margin-top: 5px;
 		margin-bottom: 5px;
 	}
-	/*  */
+	/* 左边导航 */
 	#mB1{
 	display:none;
 	background-color:#666666;
+	position:absolute;
+	z-index:998;
 	}
+	/*内层iframe  */
+	#innerIframeContainer1 #midToggleBar{
+	display:none;
+}
 }
 @media screen and (min-width:767px){
 	/*登录界面右边表单*/
@@ -52,5 +58,8 @@
 	/*记住我换行  */
 	.rememberMe{
 	padding:0;
+	}
+	#navMenu{
+	padding:0 2px;
 	}
 }

@@ -3,17 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>GPS监控</title>
- <!-- 编码格式 -->
-    <meta charset="UTF-8">
-    <title>GPS导航</title>
-    <!-- 作者 -->
-    <meta name="author" content="author">
-    <!-- 网页描述 -->
-    <meta name="description" content="hello">
-    <!-- 关键字使用","分隔 -->
-    <meta name="keywords" content="a,b,c">
+<meta http-equiv="Content-Type" content="text/html;">
+<!-- 编码格式 -->
+<meta charset="UTF-8">
+<title>GPS导航</title>
+<!-- 作者 -->
+<meta name="author" content="author">
+<!-- 关键字使用","分隔 -->
+<meta name="keywords" content="GPS,金圣达,位置">
     <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
     <meta http-equiv="Pragma" content="no-cache">
     <!-- 用来防止别人在框架里调用你的页面 -->

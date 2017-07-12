@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html;">
+<meta http-equiv="Content-Type" content="text/html">
 <!-- 编码格式 -->
 <meta charset="UTF-8">
 <title>GPS导航</title>
@@ -26,14 +26,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="css/media.css">
     <link rel="stylesheet" href="css/color.css">
-     <!-- <link rel="stylesheet" href="css/footer.css"> -->
      <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
        <script src="js/response.js"></script>
        <![endif]-->
 </head>
 <body>
-<div>统计报表页面</div>
+	<p>查询客户</p>
 	<script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>

@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="keywords" content="GPS,金圣达,位置,首页">
+<!-- 作者 -->
+<meta name="author" content="Tsui">
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 网页不会被缓存 -->

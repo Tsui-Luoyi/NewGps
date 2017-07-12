@@ -28,3 +28,13 @@ body{
 #comName h1{
 	color:#fff;
 }
+/*管理中心背景  */
+#mB1{
+	background-color:#FFFFCC;
+	padding-top:20px;
+}
+/*左侧菜单悬浮*/
+.panel .nav-pills>li>a:hover{
+	background-color:#79acdf;
+	color:#fff;
+}

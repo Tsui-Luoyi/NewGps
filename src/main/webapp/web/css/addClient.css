@@ -1,0 +1,12 @@
+html,body{
+	height:100%;
+	width:100%;
+}
+.form-group .control-label{
+	height:34px;
+	line-height:34px;
+	padding:0;
+}
+input.reset{
+	margin-left:30px;
+}

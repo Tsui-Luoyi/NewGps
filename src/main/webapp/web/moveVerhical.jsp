@@ -26,14 +26,13 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="stylesheet" href="css/media.css">
     <link rel="stylesheet" href="css/color.css">
-     <!-- <link rel="stylesheet" href="css/footer.css"> -->
      <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
        <script src="js/response.js"></script>
        <![endif]-->
 </head>
 <body>
-<div>统计报表页面</div>
+	<p>移动车辆</p>
 	<script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
 </body>

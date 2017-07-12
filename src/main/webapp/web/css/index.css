@@ -1,12 +1,84 @@
 .outerIframeContainer{
 	position:relative;
 	height:0;
-	overflow:hidden;
 }
 .outerIframeContainer #mainIframe{
 	position:absolute;
+	display:block;
 	top:0;
 	left:0;
 	width:100%;
 	height:100%;
+}
+/* 导航图标和下拉菜单 */
+html,body{
+	height:100%;
+}
+.logo{
+	padding: 0 10px;
+}
+.loginOut{
+	margin-right: 20px;
+	margin-top: 10px;
+	float:right;
+}
+#time{
+		font-weight: bolder;
+		margin-right: 30px;
+		margin-top:30px; 
+}
+.navPos{
+	margin-bottom:0px;
+}
+/* 导航按钮 */
+#navMenu .active a{
+	background-color: #fff;
+	color:black;
+}
+#navMenu  a{
+	margin-top:20px;
+	padding: 4px 10px;
+	font-weight:600;
+}
+
+/* 公司名字 */
+#comName h1{
+	font-size: 16px;
+	margin-bottom: 4px;
+	margin-top: 28px;
+}
+/*底部  */
+footer{
+	position:absolute;
+	width:100%;	
+	bottom:0;
+}
+footer p{
+	margin-top:10px;
+	margin-bottom:0;
+	font-size:16px;
+	font-weight:500;
+}
+footer .beginTime{
+	font-size:14px;
+	margin-top:5px;
+	margin-bottom:5px;
+	font-weight:200;
+}
+.footer{
+	position:absolute;
+	width:100%;	
+	bottom:0;
+}
+.footer p{
+	margin-top:10px;
+	margin-bottom:0;
+	font-size:16px;
+	font-weight:500;
+}
+.footer .beginTime{
+	font-size:14px;
+	margin-top:5px;
+	margin-bottom:5px;
+	font-weight:200;
 }
