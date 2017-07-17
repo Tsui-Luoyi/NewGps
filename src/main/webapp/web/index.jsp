@@ -64,7 +64,8 @@
 						admin24242424242</span> <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="#">修改资料</a></li>
+					<li><a onClick="changeIframe('#mainIframe','changeUserInfo.jsp')"
+						href="javascript:void(0);">修改资料</a></li>
 					<li class="divider"></li>
 					<li><a href="login.jsp">退出</a></li>
 				</ul>

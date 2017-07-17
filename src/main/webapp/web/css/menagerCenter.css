@@ -60,10 +60,10 @@ html,body{
 /* 中间的点击框 */
 #midToggleBar{
 	position:absolute;
-	background-color:#ff00ff;
+	/* background-color:#ff00ff; */
 	height:0;
-	width:0px;
-	border:8px white solid;
+	width:0;
+	border:8px transparent solid;
 	border-right:8px red solid;
 	top:48%;
 	left:-10px;
