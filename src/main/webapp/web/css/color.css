@@ -30,8 +30,7 @@ body{
 }
 /*管理中心背景  */
 #mB1{
-	background-color:#FFFFCC;
-	padding-top:20px;
+	background-color:#deded3;
 }
 /*左侧菜单悬浮*/
 .panel .nav-pills>li>a:hover{

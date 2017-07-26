@@ -5,7 +5,7 @@ $(function(){
 	var bodyHeight=$("body").height();
 	var headHeight=$(".navPos").height();
 	var footHeight=$("#indexFooter").height();
-	console.log(headHeight+"   "+footHeight);
+	/*console.log(headHeight+"   "+footHeight);*/
 	$(".outerIframeContainer").animate({height:(bodyHeight-headHeight-footHeight-2)+"px"},10);
 	/*if(windowWidth>=767){
 		$(".outerIframeContainer").css("height",(bodyHeight-114)+"px")
@@ -51,7 +51,8 @@ $(window).resize(function(){
 		}else{
 			$(".outerIframeContainer").css("height",(bodyHeight-84)+"px")
 		}*/
-		window.location.reload();
+		//重新加载
+		//window.location.reload();
 	})
 	
 	$("#navButton").click(function(){

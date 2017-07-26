@@ -26,6 +26,16 @@
 	#innerIframeContainer1 #midToggleBar{
 	display:none;
 }
+@media screen and (max-width:730px){
+/* 添加客户错误提示 */
+	.error{
+	color:red;
+	width:100%;
+}
+#addClientForm .form-control{
+	display:block;
+	width:100%;
+}
 }
 @media screen and (min-width:767px){
 	/*登录界面右边表单*/

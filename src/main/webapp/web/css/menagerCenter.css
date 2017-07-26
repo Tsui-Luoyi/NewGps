@@ -5,7 +5,11 @@ html,body{
 }
 .container-fluit,.row-fluit,#mB1{
 	height:100%;
-	position:relative;
+	position:relative; 
+	padding:0 5px;
+}
+#mB1{
+	padding-top:10px;
 }
 /*小屏幕菜单按钮  */
 
@@ -27,6 +31,10 @@ html,body{
 	line-height: 30px;
 	border-radius:5px;
 } 
+#managerParent .panel-heading a:hover{
+	text-decoration:none;
+	color:#000;
+}
 #managerParent .panel-title{
 	height:30px;
 	line-height: 30px;

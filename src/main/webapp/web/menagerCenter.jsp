@@ -38,7 +38,7 @@
 			<div id="mcMenu" class="visible-xs">
 				<span class="glyphicon glyphicon-th-large fontMenu"></span>
 			</div>
-			<div class="col-lg-2 col-md-2 col-sm-3 col-xs-4" id="mB1">
+			<div class="col-lg-2 col-md-3 col-sm-3 col-xs-4" id="mB1">
 				<div class="panel-group" id="managerParent">
 					<!-- 客户管理 -->
 					<div class="panel">
@@ -150,7 +150,7 @@
 				</div>
 			</div>
 			<!-- <div id="midToggleBar"></div> -->
-			<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12"
+			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"
 				id="innerIframeContainer1">
 				<div id="midToggleBar"></div>
 				<iframe id="managerInnerIframe" src="addClient.jsp" frameborder="0"

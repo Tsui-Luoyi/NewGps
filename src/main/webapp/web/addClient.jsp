@@ -27,6 +27,12 @@
 <link rel="stylesheet" href="css/addClient.css">
 <link rel="stylesheet" href="css/media.css">
 <link rel="stylesheet" href="css/color.css">
+<style>
+label.checked {
+color:green}
+label.error{
+color:red}
+</style>
 <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
        <script src="js/response.js"></script>
@@ -36,66 +42,66 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<h4>添加客户:</h4>
-			<form id="addClientForm" action="#" class="form-horizontal"
-				role="form" method="post" onsubmit="">
+			<form id="addClientForm" action="http://127.0.0.1/ceshi.php" class="form-horizontal"
+				role="form" method="post">
 				<!-- 客户名字 -->
 				<div class="form-group">
 					<label for="clientName"
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户名称：</label>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-left">
-						<input type="text" class="form-control" id="clientName"
-							placeholder="请输入客户名称">
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
+						<input type="text" class="form-control" name="clientName"
+							id="clientName" placeholder="请输入客户名称(3~6位)">
 					</div>
 				</div>
 				<!-- 客户电话 -->
 				<div class="form-group">
 					<label for="clientTel"
-						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户电话：</label>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-left">
-						<input type="text" class="form-control" id="clientTel"
-							placeholder="请输入客户电话">
+						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户电话(选填)：</label>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
+						<input type="text" class="form-control" name="clientTel"
+							id="clientTel" placeholder="请输入客户电话">
 					</div>
 				</div>
 				<!-- 客户地址 -->
 				<div class="form-group">
 					<label for="clientAdd"
-						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户电话：</label>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-left">
+						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户地址(选填)：</label>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="clientAdd"
-							placeholder="请输入客户地址">
+							name="clientAdd" placeholder="请输入客户地址">
 					</div>
 				</div>
 				<!-- 客户管理员用户名 -->
 				<div class="form-group">
 					<label for="clientAdminName"
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员用户名：</label>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-left">
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="clientAdminName"
-							placeholder="请输入客户管理员用户名">
+							name="clientAdminName" placeholder="请输入4-8位英文">
 					</div>
 				</div>
 				<!-- 客户管理员密码 -->
 				<div class="form-group">
 					<label for="clientAdminPwd"
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员密码：</label>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-left">
-						<input type="text" class="form-control" id="clientAdminPwd"
-							placeholder="请输入客户管理员密码">
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
+						<input type="password" class="form-control" id="clientAdminPwd"
+							name="clientAdminPwd" placeholder="请输入客户管理员密码(6~16位)">
 					</div>
 				</div>
-			<!-- 客户管理员密码确认 -->
+				<!-- 客户管理员密码确认 -->
 				<div class="form-group">
 					<label for="clientAdminPwd"
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">再次输入密码：</label>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 text-left">
-						<input type="text" class="form-control" id="clientAdminPwd"
-							placeholder="请再次输入客户管理员密码">
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
+						<input type="password" class="form-control" id="clientAdminPwd1"
+							name="clientAdminPwd1" placeholder="请再次输入客户管理员密码">
 					</div>
 				</div>
-			
+
 				<!-- 提交按钮 -->
 				<div class="form-group">
-					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-10 text-center">
+					<div class="col-lg-push-1 col-md-push-1 col-sm-push-1 col-lg-7 col-md-7 col-sm-7 col-xs-10 text-center">
 						<input type="submit" class="btn btn-info" value="添加" /> <input
 							type="reset" class="btn btn-danger reset" />
 					</div>
@@ -105,10 +111,64 @@
 	</div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/distpicker.data.js"></script>
-	<script src="js/distpicker.js"></script>
+	<script src="js/jquery.validate.js"></script>
+	<script src="js/messages_zh.js"></script>
+	<script src="js/jquery.form.js"></script>
 	<script>
-		
+		$(function() {
+			//表单验证
+			$("#addClientForm").validate({
+				errorClass:"error",
+				onkeyup:false,
+				errorElement:"label",
+				rules:{
+					clientName:{
+						required:true,
+						rangelength:[3,6],
+						//远程验证
+						remote:{
+							url :"http://127.0.0.1/ceshi.php",
+							type:"post",
+							dataType: "json",
+							cache:false,
+							data:{
+								clientName:function() {
+									return $("#clientName").val();
+								}
+							}
+						}
+					},
+					clientAdminName:{
+						required:true,
+						rangelength:[ 4, 8 ],
+						isEnglish:true
+					},
+					clientAdminPwd:{
+						required:true,
+						rangelength:[6,16]
+					},
+					clientAdminPwd1:{
+						required:true,
+						rangelength:[6,16],
+						equalTo:"#clientAdminPwd"
+					}
+				},
+				messages:{
+					clientName:{
+						remote:"该用户名已被注册",
+					}
+				},
+				submitHandler:function() {
+					$("#addClientForm").ajaxSubmit();
+				},
+				success: function(label) {
+				    label.html("<span style='color:green;font-size:12px;'>验证通过</span>");
+				}
+			});
+			$("input:reset").click(function(){
+				$("label.error").remove();
+			})
+		})
 	</script>
 </body>
 </html>
