@@ -7,3 +7,34 @@ html,body{
 	top:0;
 	left:0
 }
+.BMap_bubble_content li {
+	list-style: none;
+	margin: 3px 0;
+	line-height: 18px;
+	vertical-align: middle;
+}
+
+.BMap_bubble_title {
+	font-weight: bolder;
+	font-size: 16px;
+}
+
+.BMap_bubble_content li a {
+	display: inline-block;
+	width: 50%;
+	margin: 0 25%;
+	height: 16px;
+	line-height: 16px;
+	background-color: #309bcc;
+	color: black;
+	font-size: 14px;
+	font-weight: 500;
+	text-align: center;
+	text-decoration: none;
+	border: 1px #ff8040 solid;
+}
+
+.BMap_bubble_content li a:hover {
+	color: red;
+	background-color: #30ccb5;
+}

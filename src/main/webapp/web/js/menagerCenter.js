@@ -39,5 +39,6 @@ $(function() {
 })
 // 左侧跳转的iframe路径
 function changeIframe(obj, target) {
-	$(obj).attr("src", target);
+	var dd=Math.random()*9999;
+	$(obj).attr("src", target+"?d="+dd);
 }

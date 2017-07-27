@@ -29,6 +29,18 @@
 <link rel="stylesheet" href="css/media.css">
 <link rel="stylesheet" href="css/color.css">
 <style>
+	.ztree *{
+		font-size:18px;
+		}
+		.ztree li{
+		line-height:22px;
+		}
+		.ztree li span{
+		line-height:20px;
+		}
+		.ztree li a{
+		height:20px;
+		}
      .ztree li span.button.group_ico_open,.ztree li span.button.group_ico_close{
      	background-image:url("css/zTreeStyle/img/diy/group.png")
      }
@@ -82,7 +94,8 @@
 					<option selected="selected" value="BD">百度地图</option>
 					<option value="GD">高德地图</option>
 					<option value="GG">谷歌地图</option>
-				</select></div>
+				</select>
+				</div>
 			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"
 				id="positionInnerIframeContainer">
 				<div id="midToggleBar"></div>
@@ -156,10 +169,8 @@
 	        				}
 	        			}
 	        			var selectedCar=a.join(",");
-	        			sessionStorage.setItem("selectedCar",selectedCar);
-	        			
+	        			sessionStorage.setItem("selectedCar",selectedCar);	
 	        		}
-	        		
 	        	});
 	        	
 	        	

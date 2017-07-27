@@ -170,11 +170,14 @@ text-align:left;
 			$(".sea tr td").eq(ind).html(title+':&nbsp;<input type="text" placeholder="请输入'+title+'"/>');
 		});
 		var table=$('#ceshi').DataTable();
+		console.log(table.column(1));
 			table.columns().eq(0).each(function (ind,val) {
 				$(".sea input").on('keyup change', function (){
-					$('#ceshi').DataTable().column(ind).search(
+					//$('#ceshi').DataTable().column(ind).search(
+				table.column(ind).search(
 					$('.sea input').eq(ind).val()
-				).draw();
+				);
+				table.draw();
 		});
 	});
 			//搜索事件，当有内容时才搜索

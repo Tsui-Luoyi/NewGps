@@ -155,7 +155,7 @@ color:red}
 				},
 				messages:{
 					clientName:{
-						remote:"该用户名已被注册",
+						remote:"该用户名已被注册"
 					}
 				},
 				submitHandler:function() {
