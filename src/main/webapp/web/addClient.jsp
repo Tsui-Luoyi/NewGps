@@ -74,7 +74,7 @@ color:red}
 				<!-- 客户管理员用户名 -->
 				<div class="form-group">
 					<label for="clientAdminName"
-						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员用户名：</label>
+						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员账号：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="clientAdminName"
 							name="clientAdminName" placeholder="请输入4-8位英文">
@@ -159,7 +159,9 @@ color:red}
 					}
 				},
 				submitHandler:function() {
-					$("#addClientForm").ajaxSubmit();
+					$("#addClientForm").ajaxSubmit(function(){
+						alert("添加成功!");
+					});
 				},
 				success: function(label) {
 				    label.html("<span style='color:green;font-size:12px;'>验证通过</span>");

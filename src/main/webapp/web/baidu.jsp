@@ -36,6 +36,9 @@
 	src="http://api.map.baidu.com/library/DistanceTool/1.2/src/DistanceTool_min.js"></script>
 <script type="text/javascript"
 	src="http://api.map.baidu.com/library/TrafficControl/1.4/src/TrafficControl_min.js"></script>
+	<!-- 富标注 -->
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 <!-- <link rel="stylesheet" href="css/footer.css"> -->
 <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
@@ -60,41 +63,104 @@
 	line-height:1.3em;
 	top:20px;
 	right:153px;
+}
+#tcBtn{
+	box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 3px;
+	border:1px #8ba4dc solid;
+}
+label.BMapLabel{
+	max-width:none
 	}
-/* #map {
-	height: 700px\9;
-	width: 1000px\9;
+/* 标注框蒙版 */	
+.mengBan{
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	background-color:#000;
+	opacity:0.5;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+	z-index:2;
+	display:none;
+	}
+	/*标注框  */
+#markerWindow{
+	background-color:#fff;
+	opacity:0.8;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+	position:absolute;
+	z-index:5;
+	color:#000;
+	width:400px;
+	height:300px;
+	top:50%;
+	left:50%; 
+	margin-left:-200px;
+	margin-top:-155px;
+	padding:0 5px;
+	display:none; 
+}
+#markerWindow h4:{
+	font-weight:bolder;
+}
+#markerWindow h4 span{
+font-size:25px;
+display:inline-block;
+width:20px;
+height:20px;
+line-height:20px;
+text-align:center;
+float:right;
+margin-right:15px;
+border:1px black solid;
+border-radius:50%;}
+#markerWindow h4 span:hover{
+	cursor:pointer
+}
+#markerWindow hr{
+	margin:5px 0px;
+	border-top:2px #000 solid;
 }
 
-#map {
-	*height: 700px;
-	*width: 1000px;
-}
-
-#map {
-	_height: 100%;
-	_width: 100%;
-} */
+#markerWindow label {
+	line-height:26px;
+	float:left;
+ 	margin-right:3px;
+ }
+ #markerSubmit{
+ 	margin-left:30%
+ }
+  #markerQuit{
+ 	margin-left:10%
+ }
 </style>
 </head>
 <body>
+<!-- 蒙版-->
+<div class="mengBan">
+</div>
+<!-- 标注框 -->
+<div id="markerWindow">
+		<h4>标注信息：<span title="关闭">&times;</span></h4>
+		<hr/>
+		<p><label>名称：</label><input id="markerName" type="text"></p>
+		<p><label>经度：</label><input id="markerLng" type="text"></p>
+		<p><label>纬度：</label><input id="markerLat" type="text"></p>
+		<div><label>备注：</label><textarea name="markInfo" id="markInfo" cols="40" rows="5"></textarea></div>
+		<p><input id="markerSubmit" type="submit" ><input id="markerQuit" type="button" value="取消"></p>
+	</div>
+	<!-- 左边选择的复选框ID -->
 <input id="carId" type="hidden">
-	<p>百度地圖</p>
 	<p id="carId">id</p>
 	<div id="map">
-		</div>
+</div>
+		
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script>
-	var car=null;
  window.onload=function(){
-	 function addMaker(pt){
-		 var myIcon = new BMap.Icon("images/car.png", new BMap.Size(48, 48), {   
-				imageOffset: new BMap.Size(0, 5)
-			  });
-			marker= new BMap.Marker(pt,{icon:myIcon});
-			map.addOverlay(marker);
-		}
+	 var car=null;
 	if(document.attachEvent){
 		document.attachEvent("onstorage", function (e) {
 			car=sessionStorage.getItem("selectedCar");
@@ -105,7 +171,6 @@
 	}else{
 			window.addEventListener("storage", function (e) {
         	car=sessionStorage.getItem("selectedCar");
-        	//console.log(car)
 				document.getElementById("carId").value=car;	
 				$("#carId").change();
         	
@@ -116,7 +181,7 @@
 	var map = new BMap.Map("map"); 	// 创建Map实例
 	var cel=$("<div class='cel'>测距</div>");
 	cel.prependTo($("#map"));
-	map.centerAndZoom(point, 10); 	// 初始化地图,设置中心点坐标和地图级别
+	map.centerAndZoom(point, 6); 	// 初始化地图,设置中心点坐标和地图级别
 	map.setCurrentCity("北京"); 	// 仅当设置城市信息时，MapTypeControl的切换功能才能可用
 	map.enableScrollWheelZoom(true);
 	//缩放平移控件
@@ -151,34 +216,47 @@
 	    offset: new BMap.Size(60, 20)
 	})
 	map.addControl(cityList);
+	
+	
+	//右键菜单
+	var rightMenu=new BMap.ContextMenu(); 
+	rightMenu.addItem(new BMap.MenuItem("添加标注",function(e){
+		$(".mengBan,#markerWindow").css("display","block");
+		$("#markerLng").val(e.lng);
+		$("#markerLat").val(e.lat);
+		},{width:"100",iconUrl:"images/marker.png"}));
+	map.addContextMenu(rightMenu);
+	//添加maker
+	 function addMaker(pt){
+		 var myIcon = new BMap.Icon("images/car.png", new BMap.Size(48, 48), {   
+				imageOffset: new BMap.Size(0, 5)
+			  });
+			marker= new BMap.Marker(pt,{icon:myIcon});
+			map.addOverlay(marker);
+		}
 	//测距
 	var flagCel=false;
-	
+	var myDis= new BMapLib.DistanceTool(map);
 	//测距操作
 	$(".cel").click(function(){
 		map.clearOverlays();
-		addMaker(point); 
-		console.log(flagCel);
 		if(flagCel==false){
 			flagCel=true;
-			console.log("flagCel变为"+flagCel);
 		$(this).css({"backgroundColor":"rgb(142, 168, 224)","color":"white"});
-		//myDis = new BMapLib.DistanceTool(map);
 		myDis.open();
-		console.log("open");
 		}else{
 			flagCel=false;
 			$(this).css({"backgroundColor":"white","color":"black"});
 			myDis.close();
-			console.log("close");
 		}
 	});
+	//测距结束触发
 	myDis.addEventListener("drawend", function(e) { 
 		flagCel=false;
-		$("#cel").css({"backgroundColor":"white","color":"black"});
+		$(".cel").css({"backgroundColor":"white","color":"black"});
 		myDis.close();
 	})
-	
+	//左边复选框改变触发事件
 $("#carId").change(function() {
 	$.ajax({
 		url:"data/latlng.json",
@@ -186,11 +264,9 @@ $("#carId").change(function() {
 		type:"get",
 		async:false,
 		success:function(data){
-			console.log(1)
 			map.clearOverlays();
-			console.log(2)
 				 var myIcon = new BMap.Icon("images/car.png", new BMap.Size(48, 48), {   
-						imageOffset: new BMap.Size(0, 5)
+						imageOffset: new BMap.Size(0, 0)
 					  });
 				 var opts = {
 						  width : 240,     // 信息窗口宽度
@@ -199,21 +275,24 @@ $("#carId").change(function() {
 						  enableMessage:true//设置允许信息窗发送短息
 						}
 			map.setCenter(new BMap.Point(data[0].lng, data[0].lat));
+				 var markers=[];
 			for(var i=0;i<data.length;i++){
 				var point=new BMap.Point(data[i].lng, data[i].lat);
-				console.log(3)
 				var content = [];
 				content.push("<li><strong>车辆ID：</strong>"+data[i].id+"</li>");
 			    content.push("<li><strong>车辆经度：</strong>"+data[i].lng+"</li>");
 			    content.push("<li><strong>车辆经度：</strong>"+data[i].lat+"</li>");
 			    content.push("<li><strong>GPS时间：</strong>"+data[i].GPStime+"</li>");
 			    content.push("<li><strong>车辆地址：</strong>"+data[i].add+"</li>");
-			    var marker= new BMap.Marker(point,{icon:myIcon});
+			    var marker= new BMap.Marker(point);
+			    markers.push(marker);
+			    marker.setIcon(myIcon)
 				map.addOverlay(marker);
 				addClickHandler(content,marker);
 			    //var infoWindow = new BMap.InfoWindow(content.join(""), opts); 
 			    function addClickHandler(content,marker){
     				marker.addEventListener("click",function(e){
+    					map.panTo(new BMap.Point(e.target.getPosition().lng,e.target.getPosition().lat));
     					openInfo(content,e)}
     				);
     			}
@@ -223,10 +302,17 @@ $("#carId").change(function() {
     				var infoWindow = new BMap.InfoWindow(content.join(""),opts);  // 创建信息窗口对象 
     				map.openInfoWindow(infoWindow,point); //开启信息窗口
     			}
-			}	
+			}
+			var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
 		}
 		})
- })
+ });
+	$("#markerWindow h4 span").click(function(){
+		$(".mengBan,#markerWindow").css("display","none");
+	});
+	$("#markerQuit").click(function(){
+		$(".mengBan,#markerWindow").css("display","none");
+	});
  }
 	</script>
 	

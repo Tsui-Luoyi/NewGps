@@ -41,6 +41,8 @@
 		.ztree li a{
 		height:20px;
 		}
+		.ztree li a.curSelectedNode{
+		height:22px;}
      .ztree li span.button.group_ico_open,.ztree li span.button.group_ico_close{
      	background-image:url("css/zTreeStyle/img/diy/group.png")
      }
@@ -52,7 +54,10 @@
      }
     .ztree li span.button.onLine_ico_docu{
     	background-image:url("css/zTreeStyle/img/diy/online.png");
-    };
+    }
+ #group #searchCar{
+    	margin-top:5px;
+  }
 	</style>
 <!-- <link rel="stylesheet" href="css/footer.css"> -->
 <!--[if lt IE 9]>
@@ -67,16 +72,18 @@
 				<ul id="positionTab" class="nav nav-tabs">
 					<li class="active"><a href="#group" data-toggle="tab">分组
 					</a></li>
-					<li><a href="#mark" data-toggle="tab">标注</a></li>
+					<li><a href="#marker" data-toggle="tab">标注</a></li>
 					<li><a href="#ios2" data-toggle="tab">围栏</a></li>
 					<li><a href="#ios3" data-toggle="tab">报警</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content clearfix">
 					<div class="tab-pane fade in active" id="group">
+					<div id="searchCar"><label>搜索车辆:</label><input id="keywordCar" type="text" placeholder="请输入车辆名称"> </div>
 						<ul id="groupTree" class="ztree"></ul>
 					</div>
-					<div class="tab-pane fade" id="mark">
-						<ul id="markTree" class="ztree"></ul>
+					<div class="tab-pane fade" id="marker">
+					<div id="searchMarker"><label>搜索标注:</label><input id="keywordMarker" type="text" placeholder="请输入标注名称"> </div>
+						<ul id="markerTree" class="ztree"></ul>
 					</div>
 					<div class="tab-pane fade" id="ios2">
 						<p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
@@ -145,8 +152,9 @@
 	        					onCheck: zTreeOnCheck
 	        				}
 	        			};
+	        		
 	        		$.fn.zTree.init($("#groupTree"), setting);
-	        		$.fn.zTree.init($("#markTree"), setting);
+	        		
 	        		function ajaxDataFilter(treeId, parentNode, responseData) {
 	        		    if (responseData) {
 	        		      for(var i =0; i < responseData.length; i++) {
@@ -174,6 +182,58 @@
 	        	});
 	        	
 	        	
+	        	$("#positionTab li:eq(1)").click(function(){
+	        		var setting1 = {
+	        				check:{
+	        					enable:true,
+	        					autoCheckTrigger:true,
+	        					chkStyle: "checkbox",
+	        					chkboxType:{"Y":"s","N":"s"}
+	        				},
+	        				data:{
+	        					simpleData:{
+	        						enable: true,
+	        						idKey: "id",
+	        						pIdKey: "pId",
+	        						rootPId: 0
+	        					},
+	        					keep: {
+	        							parent: true
+	        						}
+	        				},
+	        				async:{
+	        					autoParam: ["id","name","isParent"],
+	        					enable:true,
+	        					dataType:"text",
+	        					type:"get",
+	        					url:"data/biaozhu.json"
+	        				},
+	        				callback:{
+	        					onClick:function(event, treeId, treeNode){
+	        						if(treeNode.pId!=null){
+	        						    alert("id:"+treeNode.id + ", name:" + treeNode.name+",父ID："+treeNode.pId);
+	        						}
+	        					}
+	        				}
+	        			};
+	        		$.fn.zTree.init($("#markerTree"), setting1);
+	        	})
+	        	//车辆搜索
+	        	$('#keywordCar').bind('input propertychange', function(){ 
+	        		var treeObj = $.fn.zTree.getZTreeObj("groupTree");  
+	            	var keywords=$("#keywordCar").val();  
+	            	var nodes = treeObj.getNodesByParamFuzzy("name", keywords, null);  
+	          		if (nodes.length>0) {  
+	                treeObj.selectNode(nodes[0]);  
+	            }}); 
+	        	//标注搜索
+	        	$('#keywordMarker').bind('input propertychange', function(){ 
+	        		var treeObj = $.fn.zTree.getZTreeObj("markerTree"); 
+	            	var keywords=$("#keywordMarker").val();  
+	            	var nodes = treeObj.getNodesByParamFuzzy("name", keywords,null);  
+	          		if (nodes.length>0) {  
+	                treeObj.selectNode(nodes[0]);  
+	            }}); 
 	        	
 	</script>
 </body>

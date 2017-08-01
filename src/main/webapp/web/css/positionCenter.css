@@ -4,7 +4,7 @@ html,body{
 }
 /* 右边tab页样式 */
 .container-fluit,.row-fluit,#mB2{
-	padding:0 5px;
+	/* padding:0 5px; */
 	height:100%;
 	position:relative;
 }

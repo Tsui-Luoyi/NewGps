@@ -6,7 +6,7 @@ html,body{
 .container-fluit,.row-fluit,#mB1{
 	height:100%;
 	position:relative; 
-	padding:0 5px;
+	/* padding:0 5px; */
 }
 #mB1{
 	padding-top:10px;
