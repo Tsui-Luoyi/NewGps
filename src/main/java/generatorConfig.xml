@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
 	<classPathEntry
-		location="E:\javaLib\apache-maven-3.3.9\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar"></classPathEntry>
+		location="E:\repository\mysql\mysql-connector-java\5.1.30\mysql-connector-java-5.1.30.jar"></classPathEntry>
 	<context id="context1" targetRuntime="MyBatis3">
 		<commentGenerator>
 			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
@@ -32,11 +32,10 @@
 			<property name="enableSubPackages" value="false"></property>
 		</javaClientGenerator>
 
-		<table tableName="user_t" domainObjectName="usert"
+		<table tableName="tclient" domainObjectName="Tclient"
 			enableCountByExample="false" enableUpdateByExample="false"
 			enableDeleteByExample="false" enableSelectByExample="false"
-			selectByExampleQueryId="false">
-			 
+			selectByExampleQueryId="false">	 
 		</table>
 	</context>
 </generatorConfiguration>

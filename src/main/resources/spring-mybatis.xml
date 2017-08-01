@@ -2,14 +2,19 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
 	http://www.springframework.org/schema/context  
 	http://www.springframework.org/schema/context/spring-context-3.1.xsd  
 	http://www.springframework.org/schema/mvc
-	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
-
+	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.1.xsd ">
+	<!--07/19添加aop和tx约束 -->
 	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.newrmgps.mybatis" />
 	<!-- 引入配置文件 -->
@@ -17,7 +22,6 @@
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:jdbc.properties" />
 	</bean>
-
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${driver}" />
@@ -37,21 +41,39 @@
 	</bean>
 
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> 
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<!-- 自动扫描mapping.xml文件 -->
-    	<property name="mapperLocations" value="classpath:com/newrmgps/mybatis/mapping/*.xml"></property> 
-	</bean> 
-	
+		<property name="mapperLocations" value="classpath:com/newrmgps/mybatis/mapping/*.xml"></property>
+	</bean>
+
 	<!-- DAO接口所在包名，Spring会自动查找其下的类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.newrmgps.mybatis.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 
-	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx 
+		07/19添加事物管理的详细配置.加了多个jar包 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	<!--配置通知 -->
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="query*" propagation="SUPPORTS" read-only="true" />
+		</tx:attributes>
+	</tx:advice> 
+	<!--配置切面表达式表示对那些地方做事物管理,一般是service层 -->
+ <aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* com.newrmgps.mybatis.service.*.*(..))" />
+	</aop:config> 
 </beans>
