@@ -46,16 +46,16 @@ margin:20px 0;
 	padding: 10px 20px;
 	text-align:center
 }
-#ceshi td,th{
+#clientTable td,th{
 	text-align:center;
 }
-#ceshi .checkAll{
+#clientTable .checkAll{
 	font-size:12px;
 	padding:10px;
 	padding-right:0;
 	text-align:left;
 }
-#ceshi td.select-checkbox{
+#clientTable td.select-checkbox{
 text-align:left;
 }
 </style>
@@ -70,24 +70,23 @@ text-align:left;
 			<td></td>
 		</tr>
 	</table>
-	<button id="button">点击</button>	
-	<table id="ceshi" border="1px" class="hover" cellspacing="0" width="100%">
+	<table id="clientTable" border="1px" class="hover" cellspacing="0" width="100%">
 		<thead>
 			<tr>
-				<th width='10%' class="checkAll"><input class="select-checkbox" type="checkbox" />全选</th>
+				<th width='10%' class="checkAll"><input class="select-checkbox" id="checkAll" type="checkbox" />全选</th>
 				<th width='20%'>客户名字</th>
 				<th width='15%'>客户电话</th>
-				<th width='15%' class="">添加时间</th>
+				<th width='15%' class="hidden-xs">添加时间</th>
 				<th width='15%'>客户管理员</th>
 				<th width='25%'>操作</th>
 			</tr>
 		</thead>
 		<tfoot class="hidden-xs">
 			<tr>
-				<th width='10%' class="checkAll"><input class="select-checkbox" type="checkbox" />删除选中</th>
+				<th width='10%' class="checkAll"><button id="deleteSelected">删除选中</button></th>
 				<th width='20%'>客户名字</th>
 				<th width='15%'>客户电话</th>
-				<th width='15%' class="">添加时间</th>
+				<th width='15%' class="hidden-xs">添加时间</th>
 				<th width='15%'>客户管理员</th>
 				<th width='25%'>操作</th>
 			</tr>
@@ -100,7 +99,7 @@ text-align:left;
 <script src="js/datatable.select.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#ceshi').DataTable({
+		$('#clientTable').DataTable({
 			"dom":'<"headerTop"lf>rt<"footBottom"rip><"clear">',
 			"paging":true,
 			/*分页按钮类型*/
@@ -148,29 +147,28 @@ text-align:left;
 			//添加删除等按钮
 			"render" : function(data,type,row) {
 							var name ='"'+row.clientName+'"';
-							var html="<a href='javascript:void(0); 'class='delete btn btn-default btn-xs'><i class='fa fa-times'></i> 查看</a>"
-								html+="<a href='javascript:void(0); 'class='up btn btn-default btn-xs'><i class='fa fa-arrow-up'></i> 编辑</a>"
-								html+="<a href='javascript:void(0); 'onClick='deleteThisRow("+ name + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 删除</a>"
+							var html="<a href='javascript:void(0);' class='delete btn btn-default btn-xs'><i class='fa fa-times'></i> 查看</a>"
+								html+="<a href='javascript:void(0);' class='up btn btn-default btn-xs'><i class='fa fa-arrow-up'></i> 编辑</a>"
+								html+="<a href='javascript:void(0);' onClick='deleteThisRow("+ name + ")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i> 删除</a>"
 							return html;
 						}
 					},{
     					"orderable": false,
     					"className": 'select-checkbox',
    						"targets":0,
-    					"render":function(data,type,full,meta){
-        		return '<input type="checkbox" value="'+data+'" title="'+ data+'"id="checkbox" />';
+    					"render":function(data,type,row){
+        		return "<input type='checkbox' id="+row.id+">"
        	 }      
 		}],
 	});
 });
 	//每列添加搜索框
 	$(document).ready(function() {
-			$('#ceshi thead th').each( function (ind,val) {
-			var title=$('#ceshi thead th').eq($(this).index()).text();
+			$('#clientTable thead th').each( function (ind,val) {
+			var title=$('#clientTable thead th').eq($(this).index()).text();
 			$(".sea tr td").eq(ind).html(title+':&nbsp;<input type="text" placeholder="请输入'+title+'"/>');
 		});
-		var table=$('#ceshi').DataTable();
-		console.log(table.column(1));
+		var table=$('#clientTable').DataTable();
 			table.columns().eq(0).each(function (ind,val) {
 				$(".sea input").on('keyup change', function (){
 					//$('#ceshi').DataTable().column(ind).search(
@@ -189,36 +187,50 @@ text-align:left;
 			}
 		})
 		if(flag){
-			$('#ceshi').DataTable();
+			$('#clientTable').DataTable();
 		}	
 	})
 } );
 	//跳转页面
 	$(function(){
-		$('#ceshi').on('draw.dt',function () {
+		$('#clientTable').on('draw.dt',function () {
 			if($("#jump").size()!=1){
 				var dd=$("<div id='jump'>跳转到第<input type='text' value='1'/>页<button>Go！</button></div>");
 				dd.prependTo($(".pagination"));
 			}
 			$("#jump button").click(function(){
 				var page=$("#jump input").val();
-				$('#ceshi').DataTable().page(parseInt(page)-1).draw(false);
+				$('#clientTable').DataTable().page(parseInt(page)-1).draw(false);
 				$("#jump input").val(page); 
 			})
 		});
 	})
 	
 $(function(){
-	$('#ceshi tbody').on('click','td.select-checkbox input',function () {
-		$(this).parent().parent().toggleClass('selected');
+	$("#clientTable tbody").on("click","input[type='checkbox']",function () {
+		console.log($(this))
+		if($(this).is(':checked')){
+			$(this).parents("tr").addClass('selected');
+		}else{
+			$(this).parents("tr").removeClass('selected');
+		}
+		
 	});
-	var table=$('#ceshi').DataTable();
-	$('#button').click(function (){
+	var table=$('#clientTable').DataTable();
+	$('#deleteSelected').click(function (){
 		console.log(table.rows('.selected').data());
 		alert( table.rows('.selected').data().length +' row(s) selected' );
 	});
+	$("#checkAll").click(function(){
+		if($(this).is(':checked')){
+			$("#clientTable tbody input[type='checkbox']").prop("checked",true);
+			$("#clientTable tbody tr").addClass('selected');
+		}else{
+			$("#clientTable tbody input[type='checkbox']").prop("checked",false);
+			$("#clientTable tbody tr").removeClass('selected');
+		};
+	})
 })
-
 //删除函数
 function deleteThisRow(nam){
 		alert(nam);

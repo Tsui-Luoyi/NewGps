@@ -71,13 +71,22 @@ color:red}
 							name="clientAdd" placeholder="请输入客户地址">
 					</div>
 				</div>
-				<!-- 客户管理员用户名 -->
+				<!-- 管理员名称 -->
+				<div class="form-group">
+					<label for="clientUserName"
+						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员名称：</label>
+					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
+						<input type="text" class="form-control" id="clientUserName"
+							name="clientUserName" placeholder="请输入管理员名称(3~6)位">
+					</div>
+				</div>
+				<!-- 客户管理员登录账号 -->
 				<div class="form-group">
 					<label for="clientAdminName"
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员账号：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="clientAdminName"
-							name="clientAdminName" placeholder="请输入4-8位英文">
+							name="clientAdminName" placeholder="请输入登录账号(4-8位英文)">
 					</div>
 				</div>
 				<!-- 客户管理员密码 -->
@@ -86,7 +95,7 @@ color:red}
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员密码：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="password" class="form-control" id="clientAdminPwd"
-							name="clientAdminPwd" placeholder="请输入客户管理员密码(6~16位)">
+							name="clientAdminPwd" placeholder="请输入登录密码(6~16位)">
 					</div>
 				</div>
 				<!-- 客户管理员密码确认 -->
@@ -95,7 +104,7 @@ color:red}
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">再次输入密码：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="password" class="form-control" id="clientAdminPwd1"
-							name="clientAdminPwd1" placeholder="请再次输入客户管理员密码">
+							name="clientAdminPwd1" placeholder="请再次输入登录密码">
 					</div>
 				</div>
 
@@ -127,9 +136,9 @@ color:red}
 						rangelength:[3,6],
 						//远程验证
 						remote:{
-							url :"http://127.0.0.1/ceshi.php",
+							url :"checkClientName.php",
 							type:"post",
-							dataType: "json",
+							dataType:"json",
 							cache:false,
 							data:{
 								clientName:function() {
@@ -138,10 +147,37 @@ color:red}
 							}
 						}
 					},
+					clientUserName:{
+						required:true,
+						rangelength:[3,6],
+						remote:{
+							url :"checkClientUserName.php",
+							type:"post",
+							dataType:"json",
+							cache:false,
+							data:{
+								clientUserName:function() {
+									return $("#clientUserName").val();
+								}
+							}
+						}
+					},
 					clientAdminName:{
 						required:true,
-						rangelength:[ 4, 8 ],
-						isEnglish:true
+						rangelength:[4,8],
+						isEnglish:true,
+						remote:{
+							url :"checkClientAdminName.php",
+							type:"post",
+							dataType:"json",
+							cache:false,
+							data:{
+								clientUserName:function() {
+									return $("#clientAdminName").val();
+								}
+							}
+						}
+						
 					},
 					clientAdminPwd:{
 						required:true,
@@ -155,15 +191,21 @@ color:red}
 				},
 				messages:{
 					clientName:{
+						remote:"该客户名已被注册"
+					},
+					clientUserName:{
 						remote:"该用户名已被注册"
-					}
+					},
+					clientAdminName:{
+						remote:"该登录账号已被注册"
+					},
 				},
-				submitHandler:function() {
+				submitHandler:function(){
 					$("#addClientForm").ajaxSubmit(function(){
 						alert("添加成功!");
 					});
 				},
-				success: function(label) {
+				success: function(label){
 				    label.html("<span style='color:green;font-size:12px;'>验证通过</span>");
 				}
 			});
