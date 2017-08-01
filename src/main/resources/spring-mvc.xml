@@ -11,6 +11,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- 自动扫描该包,多个包之间使用,隔开省去了配置controler类的繁琐. -->
 	<context:component-scan base-package="com.newrmgps.controller" />
+<<<<<<< HEAD
 	<!--配置可以扫描静态资源.  -->
 	<mvc:resources location="/web/" mapping="/web/**"/> 
 	<!--代替映射器和适配器.  -->
@@ -18,6 +19,29 @@
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 ,pom中有jackson所以指定了mvc:annotation-driven的默认json转换器可以省略?
 	07/20删除json转换器 -->
 	<!-- 视图解析器的配置-->
+=======
+	<!--在springMvc中配置静态资源访问路径  -->
+	 <mvc:resources location="/web/**" mapping="/web/**"/>   
+	<!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+	<bean id="mappingJacksonHttpMessageConverter"
+		class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="mappingJacksonHttpMessageConverter" />	<!-- JSON转换器 -->
+			</list>
+		</property>
+	</bean>
+	<!-- 定义跳转的文件的前后缀 ，视图模式配置-->
+>>>>>>> 52e1ff83d577b103880037ff53d8ba61d4b29531
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
 		<property name="prefix" value="/WEB-INF/jsp/" />
