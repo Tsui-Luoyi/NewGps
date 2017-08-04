@@ -39,6 +39,9 @@
 	<!-- 富标注 -->
 	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
 <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+<!-- 几何工具 -->
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/GeoUtils/1.2/src/GeoUtils_min.js"></script>
 <!-- <link rel="stylesheet" href="css/footer.css"> -->
 <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
@@ -71,7 +74,7 @@
 label.BMapLabel{
 	max-width:none
 	}
-/* 标注框蒙版 */	
+/* 蒙版 */	
 .mengBan{
 	position:absolute;
 	top:0;
@@ -105,16 +108,18 @@ label.BMapLabel{
 	font-weight:bolder;
 }
 #markerWindow h4 span{
-font-size:25px;
-display:inline-block;
-width:20px;
-height:20px;
-line-height:20px;
-text-align:center;
-float:right;
-margin-right:15px;
-border:1px black solid;
-border-radius:50%;}
+	font-size:25px;
+	display:inline-block;
+	width:20px;
+	height:20px;
+	line-height:20px;
+	text-align:center;
+	float:right;
+	margin-right:15px;
+	border:1px black solid;
+	border-radius:50%;
+}
+/* 标注框关闭按钮 */
 #markerWindow h4 span:hover{
 	cursor:pointer
 }
@@ -122,16 +127,106 @@ border-radius:50%;}
 	margin:5px 0px;
 	border-top:2px #000 solid;
 }
-
-#markerWindow label {
+.BMap_bubble_content hr{
+	margin:2px 0px;
+	border-top:2px #000 solid;
+}
+#markerWindow label{
 	line-height:26px;
 	float:left;
  	margin-right:3px;
+ }
+ /* 标注错误提示 */
+ #markerWindow #errorLabel{
+ 	color:red;
+ 	height:20px;
+ 	float:none;
+ 	font-size:12px;
+ 	margin:0 0 0 3px
  }
  #markerSubmit{
  	margin-left:30%
  }
   #markerQuit{
+ 	margin-left:10%
+ }
+ /* 围栏框 */
+ #fenceWindow{
+ background-color:#fff;
+	opacity:0.8;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+	position:absolute;
+	z-index:5;
+	color:#000;
+	width:400px;
+	height:320px;
+	top:50%;
+	left:50%; 
+	margin-left:-200px;
+	margin-top:-155px;
+	padding:0 5px;
+	display:none; 
+ }
+ #fenceWindow h4:{
+	font-weight:bolder;
+}
+#fenceWindow h4 span{
+	font-size:25px;
+	display:inline-block;
+	width:20px;
+	height:20px;
+	line-height:20px;
+	text-align:center;
+	float:right;
+	margin-right:15px;
+	border:1px black solid;
+	border-radius:50%;
+}
+/* 围栏框关闭按钮 */
+#fenceWindow h4 span:hover{
+	cursor:pointer
+}
+#fenceWindow hr{
+	margin:5px 0px;
+	border-top:2px #000 solid;
+}
+.BMap_bubble_content hr{
+	margin:2px 0px;
+	border-top:2px #000 solid;
+}
+#fenceWindow p{
+	margin-bottom:6px;
+}
+#fenceWindow label{
+	line-height:20px;
+	float:left;
+ 	margin-right:3px;
+ }
+ #fenceWindow #errorLabelRound{
+ 	color:red;
+ 	height:20px;
+ 	float:none;
+ 	font-size:12px;
+ 	margin:0 0 0 3px
+ }
+ /* 半径 */
+ #fenceRadiusRound{
+ 	width:80px;
+ }
+ #fenceRoundType{
+ 	margin-bottom:0;
+ }
+ #fenceWindow #errorLabel{
+ 	color:red;
+ 	height:20px;
+ 	float:none;
+ 	font-size:12px;
+ 	margin:0 0 0 3px
+ }
+ #fenceSubmit1,#fenceSubmit2,#fenceSubmit3{
+ 	margin-left:30%
+ }
+  #fenceQuit1,#fenceQuit2,#fenceQuit3{
  	margin-left:10%
  }
 </style>
@@ -144,23 +239,75 @@ border-radius:50%;}
 <div id="markerWindow">
 		<h4>标注信息：<span title="关闭">&times;</span></h4>
 		<hr/>
-		<p><label>名称：</label><input id="markerName" type="text"></p>
-		<p><label>经度：</label><input id="markerLng" type="text"></p>
-		<p><label>纬度：</label><input id="markerLat" type="text"></p>
-		<div><label>备注：</label><textarea name="markInfo" id="markInfo" cols="40" rows="5"></textarea></div>
-		<p><input id="markerSubmit" type="submit" ><input id="markerQuit" type="button" value="取消"></p>
+		<form id="markerForm" method="post" action="http://127.0.0.1/ceshi.php">
+			<p><label>名称：</label><input id="markerName" type="text"><label id="errorLabel"></label></p>
+			<p><label>经度：</label><input id="markerLng" type="text"></p>
+			<p><label>纬度：</label><input id="markerLat" type="text"></p>
+			<div><label>备注：</label><textarea name="markInfo" id="markInfo" cols="40" rows="5"></textarea></div>
+			<p><input id="markerSubmit" type="button" value="保存"><input id="markerQuit" type="button" value="取消"></p>
+		</form>
+	</div>
+	<!-- 围栏页面 -->
+	<div id="fenceWindow">
+		<h4>围栏信息：<span title="关闭">&times;</span></h4>
+		<hr/>
+		<div class="fenceRound">
+		<form class="fenceForm" method="post" action="http://127.0.0.1/ceshi.php">
+			<p><label id="fenceRoundType">围栏类型：</label><strong>圆形围栏</strong></p>
+			<p><label>围栏名称：</label><input id="fenceNameRound" type="text"><label id="errorLabelRound"></label></p>
+			<p><label>中心经度：</label><input id="fenceLngRound" type="text"></p>
+			<p><label>中心纬度：</label><input id="fenceLatRound" type="text"></p>
+			<p><label>围栏半径：</label><input id="fenceRadiusRound" type="text"><span>千米</span></p>
+			<div><label>围栏备注：</label><textarea name="fenceInfo" id="fenceInfoRound" cols="40" rows="3"></textarea></div>
+			<p><input id="fenceSubmit1" type="button" value="保存"><input id="fenceQuit1" type="button" value="取消"></p>
+			</form>
+		</div>
+		<div class="fenceRect">
+		<form id="fenceForm" method="post" action="http://127.0.0.1/ceshi.php">
+			<p><label>围栏类型：</label><strong>矩形围栏</strong></p>
+			<p><label>围栏名称：</label><input id="fenceName" type="text"><label id="errorLabel"></label></p>
+			<p><label>围栏长度：</label><input id="fenceLng" type="text"></p>
+			<p><label>围栏宽度：</label><input id="fenceLat" type="text"></p>
+			<div><label>围栏备注：</label><textarea name="fenceInfo" id="fenceInfo" cols="40" rows="3"></textarea></div>
+			<p><input id="fenceSubmit2" type="button" value="保存"><input id="fenceQuit2" type="button" value="取消"></p>
+			</form>
+		</div>
+		<div class="fencePlogon">
+		<form class="fenceForm" method="post" action="http://127.0.0.1/ceshi.php">
+			<p><label>围栏类型：</label><strong>多边形围栏</strong></p>
+			<p><label>围栏名称：</label><input id="fenceName" type="text"><label id="errorLabel"></label></p>
+			<div><label>围栏备注：</label><textarea name="fenceInfo" id="fenceInfo" cols="40" rows="5"></textarea></div>
+			<p><input id="fenceSubmit3" type="button" value="保存"><input id="fenceQuit3" type="button" value="取消"></p>
+			</form>
+		</div>	
 	</div>
 	<!-- 左边选择的复选框ID -->
-<input id="carId" type="hidden">
+<input id="carId" type="hidden" value="">
 	<p id="carId">id</p>
 	<div id="map">
-</div>
-		
+</div>	
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.form.js"></script>
 	<script>
- window.onload=function(){
-	 var car=null;
+	//跨域提示
+	jQuery.support.cors = true;
+	var deleteBtn=function(obj){
+		if(confirm("是否删除给标记？")){
+			$.ajax({
+				url:"http://127.0.0.1/ceshi.php",
+				data:{markerName:obj.getAttribute("data")},
+				type:"get",
+				async:false,
+				success:function(){
+					 document.location.reload();
+				}
+			});
+		}
+}
+window.onload=function(){
+	var a="aa";
+	 var car=null; 
 	if(document.attachEvent){
 		document.attachEvent("onstorage", function (e) {
 			car=sessionStorage.getItem("selectedCar");
@@ -177,7 +324,7 @@ border-radius:50%;}
     });
 	}
 	
-	var point=new BMap.Point(116.404, 39.915)
+	var point=new BMap.Point(116.404, 39.915);
 	var map = new BMap.Map("map"); 	// 创建Map实例
 	var cel=$("<div class='cel'>测距</div>");
 	cel.prependTo($("#map"));
@@ -222,18 +369,45 @@ border-radius:50%;}
 	var rightMenu=new BMap.ContextMenu(); 
 	rightMenu.addItem(new BMap.MenuItem("添加标注",function(e){
 		$(".mengBan,#markerWindow").css("display","block");
+		$("#markerName").val("");
+		$("#errorLabel").html("");
 		$("#markerLng").val(e.lng);
 		$("#markerLat").val(e.lat);
-		},{width:"100",iconUrl:"images/marker.png"}));
+		},{width:"130",iconUrl:"images/marker.png"}));
+	
+	rightMenu.addItem(new BMap.MenuItem("添加矩形围栏",function(e){
+		},{width:"130",iconUrl:"images/rect.png"}));
+	rightMenu.addItem(new BMap.MenuItem("添加圆形围栏",function(e){
+		map.disableDoubleClickZoom();
+		addRound(e);
+	},{width:"130",iconUrl:"images/round.png"}));
+	rightMenu.addItem(new BMap.MenuItem("添加多边形围栏",function(e){
+	},{width:"130",iconUrl:"images/ploygon.png"}));
+	
 	map.addContextMenu(rightMenu);
 	//添加maker
 	 function addMaker(pt){
-		 var myIcon = new BMap.Icon("images/car.png", new BMap.Size(48, 48), {   
+		 var myIcon=new BMap.Icon("images/carOnline.png",new BMap.Size(48, 48),{   
 				imageOffset: new BMap.Size(0, 5)
 			  });
-			marker= new BMap.Marker(pt,{icon:myIcon});
+			marker=new BMap.Marker(pt,{icon:myIcon});
 			map.addOverlay(marker);
 		}
+	//车辆图标绑定事件
+	    function addClickHandler(content,marker,opts){
+			marker.addEventListener("click",function(e){
+				map.panTo(new BMap.Point(e.target.getPosition().lng,e.target.getPosition().lat));
+				openInfo(content,e,opts)}
+			);
+		}
+	//打开信息窗
+		function openInfo(content,e,opts){
+			var p = e.target;
+			var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+			var infoWindow = new BMap.InfoWindow(content.join(""),opts);  // 创建信息窗口对象 
+			map.openInfoWindow(infoWindow,point); //开启信息窗口
+		};
+	
 	//测距
 	var flagCel=false;
 	var myDis= new BMapLib.DistanceTool(map);
@@ -262,60 +436,219 @@ $("#carId").change(function() {
 		url:"data/latlng.json",
 		data:{carId:car},
 		type:"get",
-		async:false,
+		async:true,
 		success:function(data){
 			map.clearOverlays();
-				 var myIcon = new BMap.Icon("images/car.png", new BMap.Size(48, 48), {   
+				 var myIconOnline = new BMap.Icon("images/carOnline.png", new BMap.Size(48, 48), {   
+						imageOffset: new BMap.Size(0, 0)
+					  });
+				 var myIconOffline = new BMap.Icon("images/carOffline.png", new BMap.Size(48, 48), {   
 						imageOffset: new BMap.Size(0, 0)
 					  });
 				 var opts = {
 						  width : 240,     // 信息窗口宽度
 						  height: 210,     // 信息窗口高度
-						  title : "详细信息" , // 信息窗口标题
-						  enableMessage:true//设置允许信息窗发送短息
+						  title : "车辆详细信息"
 						}
 			map.setCenter(new BMap.Point(data[0].lng, data[0].lat));
 				 var markers=[];
 			for(var i=0;i<data.length;i++){
 				var point=new BMap.Point(data[i].lng, data[i].lat);
+				var marker= new BMap.Marker(point);
+			    markers.push(marker);
 				var content = [];
 				content.push("<li><strong>车辆ID：</strong>"+data[i].id+"</li>");
+			     if(data[i].state==[0]){
+			    	 marker.setIcon(myIconOffline); 
+			    	content.push("<li><strong>车辆状态：</strong>离线</li>");
+			    }else{
+			    	 marker.setIcon(myIconOnline); 
+			    	 content.push("<li><strong>车辆状态：</strong>在线</li>");
+			    }
 			    content.push("<li><strong>车辆经度：</strong>"+data[i].lng+"</li>");
 			    content.push("<li><strong>车辆经度：</strong>"+data[i].lat+"</li>");
 			    content.push("<li><strong>GPS时间：</strong>"+data[i].GPStime+"</li>");
 			    content.push("<li><strong>车辆地址：</strong>"+data[i].add+"</li>");
-			    var marker= new BMap.Marker(point);
-			    markers.push(marker);
-			    marker.setIcon(myIcon)
 				map.addOverlay(marker);
-				addClickHandler(content,marker);
-			    //var infoWindow = new BMap.InfoWindow(content.join(""), opts); 
-			    function addClickHandler(content,marker){
-    				marker.addEventListener("click",function(e){
-    					map.panTo(new BMap.Point(e.target.getPosition().lng,e.target.getPosition().lat));
-    					openInfo(content,e)}
-    				);
-    			}
-    			function openInfo(content,e){
-    				var p = e.target;
-    				var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-    				var infoWindow = new BMap.InfoWindow(content.join(""),opts);  // 创建信息窗口对象 
-    				map.openInfoWindow(infoWindow,point); //开启信息窗口
-    			}
+				addClickHandler(content,marker,opts);
 			}
 			var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
 		}
 		})
  });
+	//标志关闭按钮
 	$("#markerWindow h4 span").click(function(){
 		$(".mengBan,#markerWindow").css("display","none");
 	});
+	//取消按钮
 	$("#markerQuit").click(function(){
 		$(".mengBan,#markerWindow").css("display","none");
 	});
- }
-	</script>
-	
+	//标注提交按钮
+	$("#markerSubmit").click(function(){
+		console.log($("#markerName").val()+"123");
+		var flag;
+		if($("#markerName").val()==""){
+			$("#errorLabel").html("名字不能为空！")
+			return false;
+		}else{$.ajax({
+			url:"http://127.0.0.1/ceshi.php",
+			data:{"clientName":$("#markerName").val()},
+			type:"get",
+			success:function(data){
+				if(data=="true"){
+					flag=true;
+				}else{	
+					flag=false;
+				}	
+			},error:function(e){
+			},
+			async:false
+		})
+		}
+		if(!flag){
+			$("#errorLabel").html("名字已存在！")
+			return false;
+		}
+		if($("#markerLng").val()==""){
+			return false;
+		};
+		if($("#markerLat").val()==""){
+			return false;
+		};
+		$("#markerForm").ajaxSubmit(function(){
+			alert("提交成功！");
+			$(".mengBan,#markerWindow").css("display","none");
+			//标注信息框
+			var content=[];
+			content.push("<hr/>");
+			content.push("<li><strong>标记名称：</strong>"+$("#markerName").val()+"</li>");
+			content.push("<li><strong>标记经度：</strong>"+$("#markerLng").val()+"</li>");
+		    content.push("<li><strong>标记经度：</strong>"+$("#markerLat").val()+"</li>");
+			var GeoCode=new BMap.Geocoder();
+			GeoCode.getLocation(new BMap.Point($("#markerLng").val(),$("#markerLat").val()),function(GeocoderResult){
+			    content.push("<li><strong>标记地址：</strong>"+GeocoderResult.address+"</li>");
+			    content.push("<li><a data="+$('#markerName').val()+" onClick='deleteBtn(this)' href='javascript:void(0);'>删除</a></li>")
+			})
+			content.push("<li><strong>备注：</strong>"+$("#markInfo").val()+"</li>");			
+		    opts = {
+					  width : 220,     
+					  height:0,   
+					  title : "标注详细信息"
+					};
+			var marker=new BMap.Marker(new BMap.Point($("#markerLng").val(),$("#markerLat").val()),{
+				icon:new BMap.Icon("images/marker1.png", new BMap.Size(24, 24),{   
+					imageOffset: new BMap.Size(0, 0)
+				  })
+			});
+			map.addOverlay(marker);
+			addClickHandler(content,marker,opts);
+			/* 
+				var markerRightMenu=new BMap.ContextMenu(); 
+				markerRightMenu.addItem(new BMap.MenuItem("删除标记",function(e){
+					deleteBtn();
+				},{width:"130",iconUrl:"images/ploygon.png"}));
+				marker.addContextMenu(markerRightMenu);	 */
+		})
+	})
+	function addRound(e){
+		flagRound=true;
+		roundPoint=new BMap.Point(e.lng,e.lat);
+		circle=new BMap.Circle(roundPoint);
+		circle.setStrokeColor("red");
+		circle.setFillColor("#000")
+		circle.setFillOpacity("0.5");
+		circle.setStrokeWeight("2");
+	}
+	//是否画圆
+	var flagRound=false;
+	//圆心坐标
+	var roundPoint;
+	//矩形开关
+	var flagRect=false;
+	//是否是绘图后的双击
+	var dblFlag=false;
+	//多边形开关
+	var flagPloy=false;
+	//半径
+	var roundDis;
+	map.addEventListener("mousemove",function(ev){
+		if(flagRound){
+			dblFlag=true;
+			map.clearOverlays(circle);
+			roundDis=map.getDistance(roundPoint,new BMap.Point(ev.point.lng,ev.point.lat));
+			circle.setRadius(roundDis);
+			map.addOverlay(circle);
+		}
+	})
 		
+	//双击事件
+	map.addEventListener("dblclick",function(e){
+		if(dblFlag){
+			flagRound=false;
+			$(".mengBan,#fenceWindow").css("display","block");
+			$("#fenceWindow>div").css("display","none");
+			$(".fenceRound").css("display","block");
+			$("#fenceLngRound").val(roundPoint.lng);
+			$("#fenceLatRound").val(roundPoint.lat);
+			$("#fenceRadiusRound").val((roundDis/1000).toFixed(3));
+			circle.addContextMenu(rightMenu);
+			dblFlag=false;
+		}else{
+			map.enableDoubleClickZoom();
+		}
+	})
+	//圆形围栏提交按钮
+	$("#fenceSubmit1").click(function(){
+		var flag;
+		if($("#fenceNameRound").val()==""){
+			$("#errorLabelRound").html("名字不能为空！")
+			return false;
+		}else{$.ajax({
+			url:"http://127.0.0.1/ceshi.php",
+			data:{"clientName":$("#fenceNameRound").val()},
+			type:"get",
+			success:function(data){
+				if(data=="true"){
+					flag=true;
+				}else{
+					flag=false;
+				}	
+			},
+			async:false
+		})
+		}
+		if(!flag){
+			$("#errorLabelRound").html("名字已存在！")
+			return false;
+		}
+		if($("#fenceLngRound").val()==""){
+			return false;
+		};
+		if($("#fenceLatRound").val()==""){
+			return false;
+		};
+		if($("#fenceRadiusRound").val()<=0){
+			return false;
+		}
+		$("#markerForm").ajaxSubmit(function(){
+			alert("提交成功！");
+			$(".mengBan,#fenceWindow").css("display","none");
+			map.clearOverlays(circle);
+	})
+	})
+	//围栏关闭按钮
+	$("#fenceWindow h4 span").click(function(){
+		$(".mengBan,#fenceWindow").css("display","none");
+		map.clearOverlays(circle);
+	});
+	//取消按钮
+	$("#fenceQuit1,#fenceQuit2,#fenceQuit3").click(function(){
+		$(".mengBan,#fenceWindow").css("display","none");
+		map.clearOverlays(circle);
+	});
+	return map;
+ }
+</script>	
 </body>
 </html>

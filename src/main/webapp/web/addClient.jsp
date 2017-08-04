@@ -204,6 +204,7 @@ color:red}
 					$("#addClientForm").ajaxSubmit(function(){
 						alert("添加成功!");
 					});
+					return false;
 				},
 				success: function(label){
 				    label.html("<span style='color:green;font-size:12px;'>验证通过</span>");
