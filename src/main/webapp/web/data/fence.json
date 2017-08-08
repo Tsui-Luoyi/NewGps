@@ -1,0 +1,12 @@
+[
+{ "id":1, "pId":0, "name":"矩形围栏","iconSkin":"rect"},
+{ "id":101, "pId":1, "name":"围栏一","iconSkin":"fence"},
+{ "id":102, "pId":1, "name":"围栏二","iconSkin":"fence"},
+{ "id":103, "pId":1, "name":"围栏三","iconSkin":"fence"},
+{ "id":2, "pId":0, "name":"圆形围栏","iconSkin":"circle"},
+{ "id":201, "pId":2, "name":"围栏21","iconSkin":"fence"},
+{ "id":202, "pId":2, "name":"围栏22","iconSkin":"fence"},
+{ "id":3, "pId":0, "name":"多边形围栏","iconSkin":"ploygon"},
+{ "id":301, "pId":3, "name":"围栏31","iconSkin":"fence"},
+{ "id":302, "pId":3, "name":"围栏32","iconSkin":"fence"}
+]

@@ -50,11 +50,16 @@
 	height: 22px;
 }
 
-.ztree li span.button.group_ico_open, .ztree li span.button.group_ico_close
+.ztree li span.button.group_ico_open,.ztree li span.button.group_ico_close
 	{
 	background-image: url("css/zTreeStyle/img/diy/group.png")
 }
-
+.ztree li span.button.all_ico_open{
+	background-image: url("images/all-2.png")
+}
+.ztree li span.button.all_ico_close{
+	background-image: url("images/all-1.png")
+}
 .ztree li span.button.group_ico_docu {
 	background-image: url("css/zTreeStyle/img/diy/group.png")
 }
@@ -62,17 +67,32 @@
 .ztree li span.button.offLine_ico_docu {
 	background-image: url("css/zTreeStyle/img/diy/offline.png");
 }
-
 .ztree li span.button.onLine_ico_docu {
 	background-image: url("css/zTreeStyle/img/diy/online.png");
 }
-/* 分组搜索框 */
-#group #searchCar {
+/* 矩形围栏图标 */
+.ztree li span.button.rect_ico_open,.ztree li span.button.rect_ico_close
+	{
+	background-image: url("images/rect.png")
+}
+.ztree li span.button.circle_ico_open,.ztree li span.button.circle_ico_close
+	{
+	background-image: url("images/round.png")
+}
+.ztree li span.button.ploygon_ico_open,.ztree li span.button.ploygon_ico_close
+	{
+	background-image: url("images/ploygon.png")
+}
+.ztree li span.button.fence_ico_docu {
+	background-image: url("images/fence.png");
+}
+/* 搜索框 */
+#searchCar,#searchMarker,#searchFence{
 	margin-top: 5px;
 }
-
-#marker #searchMarker {
-	margin-top: 5px;
+#notice{
+	color:red;
+	margin-bottom:5px;
 }
 </style>
 <!-- <link rel="stylesheet" href="css/footer.css"> -->
@@ -88,7 +108,7 @@
 				<ul id="positionTab" class="nav nav-tabs">
 					<li class="active"><a href="#group" data-toggle="tab">分组 </a></li>
 					<li><a href="#marker" data-toggle="tab">标注</a></li>
-					<li><a href="#ios2" data-toggle="tab">围栏</a></li>
+					<li><a href="#fence" data-toggle="tab">围栏</a></li>
 					<li><a href="#ios3" data-toggle="tab">报警</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content clearfix">
@@ -97,6 +117,7 @@
 							<label>搜索车辆:</label><input id="keywordCar" type="text"
 								placeholder="请输入车辆名称">
 						</div>
+						<p id="notice"><strong>※注意：</strong>每次请不要选取太多车辆</p>
 						<ul id="groupTree" class="ztree"></ul>
 					</div>
 					<div class="tab-pane fade" id="marker">
@@ -106,8 +127,12 @@
 						</div>
 						<ul id="markerTree" class="ztree"></ul>
 					</div>
-					<div class="tab-pane fade" id="ios2">
-						<p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
+					<div class="tab-pane fade" id="fence">
+						<div id="searchFence">
+							<label>搜索围栏:</label><input id="keywordFence" type="text"
+								placeholder="请输入围栏名称">
+						</div>
+						<ul id="fenceTree" class="ztree"></ul>
 					</div>
 					<div class="tab-pane fade" id="ios3">
 						<p>Enterprise Java
@@ -128,7 +153,7 @@
 			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"
 				id="positionInnerIframeContainer">
 				<div id="midToggleBar"></div>
-				<iframe id="positionInnerIframe" src="baidu.jsp" frameborder="0"
+				<iframe id="positionInnerIframe" name="positionInnerIframe" src="baidu.jsp" frameborder="0"
 					scrolling="yes" style="width: 100%; height: 100%">浏览器不支持，请升级或更换浏览器</iframe>
 			</div>
 		</div>
@@ -140,52 +165,52 @@
 	<script>
 		$(document).ready(
 				function() {
-					var setting = {
-						check : {
-							enable : true,
-							autoCheckTrigger : true,
-							chkStyle : "checkbox",
-							chkboxType : {
-								"Y" : "s",
-								"N" : "s"
+					var setting={
+						check:{
+							enable:true,
+							autoCheckTrigger:false,
+							chkStyle:"checkbox",
+							chkboxType:{
+								"Y":"s",
+								"N":"s"
 							}
 						},
-						data : {
-							simpleData : {
-								enable : true,
-								idKey : "id",
-								pIdKey : "pId",
-								rootPId : 0
+						data:{
+							simpleData:{
+								enable:true,
+								idKey:"id",
+								pIdKey:"pId",
+								rootPId:0
 							},
-							keep : {
-								parent : true
+							keep:{
+								parent:true
 							}
 						},
-						async : {
-							autoParam : [ "id", "name", "isParent" ],
-							enable : true,
-							dataType : "text",
-							type : "get",
-							url : "data/data2.json",
-							dataFilter : ajaxDataFilter
+						async:{
+							autoParam:["id","name","isParent"],
+							enable:true,
+							dataType:"text",
+							type:"get",
+							url:"data/data2.json",
+							//dataFilter:ajaxDataFilter
 						},
-						callback : {
-							onClick : function(event, treeId, treeNode) {
+						callback:{
+							onClick:function(event,treeId,treeNode){
 								if (treeNode.pId != null) {
 									alert("id:" + treeNode.id + ", name:"
 											+ treeNode.name + ",父ID："
 											+ treeNode.pId);
 								}
 							},
-							onCheck : zTreeOnCheck
+							onCheck:zTreeOnCheck
 						}
 					};
 
-					$.fn.zTree.init($("#groupTree"), setting);
+					$.fn.zTree.init($("#groupTree"),setting);
 
-					function ajaxDataFilter(treeId, parentNode, responseData) {
+					function ajaxDataFilter(treeId,parentNode,responseData){
 						if (responseData) {
-							for (var i = 0; i < responseData.length; i++) {
+							for (var i=0; i<responseData.length;i++){
 								if (responseData[i].pId == "0") {
 									responseData[i].isParent == true
 								}
@@ -196,54 +221,99 @@
 					}
 					;
 					var a;
-					function zTreeOnCheck(event, treeId, treeNode) {
-						a = []
-						var treeObj = $.fn.zTree.getZTreeObj("groupTree");
-						var nodes = treeObj.getChangeCheckedNodes();
-						for (var i = 0; i < nodes.length; i++) {
+					function zTreeOnCheck(event,treeId,treeNode){
+						a=[];
+						var treeObj=$.fn.zTree.getZTreeObj("groupTree");
+						var nodes=treeObj.getCheckedNodes();
+						console.log(nodes)
+						for (var i=0;i<nodes.length;i++){
 							/* console.log(nodes[i].id); */
-							if (nodes[i].pId != '0') {
+							if (nodes[i].pId!='0'){
 								a.push(nodes[i].id);
 							}
 						}
-						var selectedCar = a.join(",");
-						sessionStorage.setItem("selectedCar", selectedCar);
+						var selectedCar=a.join(",")
+						console.log(a)
+						sessionStorage.setItem("selectedCar",selectedCar);
 					}
 				});
-
+		//标注展示
 		$("#positionTab li:eq(1)").click(
-				function() {
-					var setting1 = {
-						check : {
-							enable : true,
-							autoCheckTrigger : true,
-							chkStyle : "checkbox",
-							chkboxType : {
-								"Y" : "s",
-								"N" : "s"
+				function(){
+					var setting1={
+						check:{
+							enable:true,
+							autoCheckTrigger:false,
+							chkStyle:"checkbox",
+							chkboxType:{
+								"Y":"s",
+								"N":"s"
 							}
 						},
-						data : {
-							simpleData : {
-								enable : true,
-								idKey : "id",
-								pIdKey : "pId",
-								rootPId : 0
+						data:{
+							simpleData:{
+								enable:true,
+								idKey:"id",
+								pIdKey:"pId",
+								rootPId:0
 							},
-							keep : {
-								parent : true
+							keep:{
+								parent:true
 							}
 						},
-						async : {
-							autoParam : [ "id", "name", "isParent" ],
-							enable : true,
-							dataType : "text",
-							type : "get",
-							url : "data/biaozhu.json"
+						async:{
+							autoParam:["id","name","isParent"],
+							enable:true,
+							dataType:"text",
+							type:"get",
+							url:"data/biaozhu.json"
 						},
-						callback : {
-							onClick : function(event, treeId, treeNode) {
-								if (treeNode.pId != null) {
+						callback:{
+							onClick:function(event,treeId,treeNode){
+								if(treeNode.pId != null){
+									alert("id:"+treeNode.id+", ame:"
+											+ treeNode.name + ",父ID："
+											+ treeNode.pId);
+								}
+							}
+						}
+					};
+					$.fn.zTree.init($("#markerTree"),setting1);
+				})
+				//围栏展示
+				$("#positionTab li:eq(2)").click(
+				function() {
+					var setting2={
+						check:{
+							enable:true,
+							autoCheckTrigger:false,
+							chkStyle:"checkbox",
+							chkboxType:{
+								"Y":"s",
+								"N":"s"
+							}
+						},
+						data:{
+							simpleData:{
+								enable:true,
+								idKey:"id",
+								pIdKey:"pId",
+								rootPId:0
+							},
+							keep:{
+								parent:true
+							}
+						},
+						async:{
+							autoParam:["id","name","isParent"],
+							enable:true,
+							dataType:"text",
+							type:"get",
+							url:"data/fence.json"
+						},
+						callback:{
+							onClick:function(event,treeId,treeNode){
+								if(treeNode.pId!=null){
 									alert("id:" + treeNode.id + ", name:"
 											+ treeNode.name + ",父ID："
 											+ treeNode.pId);
@@ -251,7 +321,7 @@
 							}
 						}
 					};
-					$.fn.zTree.init($("#markerTree"), setting1);
+					$.fn.zTree.init($("#fenceTree"), setting2);
 				})
 		//车辆搜索
 		$('#keywordCar').bind('input propertychange', function() {
