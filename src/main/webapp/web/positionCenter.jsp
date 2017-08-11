@@ -343,6 +343,10 @@
 				treeObj.selectNode(nodes[0]);
 			}
 		});
+		//刷新时清空storage
+		window.onbeforeunload = function(){  
+			sessionStorage.removeItem("selectedCar");
+			}  
 	</script>
 </body>
 </html>

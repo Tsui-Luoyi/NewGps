@@ -24,6 +24,7 @@
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="css/baidu.css">
 <link rel="stylesheet" href="css/media.css">
 <link rel="stylesheet" href="css/color.css">
@@ -292,6 +293,67 @@ label.BMapLabel {
 #fenceQuit1, #fenceQuit2, #fenceQuit3 {
 	margin-left: 10%
 }
+/*区域查车结果  */
+#findVerhicalResult{
+	background-color: #fff;
+	opacity: 0.8;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+	position: absolute;
+	z-index: 5;
+	color: #000;
+	width: 80%;
+	height: 500px;
+	top: 50%;
+	left: 50%;
+	margin-left: -40%;
+	margin-top:-280px;
+	padding: 0 8px;
+	display: none; 
+}
+#findVerhicalResult h4: {
+	font-weight: bolder;
+}
+
+#findVerhicalResult h4 span {
+	font-size: 25px;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	float: right;
+	margin-right: 30px;
+	border: 1px black solid;
+	border-radius: 50%;
+}
+/* 围栏框关闭按钮 */
+#findVerhicalResult h4 span:hover {
+	cursor: pointer
+}
+
+#findVerhicalResult hr {
+	margin: 5px 0px;
+	border-top: 2px #000 solid;
+}
+/* 结果表格 */
+#resultTable{
+	border:2px black solid;
+	width:100%;
+	text-align:center;
+	border-collapse:collapse
+}
+#resultContainer{
+	width:100%;
+	height:410px;
+	overflow:scroll
+}
+#resultTable th{
+	border:2px black solid;
+	text-align:center
+}
+#resultTable td{
+height:15px;
+padding:2px}
 </style>
 </head>
 <body>
@@ -417,11 +479,29 @@ label.BMapLabel {
 	</div>
 	<!-- 左边选择的复选框ID -->
 	<input id="carId" type="hidden" value="">
-	<p id="carId">id</p>
+	<!-- 查车结果面板 -->
+	<div id="findVerhicalResult">
+		<h4>区域内车辆:<span title="关闭">&times;</span></h4>
+		<hr/>
+		<div id="resultContainer">
+		<table id="resultTable" width="100%" height="250" cellspacing="0" cellpadding="0" border="1">
+		<thead>
+			<tr>
+				<th>车辆ID</th>
+				<th>定位方式</th>
+				<th>最后回传时间</th>
+				<th>车辆位置</th>
+				<th>查看轨迹</th>
+			</tr>
+			</thead>
+		</table>
+		</div>
+	</div>
 	<div id="map"></div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery.form.js"></script>
+	<script src="js/jquery.dataTables.js"></script>
 	<script src="js/baidu.js"></script>
 	<!--[if lt IE 9]>
 	console.log("can")

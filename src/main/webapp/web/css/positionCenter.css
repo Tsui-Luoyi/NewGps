@@ -53,11 +53,11 @@ html,body{
 #positionInnerIframe{
 	display:block;
 }
-
+/* 切换地图 */
 #changeMap{
 	position:absolute;
 	top:20px;
-	left:30%;
+	left:40%;
 	z-index:2;
 }
 #changeMap strong{
