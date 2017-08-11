@@ -57,6 +57,7 @@ html,body{
 	height: 20px;
 	padding:0;
 	text-align: center;
+	width:100%;
 }
 /*内部的iframe  padding是为了中间那个按钮*/
 #innerIframeContainer1{

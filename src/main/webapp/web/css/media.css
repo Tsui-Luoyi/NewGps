@@ -1,3 +1,11 @@
+@media screen and (min-width:1200px){
+	#mB2{
+		width:20%;
+	}
+	#positionInnerIframeContainer{
+		width:80%;
+	}
+}
 @media screen and (max-width:767px){
 	/*头部退出登录*/
 	.loginOut{

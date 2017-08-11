@@ -187,16 +187,15 @@
 							}
 						},
 						async:{
-							autoParam:["id","name","isParent"],
 							enable:true,
 							dataType:"text",
 							type:"get",
 							url:"data/data2.json",
-							//dataFilter:ajaxDataFilter
+							dataFilter:ajaxDataFilter
 						},
 						callback:{
 							onClick:function(event,treeId,treeNode){
-								if (treeNode.pId != null) {
+								if ((treeNode.pId != null)&(treeNode.pId !=0)) {
 									alert("id:" + treeNode.id + ", name:"
 											+ treeNode.name + ",父ID："
 											+ treeNode.pId);
@@ -213,7 +212,13 @@
 							for (var i=0; i<responseData.length;i++){
 								if (responseData[i].pId == "0") {
 									responseData[i].isParent == true
-								}
+								};
+								if(responseData[i].state=="1"){
+									responseData[i].iconSkin="onLine"
+								};
+								if(responseData[i].state=="0"){
+									responseData[i].iconSkin="offLine"
+								};
 								;
 							}
 						}
@@ -225,15 +230,12 @@
 						a=[];
 						var treeObj=$.fn.zTree.getZTreeObj("groupTree");
 						var nodes=treeObj.getCheckedNodes();
-						console.log(nodes)
 						for (var i=0;i<nodes.length;i++){
-							/* console.log(nodes[i].id); */
 							if (nodes[i].pId!='0'){
 								a.push(nodes[i].id);
 							}
 						}
 						var selectedCar=a.join(",")
-						console.log(a)
 						sessionStorage.setItem("selectedCar",selectedCar);
 					}
 				});
@@ -327,7 +329,7 @@
 		$('#keywordCar').bind('input propertychange', function() {
 			var treeObj = $.fn.zTree.getZTreeObj("groupTree");
 			var keywords = $("#keywordCar").val();
-			var nodes = treeObj.getNodesByParamFuzzy("name", keywords, null);
+			var nodes = treeObj.getNodesByParamFuzzy("name", keywords);
 			if (nodes.length > 0) {
 				treeObj.selectNode(nodes[0]);
 			}
@@ -336,7 +338,7 @@
 		$('#keywordMarker').bind('input propertychange', function() {
 			var treeObj = $.fn.zTree.getZTreeObj("markerTree");
 			var keywords = $("#keywordMarker").val();
-			var nodes = treeObj.getNodesByParamFuzzy("name", keywords, null);
+			var nodes = treeObj.getNodesByParamFuzzy("name", keywords);
 			if (nodes.length > 0) {
 				treeObj.selectNode(nodes[0]);
 			}

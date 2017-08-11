@@ -198,7 +198,7 @@ color:red}
 					},
 					clientAdminName:{
 						remote:"该登录账号已被注册"
-					},
+					}
 				},
 				submitHandler:function(){
 					$("#addClientForm").ajaxSubmit(function(){
