@@ -10,29 +10,32 @@
 	http://www.springframework.org/schema/mvc  
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- 自动扫描该包,多个包之间使用,隔开省去了配置controler类的繁琐. -->
-	<context:component-scan base-package="com.newrmgps.controller" />
-	<!--配置可以扫描静态资源.  -->
-	<mvc:resources location="/web/" mapping="/web/**"/> 
-	<!--代替映射器和适配器.  -->
-	<mvc:annotation-driven/>
-	<!--避免IE执行AJAX时，返回JSON出现下载文件 ,pom中有jackson所以指定了mvc:annotation-driven的默认json转换器可以省略?
-	07/20删除json转换器 -->
-	<!-- 视图解析器的配置-->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!--  
+	<context:component-scan base-package="com.newrmgps.mybatis.*" />
+	-->
+	<!--配置可以扫描静态资源. -->
+	<mvc:resources location="/web/" mapping="/web/**" />
+	<!--代替映射器和适配器. -->
+	<mvc:annotation-driven />
+	<!--避免IE执行AJAX时，返回JSON出现下载文件 ,pom中有jackson所以指定了mvc:annotation-driven的默认json转换器可以省略? 
+		07/20删除json转换器 -->
+	<!-- 视图解析器的配置 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个 可用的url地址 -->
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
-	<bean id="multipartResolver"  
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-        <!-- 默认编码 -->
-        <property name="defaultEncoding" value="utf-8" />  
-        <!-- 文件大小最大值 -->
-        <property name="maxUploadSize" value="10485760000" />  
-        <!-- 内存中的最大值 -->
-        <property name="maxInMemorySize" value="40960" />  
-    </bean> 
 
+	<!-- 配置文件上传，如果没有使用文件上传可以不用配置，当然如果不配，那么配置文件中也不必引入上传组件包 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+	<!-- <bean id="newrf" class="com.newrmgps.mybatis.sdk.factory.NewRmgpsFacotry"/> -->
 </beans>
