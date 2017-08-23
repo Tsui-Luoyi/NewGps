@@ -14,9 +14,9 @@ $(function() {
 		$("#managerParent .panel li").removeClass("active");
 		$(this).addClass("active");
 	})
-	$("#managerParent .panel li a").click(function() {
+/*	$("#managerParent .panel li a").click(function() {
 		console.log($(this).html())
-	})
+	})*/
 	$("#mcMenu .fontMenu").click(function() {
 		var fontColor = $(".fontMenu").css("color");
 		console.log(fontColor=="black");

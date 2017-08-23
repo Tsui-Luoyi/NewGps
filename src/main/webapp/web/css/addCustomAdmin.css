@@ -1,0 +1,62 @@
+html,body{
+	height:100%;
+	width:100%;
+}
+h4{
+	font-weight:bold;
+}
+
+.form-group .control-label{
+	height:34px;
+	line-height:34px;
+	padding:0;
+}
+input.reset{
+	margin-left:30px;
+}
+/* 错误提示 */
+.error{
+	/* position:absolute; */
+	color:red;
+	font-size:12px;
+	line-height:23px;
+}
+#addCustomAdminForm .form-control{
+	display:inline-block;
+	width:50%;
+}
+#customSelectContainer{
+	width:50%;
+	height:34px;
+}
+#customSelectContainer .combo-select {
+	height:34px;
+	margin-bottom:5px;
+	max-width:9999px;
+}
+#customSelectContainer input{
+	padding:8px 12px;
+	font-size:15px;
+}
+#customSelectContainer .combo-marker{
+	text-decoration:none;
+}
+#customSelectName{
+	z-index:-2
+}
+.combo-select #customSelectName-error{
+	left:100%;
+	line-height:34px;
+}
+.combo-open #customSelectName-error{
+	position:absolute;
+	left: 100%;
+    top: 0px;
+     width: 80px; 
+}
+#customSelectName-error{
+	position:absolute;
+	left: 50%;
+    top: 0px;
+     width: 80px; 
+}

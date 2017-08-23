@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="author">
+<meta name="author" content="Tsui">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
@@ -93,6 +93,7 @@
 position:absolute;
 z-index:1;
 opacity:0.4;
+filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
 top:17px;
 height:30px;
 background:#000;
@@ -349,11 +350,22 @@ label.BMapLabel {
 }
 #resultTable th{
 	border:2px black solid;
-	text-align:center
+	text-align:center;
+	height:20px;
+	
 }
 #resultTable td{
 height:15px;
 padding:2px}
+#jump{
+    position: absolute;
+    bottom: 5px;
+    left: 220px;
+    z-index:50;
+}
+#jump input{
+	width:60px;
+}
 </style>
 </head>
 <body>
@@ -479,12 +491,13 @@ padding:2px}
 	</div>
 	<!-- 左边选择的复选框ID -->
 	<input id="carId" type="hidden" value="">
+	<input id="clickCarId" type="hidden" value="">
 	<!-- 查车结果面板 -->
 	<div id="findVerhicalResult">
 		<h4>区域内车辆:<span title="关闭">&times;</span></h4>
 		<hr/>
 		<div id="resultContainer">
-		<table id="resultTable" width="100%" height="250" cellspacing="0" cellpadding="0" border="1">
+		<table id="resultTable" width="100%" height="" cellspacing="0" cellpadding="0" border="1">
 		<thead>
 			<tr>
 				<th>车辆ID</th>
@@ -494,6 +507,8 @@ padding:2px}
 				<th>查看轨迹</th>
 			</tr>
 			</thead>
+			<tbody>
+			</tbody>
 		</table>
 		</div>
 	</div>

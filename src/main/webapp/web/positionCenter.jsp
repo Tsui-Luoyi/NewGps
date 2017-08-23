@@ -196,9 +196,10 @@
 						callback:{
 							onClick:function(event,treeId,treeNode){
 								if ((treeNode.pId != null)&(treeNode.pId !=0)) {
-									alert("id:" + treeNode.id + ", name:"
+									sessionStorage.setItem("clickCarId",treeNode.id);
+									/* alert("id:" + treeNode.id + ", name:"
 											+ treeNode.name + ",父ID："
-											+ treeNode.pId);
+											+ treeNode.pId); */
 								}
 							},
 							onCheck:zTreeOnCheck
@@ -277,10 +278,24 @@
 											+ treeNode.name + ",父ID："
 											+ treeNode.pId);
 								}
-							}
+							},
+							onCheck:zTreeOnCheck1
 						}
 					};
 					$.fn.zTree.init($("#markerTree"),setting1);
+					var b;
+					function zTreeOnCheck1(event,treeId,treeNode){
+						b=[];
+						var treeObj=$.fn.zTree.getZTreeObj("groupTree");
+						var nodes=treeObj.getCheckedNodes();
+						for (var i=0;i<nodes.length;i++){
+							if (nodes[i].pId!='0'){
+								b.push(nodes[i].id);
+							}
+						}
+						var selectedCar=a.join(",")
+						sessionStorage.setItem("selectedMarker",selectedCar);
+					}
 				})
 				//围栏展示
 				$("#positionTab li:eq(2)").click(

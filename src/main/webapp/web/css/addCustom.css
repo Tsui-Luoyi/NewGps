@@ -1,0 +1,26 @@
+html,body{
+	height:100%;
+	width:100%;
+}
+h4{
+	font-weight:bold;
+}
+
+.form-group .control-label{
+	height:34px;
+	line-height:34px;
+	padding:0;
+}
+input.reset{
+	margin-left:30px;
+}
+/* 错误提示 */
+.error{
+	color:red;
+	font-size:12px;
+	width:50%;
+}
+#addCustomForm .form-control{
+	display:inline-block;
+	width:50%;
+}

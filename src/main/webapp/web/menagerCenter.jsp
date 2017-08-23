@@ -54,14 +54,17 @@
 							<div class="panel-body">
 								<ul class="nav nav-pills nav-stacked">
 									<li class="active"><a
-										onClick="changeIframe('#managerInnerIframe','addClient.jsp')"
+										onClick="changeIframe('#managerInnerIframe','addCustom.jsp')"
 										href="javascript:void(0);">添加客户</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','findClient.jsp')"
+										onClick="changeIframe('#managerInnerIframe','addCustomAdmin.jsp')"
+										href="javascript:void(0);">添加管理员</a></li>
+									<li><a
+										onClick="changeIframe('#managerInnerIframe','findCustom.jsp')"
 										href="javascript:void(0);">查询客户</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','stopClient.jsp')"
-										href="javascript:void(0);">停用客户</a></li>
+										onClick="changeIframe('#managerInnerIframe','stopCustom.jsp')"
+										href="javascript:void(0);">重启已停用客户</a></li>
 								</ul>
 							</div>
 						</div>
@@ -153,7 +156,7 @@
 			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"
 				id="innerIframeContainer1">
 				<div id="midToggleBar"></div>
-				<iframe id="managerInnerIframe" src="addClient.jsp" frameborder="0"
+				<iframe id="managerInnerIframe" src="addCustom.jsp" frameborder="0"
 					scrolling="yes" style="width: 100%; height: 100%">浏览器不支持，请升级或更换浏览器</iframe>
 			</div>
 		</div>

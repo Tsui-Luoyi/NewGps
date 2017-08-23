@@ -1,3 +1,8 @@
+
+/* /@media screen and (min-width:1032px){
+	#addCustomAdminForm .error{
+	position:absolute
+}  */
 @media screen and (min-width:1200px){
 	#mB2{
 		width:20%;
@@ -34,28 +39,10 @@
 	#innerIframeContainer1 #midToggleBar{
 	display:none;
 }
-@media screen and (max-width:730px){
-/* 添加客户错误提示 */
-	.error{
-	color:red;
-	width:100%;
-}
 #addClientForm .form-control{
 	display:block;
 	width:100%;
 }
-}
-@media screen and (min-width:767px){
-	/*登录界面右边表单*/
-	#loginForm{
-		padding: 100px 20px;
-		padding:0px\0;
-		margin-top:100px\0;
-	}
-	/*登录界面调整*/
-	.login .loginBg .bgImg{
-		margin-left: 5%;
-	}	
 }
 @media screen and (max-width:420px){ 
 	/*中间左边按钮  */
