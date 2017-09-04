@@ -6,6 +6,6 @@
   </head>
   
   <body>
-    ${user.userName}
+ 成功
   </body>
 </html>

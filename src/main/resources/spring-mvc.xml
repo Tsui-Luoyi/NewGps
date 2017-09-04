@@ -10,15 +10,31 @@
 	http://www.springframework.org/schema/mvc  
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- 自动扫描该包,多个包之间使用,隔开省去了配置controler类的繁琐. -->
-	<!--  
-	<context:component-scan base-package="com.newrmgps.mybatis.*" />
-	-->
+	 
+	<context:component-scan base-package="com.newrmgps.controller" />
+
 	<!--配置可以扫描静态资源. -->
 	<mvc:resources location="/web/" mapping="/web/**" />
 	<!--代替映射器和适配器. -->
 	<mvc:annotation-driven />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 ,pom中有jackson所以指定了mvc:annotation-driven的默认json转换器可以省略? 
 		07/20删除json转换器 -->
+<bean
+  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+ </bean>
+ <bean
+  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+  <property name="messageConverters">
+   <list>
+    <bean
+     class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+   </list>
+  </property>
+ </bean>
+		
+		
+		
+		
 	<!-- 视图解析器的配置 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
