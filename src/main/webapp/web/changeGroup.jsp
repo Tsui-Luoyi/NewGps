@@ -24,14 +24,34 @@
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/addCustom.css">
-<link rel="stylesheet" href="css/media.css">
-<link rel="stylesheet" href="css/color.css">
 <style>
-label.checked {
-color:green}
-label.error{
-color:red}
+html,body{
+	height:100%;
+	width:100%;
+	background-color:#dedede;
+}
+h4{
+	font-weight:bold;
+}
+
+.form-group .control-label{
+	height:34px;
+	line-height:34px;
+	padding:0;
+}
+input.reset{
+	margin-left:30px;
+}
+/* 错误提示 */
+.error{
+	color:red;
+	font-size:12px;
+	width:50%;
+}
+#changeGroupForm .form-control{
+	display:inline-block;
+	width:50%;
+}
 </style>
 <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
@@ -41,41 +61,31 @@ color:red}
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h4>添加客户:</h4>
-			<form id="addCustomForm" action="http://127.0.0.1/ceshi.php" class="form-horizontal"
+			<h4>修改分组:</h4>
+			<form id="changeGroupForm" action="http://127.0.0.1/ceshi.php" class="form-horizontal"
 				role="form" method="post">
-				<!-- 客户名字 -->
+				<!-- 分组名字 -->
 				<div class="form-group">
-					<label for="customName"
-						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户名称：</label>
+					<label for="groupName"
+						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">分组名称：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
-						<input type="text" class="form-control" name="customName"
-							id="customName" autocomplete="off" placeholder="请输入客户名称(3~6位)">
-					</div>
-				</div>
-				<!-- 客户电话 -->
-				<div class="form-group">
-					<label for="customTel"
-						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户电话(选填)：</label>
-					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
-						<input type="text" class="form-control" name="customTel"
-							id="customTel" placeholder="请输入客户电话">
+						<input type="text" class="form-control" name="groupName"
+							id="groupName" placeholder="请输入分组名称(2~10位)">
 					</div>
 				</div>
 				<!-- 客户地址 -->
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="customAdd"
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户地址(选填)：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="customAdd"
 							name="customAdd" placeholder="请输入客户地址">
 					</div>
-				</div>
+				</div> -->
 				<!-- 提交按钮 -->
 				<div class="form-group">
 					<div class="col-lg-push-1 col-md-push-1 col-sm-push-1 col-lg-7 col-md-7 col-sm-7 col-xs-10 text-center">
-						<input type="submit" class="btn btn-info" value="添加" /> <input
-							type="reset" class="btn btn-danger reset" />
+						<input type="submit" class="btn btn-info" value="修改" /> 
 					</div>
 				</div>
 			</form>
@@ -83,7 +93,6 @@ color:red}
 	</div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<!-- <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script> -->
 	<script src="js/jquery.validate.js"></script>
 	<script src="js/messages_zh.js"></script>
 	<script src="js/jquery.form.js"></script>
@@ -91,14 +100,14 @@ color:red}
 		$(function() {
 			//表单验证
 			jQuery.support.cors=true;
-			$("#addCustomForm").validate({
+			$("#changeGroupForm").validate({
 				errorClass:"error",
 				onkeyup:false,
 				errorElement:"label",
 				rules:{
-					customName:{
+					groupName:{
 						required:true,
-						rangelength:[3,6],
+						rangelength:[2,10],
 						//远程验证
 						remote:{
 							url :"http://127.0.0.1/ceshi.php",
@@ -107,20 +116,20 @@ color:red}
 							cache:false,
 							data:{
 								clientName:function() {
-									return $("#customName").val();
+									return $("#groupName").val();
 								}
 							}
 						}
 					}
 				},
 				messages:{
-					customName:{
-						remote:"该客户名已被注册"
+					groupName:{
+						remote:"分组名已存在"
 					}
 				},
 				submitHandler:function(){
-					$("#addCustomForm").ajaxSubmit(function(){
-						alert("添加客户成功!");
+					$("#changeGroupForm").ajaxSubmit(function(){
+						alert("修改分组成功!");
 					});
 					return false;
 				},

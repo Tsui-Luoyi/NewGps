@@ -35,13 +35,8 @@
 <style>
 body {
 	padding: 0 5px;
-	width:100%;
-	height:100%;
 }
-h4{
-	font-weight:bold;
-	margin-bottom:-30px;
-}
+
 .sea {
 	margin: 20px 0;
 	padding: 10px 20px;
@@ -61,11 +56,11 @@ tfoot tr{
 height:35px;}
 tr{
 height:28px;}
-#groupTable tbody td a{
+#restartCustomTable tbody td a{
 	margin-left:5px;
 	background-color:#f7d2d2;
 	}
-	#groupTable tbody td a:hover{
+	#restartCustomTable tbody td a:hover{
 		background-color:#fff;
 	}
 #pageSizeDiv, #sortDiv {
@@ -135,13 +130,14 @@ height:28px;}
 </style>
 </head>
 <body>
-<h4>查询分组:</h4>
 	<table class="sea" cellspacing="0" width="100%">
 		<tr>
-			<td width="25%"></td>
-			<td width="50%">搜索分组：<input type="text" id="searchGroup" /><button id="findBtn">查询</button></td>
-			<!-- <td width="35%">搜索电话：<input type="number" id="searchTel" /><button id="findBtn">查询</button></td> -->
-			<td width="25%"><button>导出EXCEL</button></td>
+			<td width="10%"></td>
+			<td width="25%">搜索客户：<input type="text" id="searchCustom" /></td>
+			<td width="25%">搜索电话：<input type="number" id="searchTel" /></td>
+			<td width="30%">搜索管理员：<input type="text" id="searchAdmin" />
+				<button id="findBtn">查询</button></td>
+			<td width="10%"></td>
 		</tr>
 	</table>
 	<div id="pageSetting">
@@ -155,32 +151,37 @@ height:28px;}
 		</div>
 		<div id="sortDiv">
 			按<select name="sortBy" id="sortBy">
-				<option value="creattime" selected="selected">添加时间</option>
-				<option value="groupName">分组名字</option>
+				<option value="creatTime" selected="selected">添加时间</option>
+				<option value="customerName">客户名字</option>
+				<option value="AdminName">客户管理员</option>
 			</select> <select name="sortType" id="sortType">
 				<option value="asc">升序</option>
 				<option value="desc" selected="selected">降序</option>
 			</select>排列
 		</div>
 	</div>
-	<table id="groupTable" border="1px" class="hover" cellspacing="0"
+	<table id="restartCustomTable" border="1px" class="hover" cellspacing="0"
 		width="99.5%">
 		<thead>
 			<tr>
 				<th width='10%' class="checkAll"><input class="select-checkbox"
 					id="checkAll" type="checkbox" />全选</th>
-				<th width='30%'>分组名字</th>
-				<th width='25%' class="">添加时间</th>
-				<th width='35%'>操作</th>
+				<th width='30%'>客户名字</th>
+				<th width='15%'>客户电话</th>
+				<th width='15%' class="">添加时间</th>
+				<th width='10%'>客户管理员</th>
+				<th width='20%'>操作</th>
 			</tr>
 		</thead>
 		<tbody></tbody>
 		<tfoot>
 			<tr>
 				<th width='10%' class="checkAll"><button id="deleteSelected">删除选中</button></th>
-				<th width='30%'>分组名字</th>
-				<th width='25%' class="">添加时间</th>
-				<th width='35%'>操作</th>
+				<th width='20%'>客户名字</th>
+				<th width='15%'>客户电话</th>
+				<th width='15%' class="">添加时间</th>
+				<th width='15%'>客户管理员</th>
+				<th width='25%'>操作</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -202,6 +203,9 @@ height:28px;}
 	</div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.dataTables.js"></script>
+	<script src="js/dataTables.bootstrap.js"></script>
+	<script src="js/datatable.select.js"></script>
 	<script>
 		$(function(){
 			ajaxPaging();
@@ -212,7 +216,6 @@ height:28px;}
 			});
 			//每页条数改变时
 			$("#pageSize,#sortBy,#sortType").change(function(){
-				$("#currentPage").val("1");
 				ajaxPaging();
 			})
 			//跳转时
@@ -220,7 +223,7 @@ height:28px;}
 				if($("#currentPage").val()>$("#totalPage").html()){
 					$("#currentPage").val($("#totalPage").html());
 					ajaxPaging();
-				}else if($("#currentPage").val()==''||$("#currentPage").val()<=0){
+				}else if($("#currentPage").val()==''){
 					$("#currentPage").val("1");
 					ajaxPaging();
 				}else{
@@ -266,9 +269,9 @@ height:28px;}
 			//全选
 			$("#checkAll").click(function(){
 				if($(this).is(':checked')){
-					$("#groupTable tbody input[type='checkbox']").prop("checked",true);
+					$("#customTable tbody input[type='checkbox']").prop("checked",true);
 				}else{
-					$("#groupTable tbody input[type='checkbox']").prop("checked",false);
+					$("#customTable tbody input[type='checkbox']").prop("checked",false);
 					
 				}
 				;
@@ -276,52 +279,52 @@ height:28px;}
 		})
 		function ajaxPaging(){
 			$.ajax({
-			url:"data/grouplist.json",
+			url:"data/truefenye1.json",
 			type:"get",
 			dataType:"json",
 			contextType:"application/json;charset=utf-8",
 			data:{data:JSON.stringify({
 			"pageSize":$("#pageSize").val(),
 			"pageNo":$("#currentPage").val(),
-			"groupName":$("#searchGroup").val(),
-			/* "contact_phone":$("#searchTel").val(), */
-			/* "user_name":$("#searchAdmin").val(), */
+			"customername":$("#searchCustom").val(),
+			"contact_phone":$("#searchTel").val(),
+			"user_name":$("#searchAdmin").val(),
 			"orderBy":$("#sortBy").val(),
 			"order":$("#sortType").val()
 			})},
 			success:function(data){
-				$("#groupTable tbody").empty();
+				$("#restartCustomTable tbody").empty();
 				$("#totalPage").html(data.totalPage);
 				$("#totalRecord").html(data.totalRecord)
 				for(var i=0;i<data.results.length;i++){
 					var tr=$("<tr></tr>");
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
-					var td2=$("<td>"+data.results[i].groupName+"</td>");
-					var td3=$("<td>"+data.results[i].creattime+"</td>");
-					var td4=$("<td><a href='changeGroup.jsp?id="+data.results[i].id+"&groupName="+data.results[i].groupName+"' target='_blank' onClick='changeThisGroup(this)' data-id='"
-							+data.results[i].id+"' class='down btn btn-default btn-xs'>修改</a><a href='javascript:void(0);' onClick='stopThisGroup(this)' data-id='"
-							+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
-							+"<a href='javascript:void(0);' onClick='deleteThisGroup(this)' data-id='"
-							+data.results[i].id+"' class='down btn btn-default btn-xs del'> 删除</a>");
-					$("#groupTable tbody").append(tr);
+					var td2=$("<td>"+data.results[i].customername+"</td>");
+					var td3=$("<td>"+data.results[i].contact_phone+"</td>");
+					var td4=$("<td>"+data.results[i].creattime+"</td>");
+					var td5=$("<td>"+data.results[i].user_name+"</td>");
+					var td6=$("<td><a href='javascript:void(0);' onClick='restartThisCustomer(this)' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs'>重新启用</a>");
+					$("#restartCustomTable tbody").append(tr);
 					tr.append(td1);
 					tr.append(td2);
 					tr.append(td3);
 					tr.append(td4);
+					tr.append(td5);
+					tr.append(td6);
 				}
 			},
 			error:function(error){
-				alert("未知错误，请重试")
 				console.log(error);
 			},
 			async:true
 			})
 		}
 		//删除函数
-		function deleteThisGroup(obj){
-			if(confirm("是否要删该分组?")){
+		function restartThisCustomer(obj){
+			if(confirm("是否要启用所选客户?")){
 				$.ajax({
-				url:"data/grouplist.json",
+				url:"data/customlist.json",
 				type:"get",
 				dataType:"json",
 				data:{
@@ -338,45 +341,21 @@ height:28px;}
 				})
 			}
 		}
-		// 停止操作
-		function stopThisGroup(obj){
-			if(confirm("是否要停用所选分组?")){
-				$.ajax({
-				url:"data/grouplist.json",
-				type:"get",
-				dataType:"json",
-				data:{
-				"id":obj.getAttribute("data-id")
-				},
-				success:function(data){
-					$(obj).parents("tr").remove();
-					ajaxPaging();
-				},
-				error:function(error){
-					alert("操作失败，请重新操作！");
-				},
-				async:false
-				})
-			}
-		}
-		//修改操作
-		function changeThisGroup(obj){
-			alert("修改分组操作")
-		}
 		$("#deleteSelected").click(function(){
+			
 			var selectId=[];
-			var aa=$("#groupTable tbody input[type='checkbox']");
+			var aa=$("#customTable tbody input[type='checkbox']");
 			for(var i=0;i<aa.length;i++){
 				if($(aa[i]).prop("checked")){
 					selectId.push($(aa[i]).attr("data-id"))
 				}
 			}
 			if(selectId.length==0){
-				alert("请选择要删除的分组")
+				alert("请选择要删除的客户")
 			}else{
-				if(confirm("是否要删除所选分组?")){
+				if(confirm("是否要停用所选客户?")){
 					$.ajax({
-						url:"data/userlist.json",
+						url:"data/customlist.json",
 						type:"get",
 						dataType:"json",
 						data:{
@@ -393,6 +372,7 @@ height:28px;}
 						})
 				}
 			}
+			
 		})
 	</script>
 </body>

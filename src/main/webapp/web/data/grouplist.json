@@ -1,0 +1,33 @@
+{	"totalPage":"50",
+"totalRecord":"1000",
+    "results": [
+        {	"id":"123",
+            "groupName": "崔河南宗欣",
+            "creattime": "2011\/08\/21"
+        },
+        {	"id":"456",
+            "groupName": "崔新疆龙工",
+            "creattime": "2015\/04\/25"
+        },
+        {	"id":"789",
+             "groupName": "崔东安奥迪",
+            "creattime": "2014\/06\/2"
+        },
+        {	"id":"1234",
+            "groupName": "河南为正",
+            "creattime": "2013\/11\/12"
+        },{	"id":"5678",
+            "groupName": "崔洛阳龙门",
+            "creattime": "2016\/1\/12"
+        },{	"id":"12345",
+            "groupName": "河南宗欣",
+            "creattime": "2011\/08\/21"
+        },
+        {	"id":"67890",
+            "groupName": "新疆龙工",
+            "creattime": "2015\/04\/25"
+        },
+        {	"id":"11111",
+             "groupName": "东安奥迪",
+            "creattime": "2014\/06\/2"
+        }]}

@@ -1,0 +1,49 @@
+{	"totalPage":"50",
+"totalRecord":"1000",
+    "results": [
+        {	"id":"123",
+            "customername": "崔河南宗欣",
+            "contact_phone": "13512124567",
+            "creattime": "2011\/08\/21",
+            "user_name": "Tsui"
+        },
+        {	"id":"456",
+            "customername": "崔新疆龙工",
+            "contact_phone": "18645678900",
+            "creattime": "2015\/04\/25",
+            "user_name": "Luo"
+        },
+        {	"id":"789",
+             "customername": "崔东安奥迪",
+            "contact_phone": "15211115555",
+            "creattime": "2014\/06\/2",
+            "user_name": "YiLuo"
+        },
+        {	"id":"1234",
+            "customername": "河南为正",
+            "contact_phone": "17546465252",
+            "creattime": "2013\/11\/12",
+            "user_name": "Cui"
+        },{	"id":"5678",
+            "customername": "崔洛阳龙门",
+            "contact_phone": "13203792123",
+            "creattime": "2016\/1\/12",
+            "user_name": "Myledi"
+        },{	"id":"12345",
+            "customername": "河南宗欣",
+            "contact_phone": "13512124567",
+            "creattime": "2011\/08\/21",
+            "user_name": "Tsui"
+        },
+        {	"id":"67890",
+            "customername": "新疆龙工",
+            "contact_phone": "18645678900",
+            "creattime": "2015\/04\/25",
+            "user_name": "Luo"
+        },
+        {	"id":"11111",
+             "customername": "东安奥迪",
+            "contact_phone": "15211115555",
+            "creattime": "2014\/06\/2",
+            "user_name": "Yi"
+        }]}

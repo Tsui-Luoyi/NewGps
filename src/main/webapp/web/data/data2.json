@@ -1,5 +1,5 @@
 [
-{ "id":0, "pId":"null", "name":"全部","iconSkin":"all"},
+{ "id":0, "pId":"", "name":"全部","iconSkin":"all"},
 { "id":1, "pId":0, "name":"分组1","iconSkin":"group"},
 { "id":2, "pId":0, "name":"分组2","iconSkin":"group"},
 { "id":3, "pId":0, "name":"分组3","iconSkin":"group"},

@@ -227,6 +227,7 @@ position:absolute;
 			zoom:4
 			});
 			$("#cx").click(function(){
+				map.clearMap()
 				var stTm=$("#startTime").val();
 				var endTm=$("#endTime").val();
 				//Date.parse(new Date(stTm.replace(/-/g, "/")))
@@ -248,7 +249,6 @@ position:absolute;
 					},
 					type:"get",
 					success:function(data){
-						console.log(data)
 						if(data==""){
 							alert("该时间段没有数据！")
 						}else{

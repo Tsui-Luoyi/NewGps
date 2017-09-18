@@ -33,12 +33,8 @@
        <script src="js/response.js"></script>
   <![endif]-->
 <style>
-#jump {
-	display: inline-block;
-}
-
-#jump input {
-	width: 30px;
+body {
+	padding: 0 5px;
 }
 
 .sea {
@@ -47,317 +43,322 @@
 	text-align: center
 }
 
-#customTable td, th {
+#findBtn {
+	margin-left: 5px;
+}
+
+th, td {
 	text-align: center;
 }
-
-#customTable .checkAll {
-	font-size: 12px;
-	padding: 10px;
-	padding-right: 0;
-	text-align: left;
+/* 头部h4 */
+h4 {
+	font-weight: bold;
+	margin-bottom: -30px;
 }
 
-#customTable td.select-checkbox {
-	text-align: left;
+thead, tfoot {
+	border: 2px #000 solid;
 }
 
-.pagination>li>a:hover {
-	
+thead tr {
+	height: 35px;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-	padding: 0;
-	margin: 2px 5px;
-	border: none;
-	background-color: transparent;
+tfoot tr {
+	height: 35px;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-	padding: 0;
-	margin: 2px 5px;
-	border: none;
-	background-color: transparent;
+tr {
+	height: 28px;
 }
 
-.pagination>li>a:focus {
-	background-color: #79acdf;
+#restartCustomTable tbody td a {
+	margin-left: 5px;
+	background-color: #f7d2d2;
+}
+
+#restartCustomTable tbody td a:hover {
+	background-color: #fff;
+}
+
+#pageSizeDiv, #sortDiv {
+	font-size: 16px;
+	font-weight: bolder;
+	float: left;
+	height: 20px;
+	line-height: 20px;
+}
+
+#pageSetting select {
+	font-size: 14px;
+	font-weight: 400
+}
+
+#pageSetting {
+	overflow: hidden;
+	margin-bottom: 10px;
+}
+
+#sortDiv {
+	margin-left: 50px;
+}
+
+#pageList {
+	float: right;
+	margin-right: 50px;
+}
+
+#pageList li {
+	list-style: none;
+	display: inline-block;
+	padding: 3px 5px;
+	background-color: #99CCFF;
+	font-weight: bold;
+	color: #000;
+	border: 1px #000 solid;
+	border-radius: 5px;
+	color: #000;
+}
+
+#pageList li:hover {
+	cursor: pointer;
+	background-color: #000;
 	color: #fff;
+	background-color: #000;
 }
 
-.pagination>li>a:hover {
-	background-color: #79acdf;
-	color: #fff;
+#pageFoot {
+	margin-top: 10px;
 }
 
-table.dataTable thead .sorting_asc:after {
-	content: "";
+#totalRecordDiv {
+	float: left;
 }
 
-table.dataTable thead .sorting:after {
-	opacity:;
-	content: "";
+#totalRecord, #totalPage {
+	font-weight: bolder;
 }
 
-table.dataTable thead .sorting_desc:after {
-	content: "";
-}
-
-table.dataTable thead .sorting {
-	background-image: url("images/sort-1.png");
-}
-/* 跳转多少页 */
 #jump {
 	float: left;
-	margin-right: 10px;
-	margin-top: 7px;
+	margin-left: 50px;
 }
 
-td a.down {
-	margin-right: 5px;
-	background-color: #f7d2d2;
+#currentPage {
+	width: 30px;
 }
-
-td a.del {
-	margin-right: 5px;
-	background-color: #f7d2d2;
-}
-#customTable_filter{
-margin-right:10px;}
+/* 最上面搜索框 */
+#searchCustom,#searchTel,#searchAdmin{
+width:120px;}
 </style>
 </head>
 <body>
+	<h4>重启客户:</h4>
 	<table class="sea" cellspacing="0" width="100%">
 		<tr>
-			<td style="display: none"></td>
-			<td style="display: none"></td>
-			<td style="display: none"></td>
-			<td></td>
-			<td></td>
+			<td width="10%"></td>
+			<td width="20%">搜索客户：<input type="text" id="searchCustom" /></td>
+			<td width="20%">搜索电话：<input type="number" id="searchTel" /></td>
+			<td width="40%">搜索管理员：<input type="text" id="searchAdmin" />
+				<button id="findBtn">查询</button></td>
+			<td width="10%"></td>
 		</tr>
 	</table>
-	<table id="customTable" border="1px" class="hover" cellspacing="0"
-		width="99%">
+	<div id="pageSetting">
+		<div id="pageSizeDiv">
+			每页显示<select name="pageSize" id="pageSize">
+				<option value="10" selected="selected">10</option>
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+			</select>条数据
+		</div>
+		<div id="sortDiv">
+			按<select name="sortBy" id="sortBy">
+				<option value="stopTime" selected="selected">停用时间</option>
+				<option value="customerName">客户名字</option>
+				<option value="AdminName">客户管理员</option>
+			</select> <select name="sortType" id="sortType">
+				<option value="asc">升序</option>
+				<option value="desc" selected="selected">降序</option>
+			</select>排列
+		</div>
+	</div>
+	<table id="restartCustomTable" border="1px" class="hover"
+		cellspacing="0" width="99.5%">
 		<thead>
 			<tr>
 				<th width='10%' class="checkAll"><input class="select-checkbox"
 					id="checkAll" type="checkbox" />全选</th>
 				<th width='30%'>客户名字</th>
 				<th width='15%'>客户电话</th>
-				<th width='15%' class="">添加时间</th>
+				<th width='15%' class="">停用时间</th>
 				<th width='10%'>客户管理员</th>
 				<th width='20%'>操作</th>
 			</tr>
 		</thead>
+		<tbody></tbody>
 		<tfoot>
 			<tr>
-				<th width='10%' class="checkAll"><button id="restartSelected">重启选中</button></th>
+				<th width='10%' class="checkAll"><button id="deleteSelected">重启选中</button></th>
 				<th width='20%'>客户名字</th>
 				<th width='15%'>客户电话</th>
-				<th width='15%' class="">添加时间</th>
+				<th width='15%' class="">停用时间</th>
 				<th width='15%'>客户管理员</th>
 				<th width='25%'>操作</th>
 			</tr>
 		</tfoot>
 	</table>
+	<div id="pageFoot">
+		<div id="totalRecordDiv">
+			共<span id="totalRecord"></span>条数据
+		</div>
+		<div id="jump">
+			第<input id="currentPage" type="text" value="1" />页/共<span
+				id="totalPage"></span>页
+			<button id="jumpBtn">跳转</button>
+		</div>
+		<ul id="pageList">
+			<li id="first">首页</li>
+			<li id="prev">上一页</li>
+			<li id="next">下一页</li>
+			<li id="last">尾页</li>
+		</ul>
+	</div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.dataTables.js"></script>
+	<!-- <script src="js/jquery.dataTables.js"></script>
 	<script src="js/dataTables.bootstrap.js"></script>
-	<script src="js/datatable.select.js"></script>
+	<script src="js/datatable.select.js"></script> -->
 	<script>
-		$(document).ready(function(){
-			intDataTable()
-		});
-		//每列添加搜索框
-		$(document).ready(function(){
-			$('#customTable thead th').each(function(ind,val){
-				var title=$('#customTable thead th').eq($(this).index()).text();
-				$(".sea tr td").eq(ind).html(title+':&nbsp;<input type="text" placeholder="请输入'+title+'"/>');
-			});
-			var table=$('#customTable').DataTable();
-			table.columns().eq(0).each(function(ind,val){
-				$(".sea input").on('keyup change',function(){
-					//$('#ceshi').DataTable().column(ind).search(
-					table.column(ind).search($('.sea input').eq(ind).val());
-					table.draw();
-				});
-			});
-			//搜索事件，当有内容时才搜索
-			var flag=true;
-			$(".sea input").blur(function(){
-				$(".sea input").each(function(ind,val){
-					if($(this).val()!=""){
-						flag=false;
-					}
-				})
-				if(flag){
-					$('#customTable').DataTable();
-				}
-			})
-		});
-		//跳转页面 
 		$(function(){
-			$('#customTable').on('draw.dt',function(){
-				if($("#jump").size()!=1){
-					var dd=$("<div id='jump'>跳转到第<input type='text' value='1'/>页<button>Go！</button></div>");
-					dd.prependTo($(".pagination"));
-				}
-				$("#jump button").click(function(){
-					var page=$("#jump input").val();
-					$('#customTable').DataTable().page(parseInt(page)-1).draw(false);
-					$("#jump input").val(page);
-				})
+			ajaxPaging();
+			//查询时
+			$("#findBtn").click(function(){
+				$("#currentPage").val("1");
+				ajaxPaging();
 			});
-		})
-		//datatable默认初始化设置
-		$.extend($.fn.dataTable.defaults,{
-		"dom":'<"headerTop"lf>rt<"footBottom"rip><"clear">',
-		"paging":true,
-		/*分页按钮类型*/
-		"pagingType":"full",
-		"stateSave":false,
-		//等待状态
-		"processing":true,
-		//排序
-		"ordering":true,
-		//第四列降序asc是升序
-		"order":[[3,"desc"]],
-		//每页显示多少条数据
-		"aLengthMenu":[10,25,50,100],
-		//共多少页，当前第几页
-		"info":true,
-		//中文显示
-		"language":{
-		"search":"快速搜索:",
-		"processing":"正在查询中...",
-		"lengthMenu":"每页 _MENU_ 条记录",
-		"zeroRecords":"没有找到记录",
-		"info":"第_PAGE_页(总共_PAGES_页)",
-		"infoEmpty":"无记录",
-		"infoFiltered":"(从 _MAX_ 条记录过滤)",
-		'paginate':{
-		'next':'下页',
-		'previous':'上页',
-		"sFirst":"首页",
-		"sLast":"末页"
-		}
-		},
-		"columns":[{},{
-			"data":"clientName"
-		},{
-			"data":"clientTel"
-		},{
-			"data":"creatTime"
-		},{
-			"data":"clientAdminName"
-		}],
-		//改变第五列
-		"columnDefs":[
-				{
-				//定义操作列,
-				"targets":5,
-				//添加删除等按钮
-				"render":function(data,type,row){
-					var html="<a href='javascript:void(0);' onClick='restartThisCustom("+row.id
-							+")'  class='down btn btn-default btn-xs'><i class='fa fa-arrow-down'></i>重新启用</a>"
-					return html;
-				}
-				},{
-				"orderable":false,
-				"className":'select-checkbox',
-				"targets":0,
-				"render":function(data,type,row){
-					return "<input type='checkbox' id=d"+row.id+">"
-				}
-				}]
-		});
-		 //初始化
-		function intDataTable(){
-			var table=$('#customTable').DataTable({
-				"serverSide":false,
-				//请求路径
-				"ajax":{
-				"url":"data/data1.json",
-				"data":{
-					// "pageNum":"123"
-				}
-				}
+			//每页条数改变时
+			$("#pageSize,#sortBy,#sortType").change(function(){
+				$("#currentPage").val("1");
+				ajaxPaging();
 			})
-		}
-		$(function(){
-			$("#customTable tbody").on("click","input[type='checkbox']",function(){
-				console.log($(this))
-				if($(this).is(':checked')){
-					$(this).parents("tr").addClass('selected');
+			//跳转时
+			$("#jumpBtn").click(function(){
+				if($("#currentPage").val()>$("#totalPage").html()){
+					$("#currentPage").val($("#totalPage").html());
+					ajaxPaging();
+				}else if($("#currentPage").val()==''){
+					$("#currentPage").val("1");
+					ajaxPaging();
 				}else{
-					$(this).parents("tr").removeClass('selected');
+					ajaxPaging();
 				}
 			});
-			$('#restartSelected').click(function(){
-				var table=$('#customTable').DataTable();
-				var ln=table.rows('.selected').data().length;
-				var a=[];
-				for(var i=ln;i>0;i--){
-					a.push(table.rows('.selected').data()[0].id)
-					//table.row('.selected').remove().draw(false);	
-				}
-				if(a[0]!=null){
-					if(confirm("是否要重新启用所选客户？")){
-						$.ajax({
-						url:"data/customlist.json",
-						type:"get",
-						dataType:"json",
-						data:{
-						"clientName":"ssss",
-						"selectedID":a.join(",")
-						},
-						success:function(data){
-							for(var i=ln;i>0;i--){
-								table.row('.selected').remove().draw(false);
-							}
-							alert("成功!");
-							$("#checkAll").prop("checked",false)
-						},
-						error:function(error){
-							alert("操作失败，请重新操作！");
-						},
-						async:false
-						})
-					}
+			//首页
+			$("#pageList #first").click(function(){
+				if($("#currentPage").val()>1){
+					$("#currentPage").val("1");
+					ajaxPaging();
 				}else{
-					alert("请选择要重新启用的客户");
 					return false;
 				}
-			});
+			})
+			//下一页
+			$("#pageList #next").click(function(){
+				if(($("#currentPage").val()-0)<($("#totalPage").html()-0)){
+					$("#currentPage").val($("#currentPage").val()-0+1);
+					ajaxPaging();
+				}else{
+					return false;
+				}
+			})
+			//上一页
+			$("#pageList #prev").click(function(){
+				if($("#currentPage").val()>1){
+					$("#currentPage").val($("#currentPage").val()-0-1);
+					ajaxPaging();
+				}else{
+					return false;
+				}
+			})
+			//尾页
+			$("#pageList #last").click(function(){
+				if(($("#currentPage").val()-0)<($("#totalPage").html()-0)){
+					$("#currentPage").val($("#totalPage").html());
+					ajaxPaging();
+				}else{
+					return false;
+				}
+			})
 			//全选
 			$("#checkAll").click(function(){
 				if($(this).is(':checked')){
-					$("#customTable tbody input[type='checkbox']").prop("checked",true);
-					$("#customTable tbody tr").addClass('selected');
+					$("#restartCustomTable tbody input[type='checkbox']").prop("checked",true);
 				}else{
-					$("#customTable tbody input[type='checkbox']").prop("checked",false);
-					$("#customTable tbody tr").removeClass('selected');
+					$("#restartCustomTable tbody input[type='checkbox']").prop("checked",false);
 				}
 				;
 			})
 		})
-		//删除函数
-		function deleteThisCustom(a){
-			if(confirm("是否要删除所选客户?")){
-				$("#d"+a).parents("tr").addClass("selected");
-				$("#d"+a).prop("checked",true);
+		function ajaxPaging(){
+			$.ajax({
+			url:"data/truefenye1.json",
+			type:"get",
+			dataType:"json",
+			contextType:"application/json;charset=utf-8",
+			data:{
+				data:JSON.stringify({
+				"pageSize":$("#pageSize").val(),
+				"pageNo":$("#currentPage").val(),
+				"customername":$("#searchCustom").val(),
+				"contact_phone":$("#searchTel").val(),
+				"user_name":$("#searchAdmin").val(),
+				"orderBy":$("#sortBy").val(),
+				"order":$("#sortType").val()
+				})
+			},
+			success:function(data){
+				$("#restartCustomTable tbody").empty();
+				$("#totalPage").html(data.totalPage);
+				$("#totalRecord").html(data.totalRecord)
+				for(var i=0;i<data.results.length;i++){
+					var tr=$("<tr></tr>");
+					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
+					var td2=$("<td>"+data.results[i].customername+"</td>");
+					var td3=$("<td>"+data.results[i].contact_phone+"</td>");
+					var td4=$("<td>"+data.results[i].creattime+"</td>");
+					var td5=$("<td>"+data.results[i].user_name+"</td>");
+					var td6=$("<td><a href='javascript:void(0);' onClick='restartThisCustomer(this)' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs'>重新启用</a>");
+					$("#restartCustomTable tbody").append(tr);
+					tr.append(td1);
+					tr.append(td2);
+					tr.append(td3);
+					tr.append(td4);
+					tr.append(td5);
+					tr.append(td6);
+				}
+			},
+			error:function(error){
+				console.log(error);
+			},
+			async:true
+			})
+		}
+		//启用函数
+		function restartThisCustomer(obj){
+			if(confirm("是否要启用所选客户?")){
 				$.ajax({
 				url:"data/customlist.json",
 				type:"get",
 				dataType:"json",
 				data:{
-				"clientName":"ssss",
-				"selectedID":a
+					"id":obj.getAttribute("data-id")
 				},
 				success:function(data){
-					var table=$('#customTable').DataTable();
-					table.row('.selected').remove().draw(false);
+					$(obj).parents("tr").remove();
+					ajaxPaging();
 				},
 				error:function(error){
 					alert("操作失败，请重新操作！");
@@ -366,29 +367,37 @@ margin-right:10px;}
 				})
 			}
 		}
-		function stopThisCustom(a){
-			if(confirm("是否要停用所选客户?")){
-				$("#d"+a).parents("tr").addClass("selected");
-				$("#d"+a).prop("checked",true);
-				$.ajax({
-				url:"data/customlist.json",
-				type:"get",
-				dataType:"json",
-				data:{
-				"clientName":"ssss",
-				"selectedID":a
-				},
-				success:function(data){
-					var table=$('#customTable').DataTable();
-					table.row('.selected').remove().draw(false);
-				},
-				error:function(error){
-					alert("操作失败，请重新操作！");
-				},
-				async:false
-				})
+		$("#deleteSelected").click(function(){
+			var selectId=[];
+			var aa=$("#restartCustomTable tbody input[type='checkbox']");
+			for(var i=0;i<aa.length;i++){
+				if($(aa[i]).prop("checked")){
+					selectId.push($(aa[i]).attr("data-id"))
+				}
 			}
-		}
+			if(selectId.length==0){
+				alert("请选择要启用的客户")
+			}else{
+				if(confirm("是否要启用所选客户?")){
+					$.ajax({
+					url:"data/customlist.json",
+					type:"get",
+					dataType:"json",
+					data:{
+						"selectId":selectId.join(",")
+					},
+					success:function(data){
+						ajaxPaging();
+						$("#checkAll").prop("checked",false);
+					},
+					error:function(error){
+						alert("操作失败，请重新操作！");
+					},
+					async:false
+					})
+				}
+			}
+		})
 	</script>
 </body>
 </html>

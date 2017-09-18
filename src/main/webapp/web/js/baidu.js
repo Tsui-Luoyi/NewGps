@@ -1,7 +1,30 @@
 jQuery.support.cors=true;
 window.onload=function(){
-	if(document.attachEvent){
-		document.attachEvent("onstorage",function(e){
+	var selectedCar="";
+	var selectedMarkerId="";
+	var selectedFenceId="";
+	if(window.attachEvent){
+		//ie8
+		document.onstorage=function() {
+			console.log("11:     "+selectedCar);
+			if(sessionStorage.selectedCar!=selectedCar){
+				selectedCar=sessionStorage.selectedCar;
+				$("#carId").val(selectedCar);
+				$("#carId").change();
+			};
+			if(sessionStorage.selectedMarkerId!=selectedMarkerId){
+				selectedMarkerId=sessionStorage.selectedMarkerId;
+				$("#selectedMarkerId").val(selectedMarkerId);
+				$("#selectedMarkerId").change();
+			};
+			if(sessionStorage.selectedFenceId!=selectedFenceId){
+				selectedFenceId=sessionStorage.selectedFenceId;
+				$("#selectedFenceId").val(selectedFenceId);
+				$("#selectedFenceId").change();
+			};
+		}
+			//其他IE
+		window.onstorage=function(e){
 			if(e.key=="selectedCar"){
 				document.getElementById("carId").value=e.newValue;
 				$("#carId").change();
@@ -9,9 +32,22 @@ window.onload=function(){
 			if(e.key=="clickCarId"){
 				document.getElementById("clickCarId").value=e.newValue;
 				$("#clickCarId").change();
-			}
-		})
+			};
+			if(e.key=="clickMarkerId"){
+				document.getElementById("clickMarkerId").value=e.newValue;
+				$("#clickMarkerId").change();
+			};
+			if(e.key=="selectedMarkerId"){
+				document.getElementById("selectedMarkerId").value=e.newValue;
+				$("#selectedMarkerId").change();
+			};
+			if(e.key=="selectedFenceId"){
+				document.getElementById("selectedFenceId").value=e.newValue;
+				$("#selectedFenceId").change();
+			};
+		}
 	}else{
+		//谷歌
 		window.addEventListener("storage",function(e){
 			if(e.key=="selectedCar"){
 				document.getElementById("carId").value=e.newValue;
@@ -20,7 +56,19 @@ window.onload=function(){
 			if(e.key=="clickCarId"){
 				document.getElementById("clickCarId").value=e.newValue;
 				$("#clickCarId").change();
-			}
+			};
+			if(e.key=="clickMarkerId"){
+				document.getElementById("clickMarkerId").value=e.newValue;
+				$("#clickMarkerId").change();
+			};
+			if(e.key=="selectedMarkerId"){
+				document.getElementById("selectedMarkerId").value=e.newValue;
+				$("#selectedMarkerId").change();
+			};
+			if(e.key=="selectedFenceId"){
+				document.getElementById("selectedFenceId").value=e.newValue;
+				$("#selectedFenceId").change();
+			};
 		});
 	}
 	// 添加bind事件
@@ -38,15 +86,19 @@ window.onload=function(){
 			return fBound;
 		};
 	}
-	var point=new BMap.Point(116.404,39.915);
-	var map=new BMap.Map("map"); // 创建Map实例
+	var point=new BMap.Point(116.404, 39.915);
+	var map=new BMap.Map("map",{minZoom:4}); // 创建Map实例
 	var cel=$("<div class='cel'>测距</div>");
 	var findCar=$("<div class='findCar'>区域查车</div>");
 	var topBar=$("<div id='topBar'></div>");
+	var lookAlarm=$("<div id='lookAlarm'></div>");
+	var btnLookAlarm=$("<button class='btn btn-danger'>报警</button>");
+	lookAlarm.append(btnLookAlarm);
+	lookAlarm.appendTo($("#map"));
 	cel.prependTo($("#map"));
 	findCar.prependTo($("#map"));
 	topBar.prependTo($("#map"));
-	map.centerAndZoom(point,6); // 初始化地图,设置中心点坐标和地图级别
+	map.centerAndZoom(point,5.5); //初始化地图,设置中心点坐标和地图级别
 	map.setCurrentCity("北京"); // 仅当设置城市信息时，MapTypeControl的切换功能才能可用
 	map.enableScrollWheelZoom(true);
 	// 缩放平移控件
@@ -116,7 +168,7 @@ window.onload=function(){
 		addPolygon(e);
 	},{
 	width:"130",
-	iconUrl:"images/ploygon.png"
+	iconUrl:"images/polygon.png"
 	}));
 	// 区域查车右键菜单
 	var rightMenuFindVerhical=new BMap.ContextMenu();
@@ -148,7 +200,7 @@ window.onload=function(){
 		addPolygon(e);
 	},{
 	width:"130",
-	iconUrl:"images/ploygon.png"
+	iconUrl:"images/polygon.png"
 	}));
 	map.addContextMenu(rightMenuFindVerhical);
 	// 添加maker
@@ -236,7 +288,193 @@ window.onload=function(){
 				map.setCenter(new BMap.Point(data.lng,data.lat))
 				}		
 		})
-	})
+	});
+	//点击标注地图中心改变
+	$("#clickMarkerId").change(function(){
+		$.ajax({
+			url:"data/clickMarkerId.json",
+			data:{  
+				"clickMarkerId":$("#clickMarkerId").val()
+			},
+			type:"get",
+			async:true,
+			success:function(data){
+				map.setCenter(new BMap.Point(data.lng,data.lat));  
+				}		
+		})
+	});
+	//围栏选择
+	$("#selectedFenceId").change(function(){
+		if($(this).val()==""){
+			if(rect){
+				map.removeOverlay(rect);
+				rect=null;
+			}else if(circle){
+				map.removeOverlay(circle);
+				circle=null;
+			}else{
+				map.removeOverlay(polygon);
+				polygon=null;
+			}
+		}else{
+		if(rect){
+			map.removeOverlay(rect);
+			rect=null;
+		}else if(circle){
+			map.removeOverlay(circle);
+			circle=null;
+		}else if(polygon){
+			map.removeOverlay(polygon);
+			polygon=null;
+		}else{
+			
+		}
+			$.ajax({
+			url:"data/selectedFenceId.json",
+			data:{
+				"selectedFenceId":$("#selectedFenceId").val()
+			},
+			type:"get",
+			async:true,
+			success:function(data){
+				if(data.fenceType=="polygon"){
+					polygonLng=data.lngString.split(",");
+					polygonLat=data.latString.split(",");
+					polygonPoint=[];
+					polygon=new BMap.Polygon();
+					for(var i=0;i<polygonLng.length;i++){
+						polygonPoint.push(new BMap.Point(polygonLng[i],polygonLat[i]))
+					}
+					polygon.setStrokeColor("red");
+					polygon.setStrokeWeight("2");
+					polygon.setFillColor("#000");
+					polygon.setFillOpacity("0.5");
+					var rectMenu=new BMap.ContextMenu();
+					rectMenu.addItem(new BMap.MenuItem("隐藏围栏",hidePolygon.bind(polygon),{
+					width:"130",
+					iconUrl:"images/hide.png"
+					}));
+					rectMenu.addItem(new BMap.MenuItem("删除围栏",deletePolygon.bind(polygon),{
+					width:"130",
+					iconUrl:"images/del.png"
+					}));
+					polygon.setPath(polygonPoint);
+					polygon.addContextMenu(rectMenu);
+					map.addOverlay(polygon);
+					//事野调整
+					var bb=polygon.getBounds();
+					var points = [bb.getSouthWest(), bb.getNorthEast()];  
+					var view = map.getViewport(points);  
+					var mapZoom = view.zoom;
+					map.setCenter(view.center);
+					map.setZoom(view.zoom)
+				};
+				if(data.fenceType=="rect"){
+					rect=new BMap.Polygon([new BMap.Point(data.rectStartPointLng,data.rectStartPointLat),
+					       				new BMap.Point(data.rectEndPointLng,data.rectStartPointLat),
+					       				new BMap.Point(data.rectEndPointLng,data.rectEndPointLat),
+					       				new BMap.Point(data.rectStartPointLng,data.rectEndPointLat)],{
+					       		strokeColor:"red",
+					       		strokeWeight:2,
+					       		fillColor:"#000",
+					       		fillOpacity:"0.5"
+					       		});
+					var rectMenu=new BMap.ContextMenu();
+					rectMenu.addItem(new BMap.MenuItem("隐藏围栏",hidePolygon.bind(rect),{
+					width:"130",
+					iconUrl:"images/hide.png"
+					}));
+					rectMenu.addItem(new BMap.MenuItem("删除围栏",deletePolygon.bind(rect),{
+					width:"130",
+					iconUrl:"images/del.png"
+					}));
+					rect.addContextMenu(rectMenu);
+					map.addOverlay(rect);
+					//事野调整
+					var bb=rect.getBounds();
+					var points = [bb.getSouthWest(), bb.getNorthEast()];  
+					var view = map.getViewport(points);  
+					var mapZoom = view.zoom;
+					map.setCenter(view.center);
+					map.setZoom(view.zoom)
+					
+				}
+				if(data.fenceType=="round"){
+					roundPoint=new BMap.Point(data.centerLng,data.centerLat);
+					circle=new BMap.Circle(roundPoint);
+					circle.setStrokeColor("red");
+					circle.setFillColor("#000")
+					circle.setFillOpacity("0.5");
+					circle.setStrokeWeight("2");
+					var roundMenu=new BMap.ContextMenu();
+					roundMenu.addItem(new BMap.MenuItem("隐藏围栏",hideRound.bind(circle),{
+					width:"130",
+					iconUrl:"images/hide.png"
+					}));
+					roundMenu.addItem(new BMap.MenuItem("删除围栏",deleteRound.bind(circle),{
+					width:"130",
+					iconUrl:"images/del.png"
+					}));
+					circle.addContextMenu(roundMenu);
+					circle.setRadius((data.roundFenceRadius)*1000);
+					map.addOverlay(circle);
+					//事野调整
+					var bb=circle.getBounds();
+					var points = [bb.getSouthWest(), bb.getNorthEast()];  
+					var view = map.getViewport(points);  
+					var mapZoom = view.zoom;
+					map.setCenter(view.center);
+					map.setZoom(view.zoom)
+				}
+			}
+		})
+	}
+	});
+	//展示选择的marker
+	$("#selectedMarkerId").change(function(){
+		$.ajax({
+			url:"data/selectedMarkerId.json",
+			data:{
+				"selectedMarkerId":$("#selectedMarkerId").val()
+			},
+			type:"get",
+			async:true,
+			success:function(data){
+				console.log(data)
+				for(var i=0;i<data.length;i++){
+					var content=[];
+					content.push("<hr/>");
+					content.push("<li><strong>标记名称：</strong>"+data[i].name+"</li>");
+					/*content.push("<li><strong>标记经度：</strong>"+$("#markerLng").val()+"</li>");
+					content.push("<li><strong>标记经度：</strong>"+$("#markerLat").val()+"</li>");*/
+					/*var GeoCode=new BMap.Geocoder();
+					GeoCode.getLocation(new BMap.Point(data[i].lng,data[i].lat),function(GeocoderResult){
+						content.push("<li><strong>标记地址：</strong>"+GeocoderResult.address+"</li>");
+					})*/
+					content.push("<li><strong>标记地址：</strong>"+data[i].add+"</li>");
+					content.push("<li><strong>备注：</strong>"+data[i].info+"</li>");
+					opts={
+					width:220,
+					height:0,
+					title:"标注详细信息"
+					};
+					var marker=new BMap.Marker(new BMap.Point(data[i].lng,data[i].lat),{
+						icon:new BMap.Icon("images/marker1.png",new BMap.Size(24,24),{
+							imageOffset:new BMap.Size(0,0)
+						})
+					});
+					map.addOverlay(marker);
+					addClickHandler(content,marker,opts);
+					var markerRightMenu=new BMap.ContextMenu();
+					markerRightMenu.addItem(new BMap.MenuItem("删除标记",deleteBtn.bind(marker),{
+					width:"130",
+					iconUrl:"images/del.png"
+					}));
+					marker.addContextMenu(markerRightMenu);
+				}
+				}		
+		})
+	});
 	// 左边复选框改变触发事件
 	$("#carId").change(function(){
 		$.ajax({
@@ -261,7 +499,8 @@ window.onload=function(){
 			}
 			map.setCenter(new BMap.Point(data[0].lng,data[0].lat));
 			var markers=[];
-			if(data.length<=1000){
+			//海量绘图的长度限制
+			if(data.length<=500){
 				for(var i=0;i<data.length;i++){
 					var point=new BMap.Point(data[i].lng,data[i].lat);
 					var marker=new BMap.Marker(point);
@@ -785,7 +1024,7 @@ window.onload=function(){
 						for(var len=json.length-1,i=len;i>=0;i--){
 						if(areaType=="circle"){
 							if(BMapLib.GeoUtils.isPointInCircle(new BMap.Point(json[i].lng,json[i].lat),circle)){
-								map.addOverlay(new BMap.Marker(new BMap.Point(json[i].lng,json[i].lat)))
+								//map.addOverlay(new BMap.Marker(new BMap.Point(json[i].lng,json[i].lat)))
 							}else{
 								json.splice(i,1);
 							};
@@ -812,7 +1051,7 @@ window.onload=function(){
 					"paging":true,
 					// 分页按钮类型
 					"pagingType":"full",
-					"stateSave":true,
+					"stateSave":false,
 					// 等待状态
 					"processing":true,
 					// 排序
@@ -924,6 +1163,9 @@ window.onload=function(){
 			polygon=null;
 		}
 	});
+	$("#lookAlarm button").click(function(){
+		alert("报警窗口！")
+	})
 	// 圆形围栏提交按钮
 	$("#fenceSubmit2").click(function(){
 		var flag;

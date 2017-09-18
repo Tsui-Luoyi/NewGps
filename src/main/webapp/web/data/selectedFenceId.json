@@ -1,0 +1,9 @@
+{ 
+	"id":101,
+	"fenceName":"圆形围栏",
+	"fenceType":"round",
+	"centerLng":"107.113058",
+	"centerLat":"32.746888",
+	"roundFenceRadius":"107.684",
+	"fenceInfo":"圆形搜索info"
+	}

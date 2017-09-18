@@ -12,7 +12,7 @@
 <!-- 网页描述 -->
 <meta name="description" content="北京金圣达电气有限公司官网">
 <!-- 关键字使用","分隔 -->
-<meta name="keywords" content="GPS,金圣达,位置,首页">
+<meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
@@ -38,7 +38,7 @@
 <body>
 	<!--头部  -->
 	<!-- 标题 -->
-	<header class="container-fluid" style="padding: 0">
+	<header class="container-fluid"  style=" padding: 0">
 		<div class="navbar navbar-default bg-blue navPos" role="navigation">
 			<div class="navbar-header">
 				<!-- 小屏幕三个横线 -->
@@ -104,8 +104,6 @@
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-	<!-- <script src="js/header.js"></script> -->
-	<!--写在index.js了-->
 	<script src="js/index.js"></script>
 </body>
 </html>

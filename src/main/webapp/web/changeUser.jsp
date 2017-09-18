@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="Tsui">
+<meta name="author" content="author">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
@@ -24,18 +24,11 @@
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css"
-	type="text/css">
-<link rel="stylesheet" href="css/media.css">
-<link rel="stylesheet" href="css/color.css">
-<!--[if lt IE 9]>
-       <script src="js/HTML5Shiv.min.js"></script>
-       <script src="js/response.js"></script>
-       <![endif]-->
 <style type="text/css">
 html, body {
 	height: 100%;
 	width: 100%;
+	background-color:#dedede;
 }
 
 h4 {
@@ -201,11 +194,15 @@ label.error {
 	background-image: url("images/disAllow.png")
 }
 </style>
+<!--[if lt IE 9]>
+       <script src="js/HTML5Shiv.min.js"></script>
+       <script src="js/response.js"></script>
+       <![endif]-->
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h4>添加用户:</h4>
+			<h4>修改监控员信息:</h4>
 			<div class="row">
 				<ul class="userTab">
 					<li class="active">基本信息</li>
@@ -215,7 +212,7 @@ label.error {
 			</div>
 			<div class="row formDiv">
 				<div class="row userNameDiv">
-					<form id="addUserForm" action="http://127.0.0.1/ceshi.php"
+					<form id="changeUserForm" action="http://127.0.0.1/ceshi.php"
 						class="form-horizontal" role="form" method="post">
 						<!-- 监控员名字 -->
 						<div class="form-group">
@@ -308,7 +305,7 @@ label.error {
 					<!-- </form> -->
 				</div>
 				<div class="row userJurisdictionDiv">
-					<form id="addUserForm" action="http://127.0.0.1/ceshi.php"
+					<form id="changeUserForm" action="http://127.0.0.1/ceshi.php"
 						class="form-horizontal" role="form" method="post">
 						<div class="row">
 						<h4 class="text-left">请设置权限</h4>	
@@ -329,13 +326,21 @@ label.error {
 	</div>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<!-- <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script> -->
 	<script src="js/jquery.validate.js"></script>
-	<script src="js/jquery.ztree.all.js"></script>
 	<script src="js/messages_zh.js"></script>
 	<script src="js/jquery.form.js"></script>
 	<script>
 		$(function(){
 			jQuery.support.cors=true;
+			function getQueryString(name) { 
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+				var r = window.location.search.substr(1).match(reg); 
+				if (r != null) return decodeURI(r[2]); 
+				return null; 
+				}
+			console.log(getQueryString("id"));
+			$("#userName").val(getQueryString("userName"));
 			var jurisdictionList=[{
 			"id":"0",
 			"pId":"",
@@ -420,12 +425,12 @@ label.error {
 			"iconSkin":"disAllow"
 			}];
 			function formAlert(){
-				alert("请先完成基本信息的注册！");
+				alert("请先填写基本信息！");
 				return false;
 			}
 			$(".userTab li:gt(0)").bind("click",formAlert);
 			//表单验证
-			$("#addUserForm").validate({
+			$("#changeUserForm").validate({
 			errorClass:"error",
 			onkeyup:false,
 			errorElement:"label",
@@ -463,8 +468,8 @@ label.error {
 				}
 			},
 			submitHandler:function(){
-				$("#addUserForm").ajaxSubmit(function(){
-					alert("添加用户成功!");
+				$("#changeUserForm").ajaxSubmit(function(){
+					alert("信息修改成功!");
 					userGroupSet();
 				});
 				return false;
@@ -581,7 +586,7 @@ label.error {
 				})
 				//权限设置
 				function userJurisdictionSet(){
-					alert("分组设置成功")
+					alert("分组修改成功")
 					$(".userGroupDiv").hide();
 					$(".userJurisdictionDiv").show();
 					$(".userTab li").eq(1).removeClass("active");
@@ -635,7 +640,7 @@ label.error {
 				$(".userJurisdictionDiv input[type='button']").click(function(){
 					$.post("http://127.0.0.1/ceshi.php",{
 						"selectedJurisdiction":selectedJurisdiction.join(",")
-					},function(){alert("添加权限成功！")})
+					},function(){alert("权限修改成功！")})
 				})
 			}
 		})

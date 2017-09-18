@@ -1,0 +1,41 @@
+{	"totalPage":"50",
+"totalRecord":"1000",
+    "results": [
+        {	"id":"123",
+            "username": "aa",
+            "contact_phone": "13512124567",
+            "creattime": "2011\/08\/21"
+        },
+        {	"id":"456",
+            "customername": "bb",
+            "contact_phone": "18645678900",
+            "creattime": "2015\/04\/25"
+        },
+        {	"id":"789",
+             "customername": "cc",
+            "contact_phone": "15211115555",
+            "creattime": "2014\/06\/2"
+        },
+        {	"id":"1234",
+            "customername": "dd",
+            "contact_phone": "17546465252",
+            "creattime": "2013\/11\/12"
+        },{	"id":"5678",
+            "customername": "ee",
+            "contact_phone": "13203792123",
+            "creattime": "2016\/1\/12"
+        },{	"id":"12345",
+            "customername": "ff",
+            "contact_phone": "13512124567",
+            "creattime": "2011\/08\/21"
+        },
+        {	"id":"67890",
+            "customername": "gg",
+            "contact_phone": "18645678900",
+            "creattime": "2015\/04\/25"
+        },
+        {	"id":"11111",
+             "customername": "hh",
+            "contact_phone": "15211115555",
+            "creattime": "2014\/06\/2"
+        }]}

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;">
@@ -18,7 +18,7 @@
 <!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
 <meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
-<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
+<!-- <meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> -->
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- 页面按原比例显示 -->
@@ -45,8 +45,9 @@
 <!-- 几何工具 -->
 <script type="text/javascript"
 	src="http://api.map.baidu.com/library/GeoUtils/1.2/src/GeoUtils_min.js"></script>
-	<!-- 拉框搜索 -->
-	 <script type="text/javascript" src="http://api.map.baidu.com/library/SearchInRectangle/1.2/src/SearchInRectangle_min.js"></script>
+<!-- 拉框搜索 -->
+<script type="text/javascript"
+	src="http://api.map.baidu.com/library/SearchInRectangle/1.2/src/SearchInRectangle_min.js"></script>
 <!-- <link rel="stylesheet" href="css/footer.css"> -->
 <!--[if lt IE 9]>
        <script src="js/HTML5Shiv.min.js"></script>
@@ -60,7 +61,7 @@
 	margin-left: 0px
 }
 
-.cel,.findCar {
+.cel, .findCar {
 	position: absolute;
 	background-color: #fff;
 	box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 3px;
@@ -70,15 +71,15 @@
 	padding: 2px 6px;
 	font-size: 12px;
 	line-height: 1.3em;
-	border-radius:20px;
+	border-radius: 20px;
 }
 /* 测距 */
-.cel{
+.cel {
 	top: 20px;
 	right: 216px;
-	}	
+}
 /* 查车 */
-.findCar{
+.findCar {
 	top: 20px;
 	right: 155px;
 }
@@ -86,24 +87,25 @@
 #tcBtn {
 	box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 3px;
 	border: 1px #8ba4dc solid;
-	border-radius:20px;
+	border-radius: 20px;
 }
 /*上方灰背景条 */
-#topBar{
-position:absolute;
-z-index:1;
-opacity:0.4;
-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
-top:17px;
-height:30px;
-background:#000;
-color:white;
-width:100%;
+#topBar {
+	position: absolute;
+	z-index: 1;
+	opacity: 0.4;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=40);
+	top: 17px;
+	height: 30px;
+	background: #000;
+	color: white;
+	width: 100%;
 }
 /* 地图类型 */
-.anchorTR>div div{
-	border-radius:20px!important;
+.anchorTR>div div {
+	border-radius: 20px !important;
 }
+
 label.BMapLabel {
 	max-width: none
 }
@@ -249,21 +251,23 @@ label.BMapLabel {
 	margin-right: 3px;
 }
 
-#fenceWindow #errorLabelRound{
+#fenceWindow #errorLabelRound {
 	color: red;
 	height: 20px;
 	float: none;
 	font-size: 12px;
 	margin: 0 0 0 3px
 }
-#fenceWindow #errorLabelRect{
+
+#fenceWindow #errorLabelRect {
 	color: red;
 	height: 20px;
 	float: none;
 	font-size: 12px;
 	margin: 0 0 0 3px
 }
-#fenceWindow #errorLabelPolygon{
+
+#fenceWindow #errorLabelPolygon {
 	color: red;
 	height: 20px;
 	float: none;
@@ -295,7 +299,7 @@ label.BMapLabel {
 	margin-left: 10%
 }
 /*区域查车结果  */
-#findVerhicalResult{
+#findVerhicalResult {
 	background-color: #fff;
 	opacity: 0.8;
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
@@ -307,10 +311,11 @@ label.BMapLabel {
 	top: 50%;
 	left: 50%;
 	margin-left: -40%;
-	margin-top:-280px;
+	margin-top: -280px;
 	padding: 0 8px;
-	display: none; 
+	display: none;
 }
+
 #findVerhicalResult h4: {
 	font-weight: bolder;
 }
@@ -337,34 +342,47 @@ label.BMapLabel {
 	border-top: 2px #000 solid;
 }
 /* 结果表格 */
-#resultTable{
-	border:2px black solid;
-	width:100%;
-	text-align:center;
-	border-collapse:collapse
+#resultTable {
+	border: 2px black solid;
+	width: 100%;
+	text-align: center;
+	border-collapse: collapse
 }
-#resultContainer{
-	width:100%;
-	height:410px;
-	overflow:scroll
+
+#resultContainer {
+	width: 100%;
+	height: 410px;
+	overflow: scroll
 }
-#resultTable th{
-	border:2px black solid;
-	text-align:center;
-	height:20px;
-	
+
+#resultTable th {
+	border: 2px black solid;
+	text-align: center;
+	height: 20px;
 }
-#resultTable td{
-height:15px;
-padding:2px}
-#jump{
-    position: absolute;
-    bottom: 5px;
-    left: 220px;
-    z-index:50;
+
+#resultTable td {
+	height: 15px;
+	padding: 2px
 }
-#jump input{
-	width:60px;
+
+#jump {
+	position: absolute;
+	bottom: 5px;
+	left: 220px;
+	z-index: 50;
+}
+
+#jump input {
+	width: 60px;
+}
+/* 报警按钮 */
+#lookAlarm {
+	position: absolute;
+	right: 0;
+	top: 100px;
+	z-index: 1000;
+	/* border: 1px red solid; */
 }
 </style>
 </head>
@@ -416,13 +434,16 @@ padding:2px}
 						id="errorLabelRound"></label>
 				</p>
 				<p>
-					<label>中心经度：</label><input disabled="disabled" id="fenceLngRound" type="text">
+					<label>中心经度：</label><input disabled="disabled" id="fenceLngRound"
+						type="text">
 				</p>
 				<p>
-					<label>中心纬度：</label><input disabled="disabled" id="fenceLatRound" type="text">
+					<label>中心纬度：</label><input disabled="disabled" id="fenceLatRound"
+						type="text">
 				</p>
 				<p>
-					<label>围栏半径：</label><input disabled="disabled" id="fenceRadiusRound" type="text"><span>千米</span>
+					<label>围栏半径：</label><input disabled="disabled"
+						id="fenceRadiusRound" type="text"><span>千米</span>
 				</p>
 				<div>
 					<label>围栏备注：</label>
@@ -490,26 +511,32 @@ padding:2px}
 		</div>
 	</div>
 	<!-- 左边选择的复选框ID -->
-	<input id="carId" type="hidden" value="">
-	<input id="clickCarId" type="hidden" value="">
+	<input id="carId" type="hidden" value="" />
+	<input id="clickCarId" type="hidden" value="" />
+	<input id="selectedMarkerId" type="hidden" value="" />
+	<input id="clickMarkerId" type="hidden" value="" />
+	<input id="selectedFenceId" type="hidden" value="" />
 	<!-- 查车结果面板 -->
 	<div id="findVerhicalResult">
-		<h4>区域内车辆:<span title="关闭">&times;</span></h4>
-		<hr/>
+		<h4>
+			区域内车辆:<span title="关闭">&times;</span>
+		</h4>
+		<hr />
 		<div id="resultContainer">
-		<table id="resultTable" width="100%" height="" cellspacing="0" cellpadding="0" border="1">
-		<thead>
-			<tr>
-				<th>车辆ID</th>
-				<th>定位方式</th>
-				<th>最后回传时间</th>
-				<th>车辆位置</th>
-				<th>查看轨迹</th>
-			</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
+			<table id="resultTable" width="100%" height="" cellspacing="0"
+				cellpadding="0" border="1">
+				<thead>
+					<tr>
+						<th>车辆ID</th>
+						<th>定位方式</th>
+						<th>最后回传时间</th>
+						<th>车辆位置</th>
+						<th>查看轨迹</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	<div id="map"></div>

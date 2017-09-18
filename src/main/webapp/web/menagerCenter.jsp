@@ -58,7 +58,7 @@
 										href="javascript:void(0);">添加客户</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','addCustomAdmin.jsp')"
-										href="javascript:void(0);">添加管理员</a></li>
+										href="javascript:void(0);">为客户指定管理员</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','findCustom.jsp')"
 										href="javascript:void(0);">查询客户</a></li>
@@ -69,13 +69,13 @@
 							</div>
 						</div>
 					</div>
-					<!--用户管理  -->
+					<!--监控员管理  -->
 					<div class="panel ">
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#managerParent"
 									href="#user"> <span
-									class="glyphicon glyphicon-chevron-down right"></span>用户管理
+									class="glyphicon glyphicon-chevron-down right"></span>监控员管理
 								</a>
 							</h4>
 						</div>
@@ -84,13 +84,13 @@
 								<ul class="nav nav-pills nav-stacked">
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','addUser.jsp')"
-										href="javascript:void(0);">添加用户</a></li>
+										href="javascript:void(0);">添加监控员</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','findUser.jsp')"
-										href="javascript:void(0);">查询用户</a></li>
+										href="javascript:void(0);">查询监控员</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','stopUser.jsp')"
-										href="javascript:void(0);">停用用户</a></li>
+										href="javascript:void(0);">重启已停用监控员</a></li>
 								</ul>
 							</div>
 						</div>
@@ -137,6 +137,9 @@
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','addVerhical.jsp')"
 										href="javascript:void(0);">添加车辆</a></li>
+										<li><a
+										onClick="changeIframe('#managerInnerIframe','importVerhical.jsp')"
+										href="javascript:void(0);">批量导入车辆</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','findVerhical.jsp')"
 										href="javascript:void(0);">查询车辆</a></li>

@@ -56,7 +56,7 @@ label.error {
 						<div id="customSelectContainer">
 							<select name="customSelectName"
 								id="customSelectName">
-								<option value="">-请选择客户名字-</option>
+								<option value="">-&nbsp;&nbsp;请选择客户名字&nbsp;&nbsp;-</option>
 							</select>
 						</div>
 					</div>
@@ -199,7 +199,7 @@ label.error {
 			},
 			submitHandler:function(){
 				$("#addCustomAdminForm").ajaxSubmit(function(){
-					alert("添加管理员成功!");
+					alert("添加客户管理员成功!");
 				});
 				return false;
 			},
