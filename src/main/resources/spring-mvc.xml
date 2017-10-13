@@ -19,6 +19,22 @@
 	<mvc:annotation-driven />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 ,pom中有jackson所以指定了mvc:annotation-driven的默认json转换器可以省略? 
 		07/20删除json转换器 -->
+<bean
+  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+ </bean>
+ <bean
+  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+  <property name="messageConverters">
+   <list>
+    <bean
+     class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+   </list>
+  </property>
+ </bean>
+		
+		
+		
+		
 	<!-- 视图解析器的配置 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
