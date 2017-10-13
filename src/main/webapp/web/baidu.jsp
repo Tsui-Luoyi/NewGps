@@ -15,10 +15,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
 <meta http-equiv="Window-target" content="_top">
-<!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
-<meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
-<!-- <meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> -->
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- 页面按原比例显示 -->
@@ -299,7 +297,7 @@ label.BMapLabel {
 	margin-left: 10%
 }
 /*区域查车结果  */
-#findVerhicalResult {
+#findVerhicleResult {
 	background-color: #fff;
 	opacity: 0.8;
 	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
@@ -316,11 +314,11 @@ label.BMapLabel {
 	display: none;
 }
 
-#findVerhicalResult h4: {
+#findVerhicleResult h4: {
 	font-weight: bolder;
 }
 
-#findVerhicalResult h4 span {
+#findVerhicleResult h4 span {
 	font-size: 25px;
 	display: inline-block;
 	width: 20px;
@@ -333,11 +331,11 @@ label.BMapLabel {
 	border-radius: 50%;
 }
 /* 围栏框关闭按钮 */
-#findVerhicalResult h4 span:hover {
+#findVerhicleResult h4 span:hover {
 	cursor: pointer
 }
 
-#findVerhicalResult hr {
+#findVerhicleResult hr {
 	margin: 5px 0px;
 	border-top: 2px #000 solid;
 }
@@ -517,7 +515,7 @@ label.BMapLabel {
 	<input id="clickMarkerId" type="hidden" value="" />
 	<input id="selectedFenceId" type="hidden" value="" />
 	<!-- 查车结果面板 -->
-	<div id="findVerhicalResult">
+	<div id="findVerhicleResult">
 		<h4>
 			区域内车辆:<span title="关闭">&times;</span>
 		</h4>

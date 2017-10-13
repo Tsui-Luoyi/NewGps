@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +22,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/addCustom.css">
-<link rel="stylesheet" href="css/media.css">
-<link rel="stylesheet" href="css/color.css">
+<link href="/NewRmgps/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="/NewRmgps/web/css/addCustom.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/media.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/color.css">
 <style>
 label.checked {
 color:green}
@@ -79,14 +80,15 @@ color:red}
 			</form>
 		</div>
 	</div>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+	<script src="/NewRmgps/web/js/jquery.min.js"></script>
+	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
 	<!-- <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script> -->
-	<script src="js/jquery.validate.js"></script>
-	<script src="js/messages_zh.js"></script>
-	<script src="js/jquery.form.js"></script>
+	<script src="/NewRmgps/web/js/jquery.validate.js"></script>
+	<script src="/NewRmgps/web/js/messages_zh.js"></script>
+	<script src="/NewRmgps/web/js/jquery.form.js"></script>
 	<script>
 		$(function() {
+			console.log("ss")
 			//表单验证
 			jQuery.support.cors=true;
 			$("#addCustomForm").validate({
@@ -99,10 +101,10 @@ color:red}
 						rangelength:[3,6],
 						//远程验证
 						remote:{
-							url :"${pagecontext.request.getcontextpath}/Customer/checkCustomer", 
+							url :"/NewRmgps/Customer/checkCustomer", 
 							type:"post",
-							dataType:"json",
 							cache:false,
+							dataType:"text",
 							data:{
 								name:function() {
 									return $("#customName").val();
@@ -117,8 +119,17 @@ color:red}
 					}
 				},
 				submitHandler:function(){
-					$("#addCustomForm").ajaxSubmit(function(){
-						alert("添加客户成功!");
+					$("#addCustomForm").ajaxSubmit({
+						url:"/NewRmgps/Customer/addCustomer",
+						data:{"aa":"dd"},
+						async:"false",
+						success:function(data){
+							//不太合理,添加成功后应该返回当前页面,还应该显示客户的信息,电话号码没有验证
+							alert(data);
+						},
+						error:function(e){
+							console.log(e);
+						}
 					});
 					return false;
 				},

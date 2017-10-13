@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="tsui">
+<meta name="author" content="Tsui">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
@@ -21,12 +22,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="/NewRmgps/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="/NewRmgps/web/css/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+<link rel="stylesheet" href="/NewRmgps/web/css/media.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/color.css">
+<!--[if lt IE 9]>
+       <script src="js/HTML5Shiv.min.js"></script>
+       <script src="js/response.js"></script>
+       <![endif]-->
 <style type="text/css">
 html, body {
 	height: 100%;
 	width: 100%;
-	background-color:#dedede;
 }
 
 h4 {
@@ -192,15 +200,11 @@ label.error {
 	background-image: url("images/disAllow.png")
 }
 </style>
-<!--[if lt IE 9]>
-       <script src="js/HTML5Shiv.min.js"></script>
-       <script src="js/response.js"></script>
-       <![endif]-->
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h4>修改监控员信息:</h4>
+			<h4>添加用户:</h4>
 			<div class="row">
 				<ul class="userTab">
 					<li class="active">基本信息</li>
@@ -210,15 +214,15 @@ label.error {
 			</div>
 			<div class="row formDiv">
 				<div class="row userNameDiv">
-					<form id="changeUserForm" action="http://127.0.0.1/ceshi.php"
+					<form id="addUserForm" action="http://127.0.0.1/ceshi.php"
 						class="form-horizontal" role="form" method="post">
 						<!-- 监控员名字 -->
 						<div class="form-group">
 							<label for="userName"
-								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员名称：</label>
+								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员账号：</label>
 							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
-								<input type="text" class="form-control" name="userName"
-									id="userName" placeholder="请输入监控员名称(3~6位)">
+								<input type="text" class="form-control" name="userCode"
+									id="userName" placeholder="请输入监控员账户(3~6位)">
 							</div>
 						</div>
 						<!-- 用户类型 -->
@@ -303,7 +307,7 @@ label.error {
 					<!-- </form> -->
 				</div>
 				<div class="row userJurisdictionDiv">
-					<form id="changeUserForm" action="http://127.0.0.1/ceshi.php"
+					<form id="addUserForm" action="http://127.0.0.1/ceshi.php"
 						class="form-horizontal" role="form" method="post">
 						<div class="row">
 						<h4 class="text-left">请设置权限</h4>	
@@ -322,23 +326,15 @@ label.error {
 			</div>
 		</div>
 	</div>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<!-- <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script> -->
-	<script src="js/jquery.validate.js"></script>
-	<script src="js/messages_zh.js"></script>
-	<script src="js/jquery.form.js"></script>
+	<script src="/NewRmgps/web/js/jquery.min.js"></script>
+	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
+	<script src="/NewRmgps/web/js/jquery.validate.js"></script>
+	<script src="/NewRmgps/web/js/jquery.ztree.all.js"></script>
+	<script src="/NewRmgps/web/js/messages_zh.js"></script>
+	<script src="/NewRmgps/web/js/jquery.form.js"></script>
 	<script>
 		$(function(){
 			jQuery.support.cors=true;
-			function getQueryString(name) { 
-				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
-				var r = window.location.search.substr(1).match(reg); 
-				if (r != null) return decodeURI(r[2]); 
-				return null; 
-				}
-			console.log(getQueryString("id"));
-			$("#userName").val(getQueryString("userName"));
 			var jurisdictionList=[{
 			"id":"0",
 			"pId":"",
@@ -423,27 +419,26 @@ label.error {
 			"iconSkin":"disAllow"
 			}];
 			function formAlert(){
-				alert("请先填写基本信息！");
+				alert("请先完成基本信息的注册！");
 				return false;
 			}
 			$(".userTab li:gt(0)").bind("click",formAlert);
 			//表单验证
-			$("#changeUserForm").validate({
+			$("#addUserForm").validate({
 			errorClass:"error",
 			onkeyup:false,
 			errorElement:"label",
 			rules:{
-			userName:{
+			userCode:{
 			required:true,
-			rangelength:[3,6],
+			rangelength:[4,12],
 			//远程验证
 			remote:{
-			url:"http://127.0.0.1/ceshi.php",
+			url:"/NewRmgps/User/checkUserCode",
 			type:"post",
-			dataType:"json",
 			cache:false,
 			data:{
-				clientName:function(){
+				userCode:function(){
 					return $("#userName").val();
 				}
 			}
@@ -461,13 +456,13 @@ label.error {
 			}
 			},
 			messages:{
-				userName:{
-					remote:"该名已被注册"
+				userCode:{
+					remote:"该账户已被注册"
 				}
 			},
 			submitHandler:function(){
-				$("#changeUserForm").ajaxSubmit(function(){
-					alert("信息修改成功!");
+				$("#addUserForm").ajaxSubmit(function(){
+					alert("添加用户成功!");
 					userGroupSet();
 				});
 				return false;
@@ -584,7 +579,7 @@ label.error {
 				})
 				//权限设置
 				function userJurisdictionSet(){
-					alert("分组修改成功")
+					alert("分组设置成功")
 					$(".userGroupDiv").hide();
 					$(".userJurisdictionDiv").show();
 					$(".userTab li").eq(1).removeClass("active");
@@ -638,7 +633,7 @@ label.error {
 				$(".userJurisdictionDiv input[type='button']").click(function(){
 					$.post("http://127.0.0.1/ceshi.php",{
 						"selectedJurisdiction":selectedJurisdiction.join(",")
-					},function(){alert("权限修改成功！")})
+					},function(){alert("添加权限成功！")})
 				})
 			}
 		})

@@ -6,7 +6,9 @@ window.onload=function(){
 	if(window.attachEvent){
 		//ie8
 		document.onstorage=function() {
-			console.log("11:     "+selectedCar);
+			console.log("selectedCar    "+selectedCar);
+			console.log("selectedMarkerId    "+selectedMarkerId);
+			console.log("selectedFenceId    "+selectedFenceId);
 			if(sessionStorage.selectedCar!=selectedCar){
 				selectedCar=sessionStorage.selectedCar;
 				$("#carId").val(selectedCar);
@@ -171,8 +173,8 @@ window.onload=function(){
 	iconUrl:"images/polygon.png"
 	}));
 	// 区域查车右键菜单
-	var rightMenuFindVerhical=new BMap.ContextMenu();
-	rightMenuFindVerhical.addItem(new BMap.MenuItem("矩形区域查车",function(e){
+	var rightMenuFindVerhicle=new BMap.ContextMenu();
+	rightMenuFindVerhicle.addItem(new BMap.MenuItem("矩形区域查车",function(e){
 		circle=null;
 		polygon=null;
 		map.disableDoubleClickZoom();
@@ -181,7 +183,7 @@ window.onload=function(){
 	width:"130",
 	iconUrl:"images/rect.png"
 	}));
-	rightMenuFindVerhical.addItem(new BMap.MenuItem("圆形区域查车",function(e){
+	rightMenuFindVerhicle.addItem(new BMap.MenuItem("圆形区域查车",function(e){
 		rect=null;
 		polygon=null;
 		map.disableDoubleClickZoom();
@@ -190,7 +192,7 @@ window.onload=function(){
 	width:"130",
 	iconUrl:"images/round.png"
 	}));
-	rightMenuFindVerhical.addItem(new BMap.MenuItem("多边形区域查车",function(e){
+	rightMenuFindVerhicle.addItem(new BMap.MenuItem("多边形区域查车",function(e){
 		circle=null;
 		rect=null;
 		map.disableDoubleClickZoom();
@@ -202,7 +204,7 @@ window.onload=function(){
 	width:"130",
 	iconUrl:"images/polygon.png"
 	}));
-	map.addContextMenu(rightMenuFindVerhical);
+	map.addContextMenu(rightMenuFindVerhicle);
 	// 添加maker
 	function addMaker(pt){
 		var myIcon=new BMap.Icon("images/carOnline.png",new BMap.Size(48,48),{
@@ -259,9 +261,9 @@ window.onload=function(){
 			 * "white" });
 			 */
 			$(this).html("添加围栏");
-			map.removeContextMenu(rightMenuFindVerhical);
+			map.removeContextMenu(rightMenuFindVerhicle);
 			map.addContextMenu(rightMenuAddFence);
-			findVerhicalFlag=false;
+			findVerhicleFlag=false;
 			addFenceFlag=true;
 		}else{
 			$(this).html("区域查车");
@@ -270,8 +272,8 @@ window.onload=function(){
 			 * "white" });
 			 */
 			map.removeContextMenu(rightMenuAddFence);
-			map.addContextMenu(rightMenuFindVerhical);
-			findVerhicalFlag=true;
+			map.addContextMenu(rightMenuFindVerhicle);
+			findVerhicle=true;
 			addFenceFlag=false;
 		}
 	})
@@ -908,7 +910,7 @@ window.onload=function(){
 	var rectWidth;
 	var rectHeight;
 	var addFenceFlag=false;
-	var findVerhicalFlag=true;
+	var findVerhicleFlag=true;
 	var areaType;
 	map.addEventListener("mousemove",function(ev){
 		// 画圆
@@ -999,7 +1001,7 @@ window.onload=function(){
 			}
 			dblFlag=false;
 			console.log("添加围栏");
-		}else if(dblFlag&&findVerhicalFlag){
+		}else if(dblFlag&&findVerhicleFlag){
 			var SW;
 			var NE;
 			if(flagRound){
@@ -1105,8 +1107,8 @@ window.onload=function(){
 							"targets":4,
 							// 添加删除等按钮
 							"render":function(data,type,row){
-								var html="<a target='_blank' href='checkTrailGd.jsp?verhicalId="+row.id
-										+"&verhicalName="+encodeURI(row.name)+"' class='delete btn btn-default btn-xs'><i class='fa fa-times'></i> 查看轨迹</a>"
+								var html="<a target='_blank' href='checkTrailGd.jsp?verhicleId="+row.id
+										+"&verhicleName="+encodeURI(row.name)+"' class='delete btn btn-default btn-xs'><i class='fa fa-times'></i> 查看轨迹</a>"
 								return html;
 							}
 							},{
@@ -1125,7 +1127,7 @@ window.onload=function(){
 							}
 							}]
 					});
-			$(".mengBan,#findVerhicalResult").css("display","block");
+			$(".mengBan,#findVerhicleResult").css("display","block");
 		}else{
 			map.enableDoubleClickZoom();
 		}
@@ -1145,13 +1147,13 @@ window.onload=function(){
 		});
 	})
 	// 查车表格关闭
-	$("#findVerhicalResult h4 span").click(function(){
+	$("#findVerhicleResult h4 span").click(function(){
 		map.clearOverlays();
 		// 摧毁datatable对象
 		var tt=$('#resultTable').DataTable();
 		tt.destroy();
 		areaType=null;
-		$(".mengBan,#findVerhicalResult").css("display","none");
+		$(".mengBan,#findVerhicleResult").css("display","none");
 		if(circle){
 			map.removeOverlay(circle);
 			circle=null;

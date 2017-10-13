@@ -1,0 +1,45 @@
+{	"totalPage":"50",
+"totalRecord":"1000",
+    "results": [
+        {	"id":"123",
+            "verhiclenum": "京A 12345",
+            "terminalnum": "UGPS123123",
+            "creattime": "2017\/08\/21",
+            "verhiclegroup": "公司"
+        },
+        {	"id":"123",
+            "verhiclenum": "京B 54321",
+            "terminalnum": "UGPS123123",
+            "creattime": "2017\/07\/2",
+            "verhiclegroup": "学校"
+        },{	"id":"123",
+            "verhiclenum": "京C 53241",
+            "terminalnum": "UGPS123123",
+            "creattime": "2017\/05\/11",
+            "verhiclegroup": "部门"
+        },{	"id":"123",
+            "verhiclenum": "豫A 12345",
+            "terminalnum": "UGPS123321",
+            "creattime": "2017\/05\/6",
+            "verhiclegroup": "小王"
+        },{	"id":"123",
+            "verhiclenum": "豫B 14523",
+            "terminalnum": "UGPS123313",
+            "creattime": "2017\/01\/19",
+            "verhiclegroup": "赫曼"
+        },{	"id":"123",
+            "verhiclenum": "豫C 15324",
+            "terminalnum": "UGPS312214",
+            "creattime": "2016\/11\/12",
+            "verhiclegroup": "北京"
+        },{	"id":"123",
+            "verhiclenum": "鲁A 12345",
+            "terminalnum": "UGPS333224",
+            "creattime": "2016\/10\/3",
+            "verhiclegroup": "海外"
+        },{	"id":"123",
+            "verhiclenum": "京A 00000",
+            "terminalnum": "UGPS332211",
+            "creattime": "2016\/08\/5",
+            "verhiclegroup": "租赁"
+        }]}

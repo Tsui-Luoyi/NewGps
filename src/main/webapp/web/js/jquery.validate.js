@@ -1329,11 +1329,9 @@ $.extend( $.validator, {
 			$.ajax( $.extend( true, {
 				mode: "abort",
 				port: "validate" + element.name,
-				dataType: "text",
-				data: data,
 				context: validator.currentForm,
 				success: function( response ) {
-					var valid = response === true || response === "true",
+					var valid = response === true|| (response.toLowerCase() )=="true",
 						errors, message, submitted;
 
 					validator.settings.messages[ element.name ].remote = previous.originalMessage;
@@ -1346,7 +1344,7 @@ $.extend( $.validator, {
 						validator.showErrors();
 					} else {
 						errors = {};
-						message = response || validator.defaultMessage( element, "remote" );
+						message = validator.defaultMessage( element, "remote" );
 						errors[ element.name ] = previous.message = $.isFunction( message ) ? message( value ) : message;
 						validator.invalid[ element.name ] = true;
 						validator.showErrors( errors );

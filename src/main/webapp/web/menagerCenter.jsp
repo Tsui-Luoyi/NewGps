@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="author">
+<meta name="author" content="tsui">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
 <meta http-equiv="Window-target" content="_top">
-<!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
-<meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
@@ -54,13 +52,13 @@
 							<div class="panel-body">
 								<ul class="nav nav-pills nav-stacked">
 									<li class="active"><a
-										onClick="changeIframe('#managerInnerIframe','addCustom.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Customer/toAddCustomer')"
 										href="javascript:void(0);">添加客户</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','addCustomAdmin.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/User/toAddCustomAdmin')"
 										href="javascript:void(0);">为客户指定管理员</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','findCustom.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Customer/toFindCustomer')"
 										href="javascript:void(0);">查询客户</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','stopCustom.jsp')"
@@ -83,7 +81,7 @@
 							<div class="panel-body">
 								<ul class="nav nav-pills nav-stacked">
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','addUser.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/User/toAddMonitor')"
 										href="javascript:void(0);">添加监控员</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','findUser.jsp')"
@@ -126,28 +124,28 @@
 						<div class="panel-heading">
 							<h4 class="panel-title">
 								<a data-toggle="collapse" data-parent="#managerParent"
-									href="#verhical"> <span
+									href="#verhicle"> <span
 									class="glyphicon glyphicon-chevron-down right"></span>车辆管理
 								</a>
 							</h4>
 						</div>
-						<div id="verhical" class="panel-collapse collapse">
+						<div id="verhicle" class="panel-collapse collapse">
 							<div class="panel-body">
 								<ul class="nav nav-pills nav-stacked">
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','addVerhical.jsp')"
+										onClick="changeIframe('#managerInnerIframe','${pagecontext.request.getcontextpath}/Customer/toAddCustomer')"
 										href="javascript:void(0);">添加车辆</a></li>
 										<li><a
-										onClick="changeIframe('#managerInnerIframe','importVerhical.jsp')"
+										onClick="changeIframe('#managerInnerIframe','importVerhicle.jsp')"
 										href="javascript:void(0);">批量导入车辆</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','findVerhical.jsp')"
+										onClick="changeIframe('#managerInnerIframe','findVerhicle.jsp')"
 										href="javascript:void(0);">查询车辆</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','stopVerhical.jsp')"
+										onClick="changeIframe('#managerInnerIframe','moveVerhicle.jsp')"
 										href="javascript:void(0);">移动车辆</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','moveVerhical.jsp')"
+										onClick="changeIframe('#managerInnerIframe','stopVerhicle.jsp')"
 										href="javascript:void(0);">停用车辆</a></li>
 								</ul>
 							</div>

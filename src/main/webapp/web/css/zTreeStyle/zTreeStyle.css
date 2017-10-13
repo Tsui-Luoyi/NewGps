@@ -78,7 +78,7 @@ website:	http://code.google.com/p/jquerytree/
 
 .ztree li span.button.ico_loading{margin-right:2px; background:url(./img/loading.gif) no-repeat scroll 0 0 transparent; vertical-align:top; *vertical-align:middle}
 
-ul.tmpTargetzTree {background-color:#FFE6B0; opacity:0.8; filter:alpha(opacity=80)}
+ul.tmpTargetzTree {background-color:#d9b34f; opacity:0.8; filter:alpha(opacity=80)}
 
 span.tmpzTreeMove_arrow {width:16px; height:16px; display: inline-block; padding:0; margin:2px 0 0 1px; border:0 none; position:absolute;
 	background-color:transparent; background-repeat:no-repeat; background-attachment: scroll;

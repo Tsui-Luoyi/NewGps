@@ -15,8 +15,6 @@
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
 <meta http-equiv="Window-target" content="_top">
-<!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
-<meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
@@ -291,7 +289,13 @@ height:28px;}
 			success:function(data){
 				$("#userTable tbody").empty();
 				$("#totalPage").html(data.totalPage);
-				$("#totalRecord").html(data.totalRecord)
+				$("#totalRecord").html(data.totalRecord);
+				if(data.results.length=="0"){
+					var tr=$("<tr></tr>");
+					var td=$("<td colspan='4'>没有记录</td>")
+					$("#userTable tbody").append(tr);
+					tr.append(td);
+				}else{
 				for(var i=0;i<data.results.length;i++){
 					var tr=$("<tr></tr>");
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
@@ -305,6 +309,7 @@ height:28px;}
 					tr.append(td2);
 					tr.append(td3);
 					tr.append(td4);
+				}
 				}
 			},
 			error:function(error){

@@ -21,16 +21,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/combo.select.css">
-<link rel="stylesheet" href="css/addCustomAdmin.css">
-<link rel="stylesheet" href="css/media.css">
-<link rel="stylesheet" href="css/color.css">
+<link href="/NewRmgps/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="/NewRmgps/web/css/combo.select.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/addCustomAdmin.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/media.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/color.css">
 <style>
 label.checked {
 	color: green
 }
-
 label.error {
 	color: red
 }
@@ -44,7 +43,7 @@ label.error {
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<h4>添加客户管理员:</h4>
-			<form id="addCustomAdminForm" action="http://127.0.0.1/ceshi.php"
+			<form id="addCustomAdminForm" action="/NewRmgps/User/addCustomAdmin"
 				class="form-horizontal" role="form" method="post">
 				<!-- 客户名字 -->
 				<div class="form-group">
@@ -52,7 +51,7 @@ label.error {
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">客户名字：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<div id="customSelectContainer">
-							<select name="customSelectName"
+							<select name="customerid"
 								id="customSelectName">
 								<option value="">-&nbsp;&nbsp;请选择客户名字&nbsp;&nbsp;-</option>
 							</select>
@@ -62,7 +61,7 @@ label.error {
 				<!-- 管理员名称 -->
 				<div class="form-group">
 					<label for="customAdminName"
-						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员名称：</label>
+						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员昵称：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="customAdminName"
 							name="userName" placeholder="请输入管理员名称(3~6)位">
@@ -74,7 +73,7 @@ label.error {
 						class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">管理员账号：</label>
 					<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 						<input type="text" class="form-control" id="customAdminLoginName"
-							name="userCode" placeholder="请输入登录账号(4-8位英文)">
+							name="userCode" placeholder="请输入登录账号(4-16位英文)">
 					</div>
 				</div>
 				<!-- 客户管理员密码 -->
@@ -95,7 +94,6 @@ label.error {
 							name="customAdminLoginPwd1" placeholder="请再次输入登录密码">
 					</div>
 				</div>
-
 				<!-- 提交按钮 -->
 				<div class="form-group">
 					<div
@@ -107,22 +105,20 @@ label.error {
 			</form>
 		</div>
 	</div>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/jquery.combo.select.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.validate.js"></script>
-	<script src="js/messages_zh.js"></script>
-	<script src="js/jquery.form.js"></script>
+	<script src="/NewRmgps/web/js/jquery.min.js"></script>
+	<script src="/NewRmgps/web/js/jquery.combo.select.js"></script>
+	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
+	<script src="/NewRmgps/web/js/jquery.validate.js"></script>
+	<script src="/NewRmgps/web/js/messages_zh.js"></script>
+	<script src="/NewRmgps/web/js/jquery.form.js"></script>
 	<script>
 		$(function(){
 			$('#customSelectName').comboSelect();
-
 			 $.ajax({
-				url:"${pagecontext.request.getcontextpath}/Customer/selecTcustomersByCAId",
-				type:"post",
-				dataType:"json",
-				data:"123",
+				url:"/NewRmgps/Customer/selecTcustomersByCAId",
+				type:"get",
 				cache:'true',
+				dateType:"json",
 				success:function(data){
 					for(var i=0;i<data.length;i++){
 						var opt=$("<option value='"+data[i].id+"'>"+data[i].customername+"</option>");
@@ -134,37 +130,22 @@ label.error {
 				},
 				async:false
 			}) 
-			//表单验证
+			//表单验证,表单验证的时候有一定的问题.
 			$("#addCustomAdminForm").validate({
 			errorClass:"error",
 			onkeyup:false,
 			errorElement:"label",
 			rules:{
-			customSelectName:{
+				id:{
 			required:true
 			},
-			customAdminName:{
+			userCode :{
 			required:true,
-			rangelength:[3,6],
+			rangelength:[4,16],
+			isEnglish:true,
 			remote:{
-			url:"http://127.0.0.1/ceshi.php",
+			url:"/NewRmgps/User/checkUserCode",
 			type:"post",
-			dataType:"json",
-			data:{
-				"clientName":function(){
-					return $("#customAdminName").val();
-				}
-			}
-			}
-			},
-			customAdminLoginName:{
-			required:true,
-			rangelength:[4,8],
-			//isEnglish:true,
-			remote:{
-			url:"/NewRmgps/web/User/checkUserCode",
-			type:"post",
-			dataType:"json",
 			data:{
 				"userCode":function(){
 					return $("#customAdminLoginName").val();
@@ -172,7 +153,7 @@ label.error {
 			}
 			}
 			},
-			customAdminLoginPwd:{
+			userPassword:{
 			required:true,
 			rangelength:[6,16],
 			isEnglish:true
@@ -184,18 +165,19 @@ label.error {
 			}
 			},
 			messages:{
-				customAdminName:{
+				id:{
 				remote:"请选择一个客户"
 			},
-			customAdminName:{
+			userName:{
 				remote:"用户名称已被注册"
 			},
-			customAdminLoginName:{
+			userCode:{
 				remote:"该登录账号已被注册"
 			}
 			},
 			submitHandler:function(){
 				$("#addCustomAdminForm").ajaxSubmit(function(){
+					/*获取返回数据进行林场的判断,或者在做一个接口查询出没有管理员的用户前台默认添加用户类型  */
 					alert("添加客户管理员成功!");
 				});
 				return false;

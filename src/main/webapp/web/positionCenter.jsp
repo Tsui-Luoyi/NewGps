@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="author">
+<meta name="author" content="tsui">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
 <meta http-equiv="Window-target" content="_top">
-<!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
-<meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
@@ -240,19 +238,19 @@
 			function ajaxDataFilter(treeId,parentNode,responseData){
 				if(responseData){
 					for(var i=0;i<responseData.length;i++){
-						if(responseData[i].pId=="0"){
-							responseData[i].isParent==true
-						}
-						;
+						if(responseData[i].pId==null){
+							responseData[i].iconSkin="all"
+						}else if(responseData[i].pId=="0"){
+							responseData[i].iconSkin="group";
+							responseData[i].isParent==true;
+						}else{
 						if(responseData[i].state=="1"){
 							responseData[i].iconSkin="onLine"
-						}
-						;
+						};
 						if(responseData[i].state=="0"){
 							responseData[i].iconSkin="offLine"
 						}
-						;
-						;
+					}
 					}
 				}
 				return responseData;
@@ -275,8 +273,9 @@
 				var version=b_version.split(";");
 				var trim_Version=version[1].replace(/[ ]/g,"");
 				if(browser=="Microsoft Internet Explorer"&&trim_Version=="MSIE8.0"){
-					sessionStorage.setItem("selectedMarkerId","");
-					sessionStorage.setItem("selectedFenceId","");
+					alert("IE8")
+					//sessionStorage.setItem("selectedMarkerId","");
+					//sessionStorage.setItem("selectedFenceId","");
 				}
 			}
 			//标注展示

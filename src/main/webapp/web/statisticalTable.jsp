@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="author">
+<meta name="author" content="tsui">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
 <meta http-equiv="Window-target" content="_top">
-<!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
-<meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
@@ -74,11 +72,11 @@ ul li.active {
 	overflow: hidden
 }
 
-#verhicalInput, #selectTime {
+#verhicleInput, #selectTime {
 	float: left;
 }
 
-#verhicalInput {
+#verhicleInput {
 	margin-left: 20px;
 	display: none;
 }
@@ -97,7 +95,7 @@ display:none}
 			<option value="month">近一月</option>
 			<option value="year">近一年</option>
 		</select>
-		<div id="verhicalInput">
+		<div id="verhicleInput">
 			请输入车牌号:<input type="text" />
 			<button>查看</button>
 		</div>
@@ -212,11 +210,11 @@ display:none}
 				});
 			}
 			//上线次数
-			function displayOnlineTime(verhical,selectLong){
+			function displayOnlineTime(verhicle,selectLong){
 				var myChart=echarts.init(document.getElementById('onLineTimeDiv'));
 				$.get('data/monthOnlineTime.json',{
 				"dateLone":selectLong,
-				"verhical":verhical
+				"verhicle":verhicle
 				}).success(function(data){
 					myChart.setOption({
 					title:{
@@ -318,17 +316,17 @@ display:none}
 				$(this).siblings("li").removeClass("active");
 				$(this).addClass("active");
 				$("#onLineRateDiv").hide();
-				$("#verhicalInput").show();
+				$("#verhicleInput").show();
 				$("#onLineTimeDiv").show();
 			});
-			$("#verhicalInput button").click(function(){
-				displayOnlineTime($("#verhicalInput input").val(),$(selectTime).val());
+			$("#verhicleInput button").click(function(){
+				displayOnlineTime($("#verhicleInput input").val(),$(selectTime).val());
 				})
 			$("#onLineRate").click(function(){
 				$("#selectTime").val("week");
 				$(this).siblings("li").removeClass("active");
 				$(this).addClass("active");
-				$("#verhicalInput").hide();
+				$("#verhicleInput").hide();
 				$("#onLineTimeDiv").hide();
 				$("#onLineRateDiv").show();
 				displayOnlineRate("week");

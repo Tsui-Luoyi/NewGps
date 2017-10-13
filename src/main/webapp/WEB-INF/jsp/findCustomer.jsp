@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,52 +33,37 @@
 <style>
 body {
 	padding: 0 5px;
+	width:100%;
+	height:100%;
 }
-
+h4{
+	font-weight:bold;
+	margin-bottom:-30px;
+}
 .sea {
 	margin: 20px 0;
 	padding: 10px 20px;
 	text-align: center
 }
 
-#findBtn {
-	margin-left: 5px;
-}
-
 th, td {
 	text-align: center;
 }
-/* 头部h4 */
-h4 {
-	font-weight: bold;
-	margin-bottom: -30px;
-}
-
-thead, tfoot {
-	border: 2px #000 solid;
-}
-
-thead tr {
-	height: 35px;
-}
-
-tfoot tr {
-	height: 35px;
-}
-
-tr {
-	height: 28px;
-}
-
-#restartCustomTable tbody td a {
-	margin-left: 5px;
-	background-color: #f7d2d2;
-}
-
-#restartCustomTable tbody td a:hover {
-	background-color: #fff;
-}
-
+thead,tfoot{
+border:2px #000 solid;}
+thead tr{
+height:35px;}
+tfoot tr{
+height:35px;}
+tr{
+height:28px;}
+#customTable tbody td a{
+	margin-left:5px;
+	background-color:#f7d2d2;
+	}
+	#customTable tbody td a:hover{
+		background-color:#fff;
+	}
 #pageSizeDiv, #sortDiv {
 	font-size: 16px;
 	font-weight: bolder;
@@ -112,16 +96,14 @@ tr {
 	display: inline-block;
 	padding: 3px 5px;
 	background-color: #99CCFF;
-	font-weight: bold;
-	color: #000;
+	font-weight: bold; color : #000;
 	border: 1px #000 solid;
 	border-radius: 5px;
 	color: #000;
 }
 
 #pageList li:hover {
-	cursor: pointer;
-	background-color: #000;
+	cursor: pointer; background-color : #000;
 	color: #fff;
 	background-color: #000;
 }
@@ -146,19 +128,18 @@ tr {
 #currentPage {
 	width: 30px;
 }
-/* 最上面搜索框 */
 #searchCustom,#searchTel,#searchAdmin{
 width:120px;}
 </style>
 </head>
 <body>
-	<h4>重启客户:</h4>
+<h4>查询客户:</h4>
 	<table class="sea" cellspacing="0" width="100%">
 		<tr>
 			<td width="10%"></td>
-			<td width="20%">搜索客户：<input type="text" id="searchCustom" /></td>
-			<td width="20%">搜索电话：<input type="number" id="searchTel" /></td>
-			<td width="40%">搜索管理员：<input type="text" id="searchAdmin" />
+			<td width="25%">搜索客户：<input type="text" id="searchCustom" /></td>
+			<td width="25%">搜索电话：<input type="tel" id="searchTel" /></td>
+			<td width="30%">搜索管理员：<input type="text" id="searchAdmin" />
 				<button id="findBtn">查询</button></td>
 			<td width="10%"></td>
 		</tr>
@@ -174,35 +155,36 @@ width:120px;}
 		</div>
 		<div id="sortDiv">
 			按<select name="sortBy" id="sortBy">
-				<option value="stopTime" selected="selected">停用时间</option>
-				<option value="customerName">客户名字</option>
-				<option value="AdminName">客户管理员</option>
+				<option value="createtime" selected="selected">添加时间</option>
+				<option value="customername">客户名字</option>
+				<option value="user_name">客户管理员</option>
 			</select> <select name="sortType" id="sortType">
 				<option value="asc">升序</option>
 				<option value="desc" selected="selected">降序</option>
 			</select>排列
 		</div>
 	</div>
-	<table id="restartCustomTable" border="1px" class="hover"
-		cellspacing="0" width="99.5%">
+	<table id="customTable" border="1px" class="hover" cellspacing="0"
+		width="99.5%">
 		<thead>
 			<tr>
 				<th width='10%' class="checkAll"><input class="select-checkbox"
 					id="checkAll" type="checkbox" />全选</th>
 				<th width='30%'>客户名字</th>
 				<th width='15%'>客户电话</th>
-				<th width='15%' class="">停用时间</th>
+				<th width='15%' class="">添加时间</th>
 				<th width='10%'>客户管理员</th>
 				<th width='20%'>操作</th>
 			</tr>
 		</thead>
-		<tbody></tbody>
+		<tbody>
+			</tbody>
 		<tfoot>
 			<tr>
-				<th width='10%' class="checkAll"><button id="deleteSelected">重启选中</button></th>
+				<th width='10%' class="checkAll"><button id="deleteSelected">删除选中</button></th>
 				<th width='20%'>客户名字</th>
 				<th width='15%'>客户电话</th>
-				<th width='15%' class="">停用时间</th>
+				<th width='15%' class="">添加时间</th>
 				<th width='15%'>客户管理员</th>
 				<th width='25%'>操作</th>
 			</tr>
@@ -244,7 +226,7 @@ width:120px;}
 				if($("#currentPage").val()>$("#totalPage").html()){
 					$("#currentPage").val($("#totalPage").html());
 					ajaxPaging();
-				}else if($("#currentPage").val()==''){
+				}else if($("#currentPage").val()==''||$("#currentPage").val()<=0){
 					$("#currentPage").val("1");
 					ajaxPaging();
 				}else{
@@ -290,34 +272,34 @@ width:120px;}
 			//全选
 			$("#checkAll").click(function(){
 				if($(this).is(':checked')){
-					$("#restartCustomTable tbody input[type='checkbox']").prop("checked",true);
+					$("#customTable tbody input[type='checkbox']").prop("checked",true);
 				}else{
-					$("#restartCustomTable tbody input[type='checkbox']").prop("checked",false);
+					$("#customTable tbody input[type='checkbox']").prop("checked",false);
+					
 				}
 				;
 			})
 		})
+		/*  ajax语句*/
 		function ajaxPaging(){
 			$.ajax({
-			url:"data/truefenye1.json",
-			type:"get",
-			dataType:"json",
-			contextType:"application/json;charset=utf-8",
-			data:{
-				data:JSON.stringify({
-				"pageSize":$("#pageSize").val(),
-				"pageNo":$("#currentPage").val(),
-				"customername":$("#searchCustom").val(),
-				"contact_phone":$("#searchTel").val(),
-				"user_name":$("#searchAdmin").val(),
-				"orderBy":$("#sortBy").val(),
-				"order":$("#sortType").val()
-				})
-			},
+			url:"/NewRmgps/Customer/getCustomerLists",
+			type:"post",
+	 	    dataType:"json",
+	    	contextType:"application/json;charset=utf-8",
+			data:{data:JSON.stringify({
+			"pageSize":$("#pageSize").val(),
+			"pageNo":$("#currentPage").val(),
+			"customername":$("#searchCustom").val(),
+			"contact_phone":$("#searchTel").val(),
+			"user_name":$("#searchAdmin").val(),
+			"orderBy":$("#sortBy").val(),
+			"order":$("#sortType").val()
+			})},
 			success:function(data){
-				$("#restartCustomTable tbody").empty();
+				$("#customTable tbody").empty();
 				$("#totalPage").html(data.totalPage);
-				$("#totalRecord").html(data.totalRecord);
+				$("#totalRecord").html(data.totalRecord)
 				if(data.results.length=="0"){
 					var tr=$("<tr></tr>");
 					var td=$("<td colspan='6'>没有记录</td>")
@@ -329,11 +311,13 @@ width:120px;}
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 					var td2=$("<td>"+data.results[i].customername+"</td>");
 					var td3=$("<td>"+data.results[i].contact_phone+"</td>");
-					var td4=$("<td>"+data.results[i].creattime+"</td>");
+					var td4=$("<td>"+data.results[i].createtime+"</td>");
 					var td5=$("<td>"+data.results[i].user_name+"</td>");
-					var td6=$("<td><a href='javascript:void(0);' onClick='restartThisCustomer(this)' data-id='"
-							+data.results[i].id+"' class='down btn btn-default btn-xs'>重新启用</a>");
-					$("#restartCustomTable tbody").append(tr);
+					var td6=$("<td><a href='javascript:void(0);' onClick='stopThisCustomer(this)' data-name='"+data.results[i].customername+"' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
+							+"<a href='javascript:void(0);' onClick='deleteThisCustomer(this)' data-name='"+data.results[i].customername+"' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs del'> 删除</a></td>");
+					$("#customTable tbody").append(tr);
 					tr.append(td1);
 					tr.append(td2);
 					tr.append(td3);
@@ -344,23 +328,45 @@ width:120px;}
 				}
 			},
 			error:function(error){
+				alert("未知错误，请重试")
 				console.log(error);
 			},
 			async:true
 			})
 		}
-		//启用函数
-		function restartThisCustomer(obj){
-			if(confirm("是否要启用所选客户?")){
+		//删除函数
+		function deleteThisCustomer(obj){
+			if(confirm("是否要删除所选客户\r\r"+obj.getAttribute('data-name')+"?")){
 				$.ajax({
-				url:"data/customlist.json",
+				url:"/NewRmgps/Customer/deleteCustomerByCustomerId",
 				type:"get",
-				dataType:"json",
 				data:{
 					"id":obj.getAttribute("data-id")
 				},
 				success:function(data){
+					alert(data)
 					$(obj).parents("tr").remove();
+					ajaxPaging();
+				},
+				error:function(error){
+					alert("操作失败，请重新操作！");
+				},
+				async:false
+				})
+			}
+		}
+		function stopThisCustomer(obj){
+			if(confirm("是否要停用客户：\r\r"+obj.getAttribute('data-name')+"?")){
+				$.ajax({
+				url:"/NewRmgps/Customer/nonUseCustomerByCustomerId",
+				type:"get",
+				data:{
+				"id":obj.getAttribute("data-id")
+				},
+				success:function(data){
+					$(obj).parents("tr").remove();
+					alert(data)
+					alert("停用成功")
 					ajaxPaging();
 				},
 				error:function(error){
@@ -372,34 +378,35 @@ width:120px;}
 		}
 		$("#deleteSelected").click(function(){
 			var selectId=[];
-			var aa=$("#restartCustomTable tbody input[type='checkbox']");
+			var aa=$("#customTable tbody input[type='checkbox']");
 			for(var i=0;i<aa.length;i++){
 				if($(aa[i]).prop("checked")){
 					selectId.push($(aa[i]).attr("data-id"))
 				}
 			}
 			if(selectId.length==0){
-				alert("请选择要启用的客户")
+				alert("请选择要删除的客户")
 			}else{
-				if(confirm("是否要启用所选客户?")){
+				if(confirm("是否要停用所选客户?")){
 					$.ajax({
-					url:"data/customlist.json",
-					type:"get",
-					dataType:"json",
-					data:{
+						url:"data/customlist.json",
+						type:"get",
+						dataType:"json",
+						data:{
 						"selectId":selectId.join(",")
-					},
-					success:function(data){
-						ajaxPaging();
-						$("#checkAll").prop("checked",false);
-					},
-					error:function(error){
-						alert("操作失败，请重新操作！");
-					},
-					async:false
-					})
+						},
+						success:function(data){
+							ajaxPaging();
+							$("#checkAll").prop("checked",false);
+						},
+						error:function(error){
+							alert("操作失败，请重新操作！");
+						},
+						async:false
+						})
 				}
 			}
+			
 		})
 	</script>
 </body>

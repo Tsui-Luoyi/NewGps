@@ -8,15 +8,13 @@
 <meta charset="UTF-8">
 <title>GPS导航</title>
 <!-- 作者 -->
-<meta name="author" content="author">
+<meta name="author" content="tsui">
 <!-- 关键字使用","分隔 -->
 <meta name="keywords" content="GPS,金圣达,位置">
 <!-- 禁止浏览器从本地机的缓存中调阅页面内容 -->
 <meta http-equiv="Pragma" content="no-cache">
 <!-- 用来防止别人在框架里调用你的页面 -->
 <meta http-equiv="Window-target" content="_top">
-<!-- content的参数有all，none，index，noindex，follow，nofollow，默认是all -->
-<meta name="robots" content="none">
 <!-- 网页不会被缓存 -->
 <meta http-equiv="Cache-Control" content="no-cache, must-revalidate">
 <!-- 解决部分兼容性问题，如果安装了GCF，则使用GCF来渲染页面，如果未安装GCF，则使用最高版本的IE内核进行渲染。 -->
@@ -66,8 +64,8 @@
 				if (r != null) return decodeURI(r[2]); 
 				return null; 
 				}
-			console.log(getQueryString("verhicalId"));
-			console.log(getQueryString("verhicalName"));
+			console.log(getQueryString("verhicleId"));
+			console.log(getQueryString("verhicleName"));
 			    var marker;
 			    var map = new BMap.Map('map');
 			    map.enableScrollWheelZoom();
@@ -89,7 +87,7 @@
 			                   marker=new BMap.Marker(arrPois[0],{
 			                      icon  : new BMap.Icon('http://developer.baidu.com/map/jsdemo/img/car.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)})
 			                   });
-			      var label = new BMap.Label(getQueryString("verhicalName"),{offset:new BMap.Size(0,-30)});
+			      var label = new BMap.Label(getQueryString("verhicleName"),{offset:new BMap.Size(0,-30)});
 			      label.setStyle({border:"1px solid rgb(204, 204, 204)",color: "rgb(0, 0, 0)",borderRadius:"10px",padding:"5px",background:"rgb(255, 255, 255)",});
 			                marker.setLabel(label);
 			                 
@@ -157,7 +155,7 @@
 			            },timer);
 			        };
 			                lushu = new BMapLib.LuShu(map,arrPois,{
-			                defaultContent:getQueryString("verhicalName"),//"从天安门到百度大厦"
+			                defaultContent:getQueryString("verhicleName"),//"从天安门到百度大厦"
 			                autoView:true,//是否开启自动视野调整，如果开启那么路书在运动过程中会根据视野自动调整
 			                icon  : new BMap.Icon('http://developer.baidu.com/map/jsdemo/img/car.png', new BMap.Size(52,26),{anchor : new BMap.Size(27, 13)}),
 			                speed: 14500,
