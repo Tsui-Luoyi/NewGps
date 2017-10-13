@@ -10,9 +10,7 @@
 	http://www.springframework.org/schema/mvc  
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- 自动扫描该包,多个包之间使用,隔开省去了配置controler类的繁琐. -->
-	
-	 <context:component-scan base-package="com.jsd.*" />
-	
+	 <context:component-scan base-package="com.jsd.controller" />
 	<!--配置可以扫描静态资源. -->
 	<mvc:resources location="/web/" mapping="/web/**" />
 	<!--代替映射器和适配器. -->

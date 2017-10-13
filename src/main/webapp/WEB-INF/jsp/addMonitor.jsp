@@ -214,7 +214,7 @@ label.error {
 			</div>
 			<div class="row formDiv">
 				<div class="row userNameDiv">
-					<form id="addUserForm" action="http://127.0.0.1/ceshi.php"
+					<form id="addUserForm" action="/NewRmgps/User/addCustomAdmin"
 						class="form-horizontal" role="form" method="post">
 						<!-- 监控员名字 -->
 						<div class="form-group">
