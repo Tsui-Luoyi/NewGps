@@ -157,7 +157,7 @@
 			<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12"
 				id="innerIframeContainer1">
 				<div id="midToggleBar"></div>
-				<iframe id="managerInnerIframe" src="addCustom.jsp" frameborder="0"
+				<iframe id="managerInnerIframe" name="managerInnerIframe" src="addCustom.jsp" frameborder="0"
 					scrolling="yes" style="width: 100%; height: 100%">浏览器不支持，请升级或更换浏览器</iframe>
 			</div>
 		</div>
