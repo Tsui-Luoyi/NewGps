@@ -195,9 +195,9 @@ label.error {
 			}
 			},
 			submitHandler:function(){
-				$("#addCustomAdminForm").ajaxSubmit(function(){
+				$("#addCustomAdminForm").ajaxSubmit({data:{"sss":"ssss"},success:function(){
 					alert("添加客户管理员成功!");
-				});
+				}});
 				return false;
 			},
 			success:function(label){

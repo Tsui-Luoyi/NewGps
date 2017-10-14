@@ -94,6 +94,7 @@ label.error {
 							name="customAdminLoginPwd1" placeholder="请再次输入登录密码">
 					</div>
 				</div>
+				<input type="hidden" value="1" name="del">
 				<!-- 提交按钮 -->
 				<div class="form-group">
 					<div
@@ -176,10 +177,13 @@ label.error {
 			}
 			},
 			submitHandler:function(){
+				if(confirm("是否添加管理员\r\r"+$("#customAdminName").val()+"?")){
 				$("#addCustomAdminForm").ajaxSubmit(function(){
 					/*获取返回数据进行林场的判断,或者在做一个接口查询出没有管理员的用户前台默认添加用户类型  */
 					alert("添加客户管理员成功!");
+					$("#addCustomAdminForm .reset").trigger("click");
 				});
+				}
 				return false;
 			},
 			success:function(label){

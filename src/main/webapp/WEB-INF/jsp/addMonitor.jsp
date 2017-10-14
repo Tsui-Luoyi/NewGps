@@ -214,15 +214,15 @@ label.error {
 			</div>
 			<div class="row formDiv">
 				<div class="row userNameDiv">
-					<form id="addUserForm" action="/NewRmgps/User/addCustomAdmin"
+					<form id="addUserForm" action="/NewRmgps/User/addCustomMonitor"
 						class="form-horizontal" role="form" method="post">
-						<!-- 监控员名字 -->
+						<!-- 监控员账号 -->
 						<div class="form-group">
 							<label for="userName"
 								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员账号：</label>
 							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 								<input type="text" class="form-control" name="userCode"
-									id="userName" placeholder="请输入监控员账户(3~6位)">
+									id="userName" placeholder="请输入监控员账户(3~16位)">
 							</div>
 						</div>
 						<!-- 用户类型 -->
@@ -237,16 +237,7 @@ label.error {
 									</select>
 								</div>
 							</div>
-						</div> -->
-						<!-- 用户电话 -->
-						<div class="form-group">
-							<label for="userTel"
-								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员电话(选填)：</label>
-							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
-								<input type="text" class="form-control" name="userTel"
-									id="userTel" placeholder="请输入监控员电话">
-							</div>
-						</div>
+						</div> -->		
 						 <!-- 用户地址 -->
 						<!-- <div class="form-group">
 							<label for="userAdd"
@@ -262,9 +253,11 @@ label.error {
 								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">登录密码：</label>
 							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 								<input type="password" class="form-control" id="userLoginPwd"
-									name="userLoginPwd" placeholder="请输入登录密码(6~16位)">
+									name="userPassword" placeholder="请输入登录密码(6~16位)">
 							</div>
 						</div>
+						<input type="hidden" value="2" name="userTypeid">
+						<input  type="hidden" value="${customerId}" name="customerid"> 
 						<!-- 用户密码确认 -->
 						<div class="form-group">
 							<label for="userLoginPwd1"
@@ -461,8 +454,13 @@ label.error {
 				}
 			},
 			submitHandler:function(){
-				$("#addUserForm").ajaxSubmit(function(){
-					alert("添加用户成功!");
+				$("#addUserForm").ajaxSubmit(function(data){
+					if(data==="true"){
+						alert("添加用户成功!");
+					}else{
+						alert("未知错误!");
+					}
+				
 					userGroupSet();
 				});
 				return false;

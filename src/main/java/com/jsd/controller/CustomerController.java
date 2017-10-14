@@ -46,13 +46,15 @@ public class CustomerController {
 		return "addCustomer";
 	}
 	
-	@RequestMapping(value ="/addCustomer",produces={"text/html;charset=UTF-8;"})
+@RequestMapping(value ="/addCustomer",produces={"text/html;charset=UTF-8;"})
 	public  @ResponseBody String addCustomer( CustomerVo c){
+		System.out.println(c.getPhone());
 		JsdCustomer customer = new JsdCustomerImpl();               
 		int addCustomer = customer.addCustomer(1,c);
 		System.out.println(addCustomer);
-		return "添加成功";
+		return "success";
 	}
+
 
 @RequestMapping(value ="/selecTcustomersByCAId",produces={"text/html;charset=UTF-8;"})
 	public void selecTcustomersByCAId( HttpServletResponse response){

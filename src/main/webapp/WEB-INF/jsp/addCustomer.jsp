@@ -98,7 +98,7 @@ color:red}
 				rules:{
 					name:{
 						required:true,
-						rangelength:[3,6],
+						rangelength:[3,16],
 						//远程验证
 						remote:{
 							url :"/NewRmgps/Customer/checkCustomer", 
@@ -111,26 +111,41 @@ color:red}
 								}
 							}
 						}
+					},
+					phone:{
+						
+						rangelength:[11,11],
+						digits:true
 					}
 				},
 				messages:{
 					name:{
 						remote:"该客户名已被注册"
+					},
+					phone:{
+						
+						rangelength:"请输入11位数字",
+						digits:"只能输入数字"
 					}
 				},
 				submitHandler:function(){
-					$("#addCustomForm").ajaxSubmit({
-						url:"/NewRmgps/Customer/addCustomer",
-						data:{"aa":"dd"},
-						async:"false",
-						success:function(data){
-							//不太合理,添加成功后应该返回当前页面,还应该显示客户的信息,电话号码没有验证
-							alert(data);
-						},
-						error:function(e){
-							console.log(e);
-						}
-					});
+					if(confirm("是否添加客户/r/r"+$("#customName").val()+"?")){
+						$("#addCustomForm").ajaxSubmit({
+							url:"/NewRmgps/Customer/addCustomer",
+							data:{"aa":"dd"},
+							async:"false",
+							success:function(data){
+								
+								//不太合理,添加成功后应该返回当前页面,还应该显示客户的信息,电话号码没有验证
+								alert(data);
+								$("#addCustomForm .reset").trigger("click");
+							},
+							error:function(e){
+								console.log(e);
+							}
+						});
+					}
+					
 					return false;
 				},
 				success: function(label){
