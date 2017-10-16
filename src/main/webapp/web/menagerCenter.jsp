@@ -84,7 +84,7 @@
 										onClick="changeIframe('#managerInnerIframe','/NewRmgps/User/toAddMonitor')"
 										href="javascript:void(0);">添加监控员</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','findUser.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/User/toFindMonitor')"
 										href="javascript:void(0);">查询监控员</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','stopUser.jsp')"

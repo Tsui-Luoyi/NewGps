@@ -90,6 +90,7 @@ public String toFindCustomer (){
 "orderBy":$("#sortBy").val(),
 "order":*/
 public void getCustomerLists ( HttpServletResponse response, String data  ){
+	
 	System.out.println("进入查询");
 	System.out.println(data);
 
