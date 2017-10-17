@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,11 +59,11 @@ tfoot tr{
 height:35px;}
 tr{
 height:28px;}
-#userTable tbody td a{
+#groupTable tbody td a{
 	margin-left:5px;
 	background-color:#f7d2d2;
 	}
-	#userTable tbody td a:hover{
+	#groupTable tbody td a:hover{
 		background-color:#fff;
 	}
 #pageSizeDiv, #sortDiv {
@@ -131,22 +130,14 @@ height:28px;}
 #currentPage {
 	width: 30px;
 }
-/* a按钮禁用 */
-#userTable tbody td .a-disable{
-    margin-left: 5px;
-    background-color: #fff;
-    color:#5a5959;
-    }
-#userTable tbody td .a-disable:hover{cursor:not-allowed;}
 </style>
 </head>
 <body>
-<h4>查询监控员:</h4>
-<input type="hidden" name="userTypeid" id="userTypeid" value="2">
+<h4>查询分组:</h4>
 	<table class="sea" cellspacing="0" width="100%">
 		<tr>
 			<td width="25%"></td>
-			<td width="50%">搜索监控员：<input type="text" id="searchUser" /><button id="findBtn">查询</button></td>
+			<td width="50%">搜索分组：<input type="text" id="searchGroup" /><button id="findBtn">查询</button></td>
 			<!-- <td width="35%">搜索电话：<input type="number" id="searchTel" /><button id="findBtn">查询</button></td> -->
 			<td width="25%"><button>导出EXCEL</button></td>
 		</tr>
@@ -161,28 +152,22 @@ height:28px;}
 			</select>条数据
 		</div>
 		<div id="sortDiv">
-		查看<select name="del" id="del">
-				<option value="" selected="selected">所有</option>
-				<option value=0>未停用</option>
-				<option value=1>已停用</option>
-			</select>
-			监控员，
 			按<select name="sortBy" id="sortBy">
 				<option value="createtime" selected="selected">添加时间</option>
-				<option value="user_name">监控员名字</option>
+				<option value="name">分组名字</option>
 			</select> <select name="sortType" id="sortType">
 				<option value="asc">升序</option>
 				<option value="desc" selected="selected">降序</option>
 			</select>排列
 		</div>
 	</div>
-	<table id="userTable" border="1px" class="hover" cellspacing="0"
+	<table id="groupTable" border="1px" class="hover" cellspacing="0"
 		width="99.5%">
 		<thead>
 			<tr>
 				<th width='10%' class="checkAll"><input class="select-checkbox"
 					id="checkAll" type="checkbox" />全选</th>
-				<th width='30%'>监控员名字</th>
+				<th width='30%'>分组名字</th>
 				<th width='25%' class="">添加时间</th>
 				<th width='35%'>操作</th>
 			</tr>
@@ -191,7 +176,7 @@ height:28px;}
 		<tfoot>
 			<tr>
 				<th width='10%' class="checkAll"><button id="deleteSelected">删除选中</button></th>
-				<th width='30%'>监控员名字</th>
+				<th width='30%'>分组名字</th>
 				<th width='25%' class="">添加时间</th>
 				<th width='35%'>操作</th>
 			</tr>
@@ -224,7 +209,7 @@ height:28px;}
 				ajaxPaging();
 			});
 			//每页条数改变时
-			$("#pageSize,#sortBy,#sortType,#del").change(function(){
+			$("#pageSize,#sortBy,#sortType").change(function(){
 				$("#currentPage").val("1");
 				ajaxPaging();
 			})
@@ -279,9 +264,9 @@ height:28px;}
 			//全选
 			$("#checkAll").click(function(){
 				if($(this).is(':checked')){
-					$("#userTable tbody input[type='checkbox']").prop("checked",true);
+					$("#groupTable tbody input[type='checkbox']").prop("checked",true);
 				}else{
-					$("#userTable tbody input[type='checkbox']").prop("checked",false);
+					$("#groupTable tbody input[type='checkbox']").prop("checked",false);
 					
 				}
 				;
@@ -289,65 +274,44 @@ height:28px;}
 		})
 		function ajaxPaging(){
 			$.ajax({
-			url:"/NewRmgps/User/getMonitorLists",
+			url:"/NewRmgps/Group/getGroupLists",
 			type:"post",
 			dataType:"json",
 			contextType:"application/json;charset=utf-8",
 			data:{data:JSON.stringify({
 			"pageSize":$("#pageSize").val(),
 			"pageNo":$("#currentPage").val(),
-			"userName":$("#searchUser").val(),
-			"userTypeid":$("#userTypeid").val(),
+			"name":$("#searchGroup").val(),
 			/* "contact_phone":$("#searchTel").val(), */
 			/* "user_name":$("#searchAdmin").val(), */
 			"orderBy":$("#sortBy").val(),
-			"del":$("#del").val(),
 			"order":$("#sortType").val()
 			})},
 			success:function(data){
-				$("#userTable tbody").empty();
+				$("#groupTable tbody").empty();
 				$("#totalPage").html(data.totalPage);
-				$("#totalRecord").html(data.totalRecord);
+				$("#totalRecord").html(data.totalRecord)
 				if(data.results.length=="0"){
 					var tr=$("<tr></tr>");
 					var td=$("<td colspan='4'>没有记录</td>")
-					$("#userTable tbody").append(tr);
+					$("#groupTable tbody").append(tr);
 					tr.append(td);
 				}else{
 				for(var i=0;i<data.results.length;i++){
-					if(!data.results[i].del){
-						var tr=$("<tr></tr>");
-						var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
-						var td2=$("<td>"+data.results[i].userName+"</td>");
-						var td3=$("<td>"+data.results[i].creattime+"</td>");
-						var td4=$("<td><a href='changeUser.jsp?id="+data.results[i].id+"&userName="+data.results[i].userName+"' target='_self' onClick='changeThisUser(this)' data-id='"
-								+data.results[i].id+"' class='down btn btn-default btn-xs'>修改</a><a href='javascript:void(0);' onClick='stopThisUser(this)' data-id='"
-								+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
-								+"<a href='javascript:void(0);' onClick='deleteThisUser(this)' data-id='"
-								+data.results[i].id+"' class='down btn btn-default btn-xs del'> 删除</a><a href='javascript:void(0);' onClick='initThisUser(this)' data-id='"
-								+data.results[i].id+"' class='down btn btn-default btn-xs'>重置</a></td>");
-						$("#userTable tbody").append(tr);
-						tr.append(td1);
-						tr.append(td2);
-						tr.append(td3);
-						tr.append(td4);
-						}else{
-							var tr=$("<tr class='tr-disable'></tr>");
-							var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
-							var td2=$("<td>"+data.results[i].userName+"</td>");
-							var td3=$("<td>"+data.results[i].creattime+"</td>");
-							var td4=$("<td><a  href=' javascript:void(0);'  target='_self' onClick='' data-id='"
-									+data.results[i].id+"' class='down btn btn-default btn-xs a-disable'>修改</a><a href='javascript:void(0);' onClick='restartThisUser(this)' data-id='"
-									+data.results[i].id+"' class='down btn btn-default btn-xs '>重启</a>"
-									+"<a href='javascript:void(0);' onClick='' data-id='"
-									+data.results[i].id+"' class='down btn btn-default btn-xs del a-disable'> 删除</a><a href='javascript:void(0);' onClick='' data-id='"
-									+data.results[i].id+"' class='down btn btn-default btn-xs a-disable'>重置</a></td>");
-							$("#userTable tbody").append(tr);
-							tr.append(td1);
-							tr.append(td2);
-							tr.append(td3);
-							tr.append(td4);
-						}
+					var tr=$("<tr></tr>");
+					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
+					var td2=$("<td>"+data.results[i].name+"</td>");
+					var td3=$("<td>"+data.results[i].createtime+"</td>");
+					var td4=$("<td><a href='changeGroup.jsp?id="+data.results[i].id+"&name="+data.results[i].name+"' target='_blank' onClick='changeThisGroup(this)' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs'>修改</a><a href='javascript:void(0);' onClick='stopThisGroup(this)' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
+							+"<a href='javascript:void(0);' onClick='deleteThisGroup(this)' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs del'> 删除</a>");
+					$("#groupTable tbody").append(tr);
+					tr.append(td1);
+					tr.append(td2);
+					tr.append(td3);
+					tr.append(td4);
 				}
 				}
 			},
@@ -359,17 +323,16 @@ height:28px;}
 			})
 		}
 		//删除函数
-		function deleteThisUser(obj){
-			if(confirm("是否要删除所选监控员?")){
+		function deleteThisGroup(obj){
+			if(confirm("是否要删该分组?")){
 				$.ajax({
-				url:"/NewRmgps/User/deleteMonitorByMonitorId",
-				type:"post",
+				url:"data/grouplist.json",
+				type:"get",
 				dataType:"json",
 				data:{
 					"id":obj.getAttribute("data-id")
 				},
 				success:function(data){
-					alert(data);
 					$(obj).parents("tr").remove();
 					ajaxPaging();
 				},
@@ -381,11 +344,11 @@ height:28px;}
 			}
 		}
 		// 停止操作
-		function stopThisUser(obj){
-			if(confirm("是否要停用所选监控员?")){
+		function stopThisGroup(obj){
+			if(confirm("是否要停用所选分组?")){
 				$.ajax({
-				url:"/NewRmgps/User/nonMonitorByMonitor",
-				type:"post",
+				url:"data/grouplist.json",
+				type:"get",
 				dataType:"json",
 				data:{
 				"id":obj.getAttribute("data-id")
@@ -402,76 +365,29 @@ height:28px;}
 			}
 		}
 		//修改操作
-		function changeThisUser(obj){
-			alert("修改监控员操作")
-		}
-		//重启函数
-		function restartThisUser(obj){
-			if(confirm("是否要重新启用所选监控员?")){
-				$.ajax({
-				url:"/NewRmgps/User/RestartMonitorByMonitor",
-				type:"get",
-				dataType:"json",
-				data:{
-					"id":obj.getAttribute("data-id")
-				},
-				success:function(data){
-					$(obj).parents("tr").remove();
-					ajaxPaging();
-				},
-				error:function(error){
-					alert("操作失败，请重新操作！");
-				},
-				async:false
-				})
-			}
-		}
-
-		//重置密码操作
-		function initThisUser(obj){
-			if(confirm("是否要重置监控员密码?")){
-				$.ajax({
-				url:"/NewRmgps/User/resetPasswordByuserId",
-				type:"get",
-				dataType:"json",
-				data:{
-				"id":obj.getAttribute("data-id")
-				},
-				success:function(data){
-					alert(data);
-					alert("密码已经重置为：000000！")
-					/* $(obj).parents("tr").remove();
-					ajaxPaging(); */
-				},
-				error:function(error){
-					alert("操作失败，请重新操作！");
-				},
-				async:false
-				})
-			}
+		function changeThisGroup(obj){
+			alert("修改分组操作")
 		}
 		$("#deleteSelected").click(function(){
-			
 			var selectId=[];
-			var aa=$("#userTable tbody input[type='checkbox']");
+			var aa=$("#groupTable tbody input[type='checkbox']");
 			for(var i=0;i<aa.length;i++){
 				if($(aa[i]).prop("checked")){
 					selectId.push($(aa[i]).attr("data-id"))
 				}
 			}
 			if(selectId.length==0){
-				alert("请选择要删除的监控员")
+				alert("请选择要删除的分组")
 			}else{
-				if(confirm("是否要删除所选监控员?")){
+				if(confirm("是否要删除所选分组?")){
 					$.ajax({
-						url:"/NewRmgps/User/deletePartMonitorByMonitorId",
-						type:"post",
+						url:"data/userlist.json",
+						type:"get",
 						dataType:"json",
 						data:{
 						"selectId":selectId.join(",")
 						},
 						success:function(data){
-							alert(data);
 							ajaxPaging();
 							$("#checkAll").prop("checked",false);
 						},

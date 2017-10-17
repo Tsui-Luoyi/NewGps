@@ -1,8 +1,12 @@
 package com.jsd.controller;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +15,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.jsd.db.pojo.Group;
 import com.jsd.db.pojo.Tuser;
 import com.jsd.service.JsdCustomer;
+import com.jsd.service.JsdGroup;
 import com.jsd.service.JsdTuser;
 import com.jsd.service.impl.JsdCustomerImpl;
+import com.jsd.service.impl.JsdGroupImpl;
 import com.jsd.service.impl.JsdTuserImpl;
 import com.jsd.service.vo.CustomerVo;
 import com.jsd.service.vo.TuserVo;
@@ -182,7 +189,54 @@ public class TuserController {
 		
 		
 	}
-
+	@RequestMapping("resetPasswordByuserId")
+	public @ResponseBody String resetPasswordByuserId(int id){
+		
+		System.out.println("进入重置监控员的操作停用id为"+id);
+		
+		JsdTuser jsdTuserImpl = new JsdTuserImpl();
+		int num = jsdTuserImpl.resetPasswordByuserId(id);
+		System.out.println("重置操作完成");
+		return num+"";
+		
+	
+	}
+	@RequestMapping("	RestartMonitorByMonitor")
+	public @ResponseBody String 	RestartMonitorByMonitor(int id){
+		
+		System.out.println("进入重启监控员的操作停用id为"+id);
+		
+		JsdTuser jsdTuserImpl = new JsdTuserImpl();
+		int num = jsdTuserImpl.RestartMonitorByMonitor(id);
+		System.out.println("重启操作完成");
+		return num+"";
+		
+		
+	}
+//showMonitorsForPage
+	
+	@RequestMapping(value = "showMonitorsForPage", produces={"text/html;charset=UTF-8;"})
+	public void	showMonitorsForPage(HttpServletResponse response){
+		
+		System.out.println("假设已经获取到了登录用户的id");
+		System.out.println("展示出用户的所有监控员");
+	    JsdTuser jsdTuserImpl = new JsdTuserImpl();
+	    List<Tuser> tusers = jsdTuserImpl.showMonitorsForPage(2);
+	    for (Tuser tuser : tusers) {
+			System.out.println(JSON.toJSONString(tuser));
+		}
+	    String jsonString = JSONArray.fromObject(tusers).toString();
+	    System.out.println(jsonString);
+		response.setContentType("application/json; charset=UTF-8");
+				try {
+					response.getWriter().print(jsonString);
+					response.getWriter().flush();//刷新流.
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+	}
 	
 	
 	

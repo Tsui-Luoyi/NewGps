@@ -86,9 +86,9 @@
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','/NewRmgps/User/toFindMonitor')"
 										href="javascript:void(0);">查询监控员</a></li>
-									<li><a
+								<!-- 	<li><a
 										onClick="changeIframe('#managerInnerIframe','stopUser.jsp')"
-										href="javascript:void(0);">重启已停用监控员</a></li>
+										href="javascript:void(0);">重启已停用监控员</a></li> -->
 								</ul>
 							</div>
 						</div>
@@ -107,10 +107,10 @@
 							<div class="panel-body">
 								<ul class="nav nav-pills nav-stacked">
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','addGroup.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Group/toAddGroup')"
 										href="javascript:void(0);">添加分组</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','findGroup.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Group/toFindGroup')"
 										href="javascript:void(0);">查询分组</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','stopGroup.jsp')"
