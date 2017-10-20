@@ -1,6 +1,7 @@
 package com.jsd.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,6 +23,7 @@ import com.jsd.service.impl.JsdTuserImpl;
 import com.jsd.service.impl.JsdVehicleImpl;
 import com.jsd.service.vo.GroupVo;
 import com.jsd.service.vo.ShowGV;
+import com.jsd.test.newCustomerTest;
 import com.jsd.utils.Page;
 
 @Controller
@@ -74,6 +77,23 @@ public class GroupController {
 		
 		return "findGroup";
 	}
+	@RequestMapping(value ="/toChangeGroup",produces={"text/html;charset=UTF-8;"})
+	public String toChangeGroup(int id,String name,Model model){
+		System.out.println("id="+id+",name="+name);
+		System.out.println("进入去查询分组页面,并且假设用户处于登录中");
+		model.addAttribute("id", id);
+		System.out.println(name);
+	    String str="";
+	try {
+		str = new String(name.getBytes("iso-8859-1"), "utf-8");
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   System.out.println(str);
+		model.addAttribute("name", str);
+		return "changeGroup";
+	}
 	@RequestMapping("addGroup")
 	public  @ResponseBody String  addGroup(Group group,String selectedUser){
 		System.out.println("进入添加分组方法");
@@ -104,6 +124,62 @@ public class GroupController {
 		}
 		return "false";
 	}
+	@RequestMapping("deleteGroup")
+	public @ResponseBody String deleteGroup(int id){
+		
+        System.out.println("进入删除分组的方法");
+        JsdGroup jsdGroupImpl = new JsdGroupImpl();
+		int num = jsdGroupImpl.deleteAllGroupByGroupId(id);
+		System.out.println(num);
+		System.out.println("删除操作完成");
+		return num+"";
+	}
+	@RequestMapping("deleteGroups")
+	public @ResponseBody String deleteGroups(String selectId){
+		
+		System.out.println("进入删除部分分组的方法");
+		System.out.println(selectId);
+		JsdGroup jsdGroupImpl = new JsdGroupImpl();
+		int num = jsdGroupImpl.deleteGroupsByGroupIds(selectId);
+		System.out.println(num);
+		System.out.println("删除部分分组操作完成");
+		return num+"";
+	}
+	
+	@RequestMapping("nonGroup")
+	public @ResponseBody String nonGroup(int id){
+		
+		System.out.println("进入停用分组的操作停用id为"+id);
+		
+		JsdGroup jsdGroupImpl = new JsdGroupImpl();
+		int num = jsdGroupImpl.nonGroupByGroupId(id);
+		System.out.println("停用操作完成");
+		return num+"";
+		
+	}
+	@RequestMapping("restartGroup")
+	public @ResponseBody String restartGroup(int id){
+		
+		System.out.println("进入重启分组的操作停用id为"+id);
+		
+		JsdGroup jsdGroupImpl = new JsdGroupImpl();
+		int num = jsdGroupImpl.restartGroupByGroupId(id);
+		System.out.println("重启操作完成");
+		return num+"";
+		
+	}
+	@RequestMapping("updateGroup")
+	public @ResponseBody String updateGroup(Group group){
+		
+		System.out.println("进入分组后id为"+group.getId());
+		System.out.println("进入分组后id为"+group.getName());
+		JsdGroup jsdGroupImpl = new JsdGroupImpl();
+		int num = jsdGroupImpl.updateGroup(group);
+		System.out.println("修改操作完成");
+		return num+"";
+		
+	}
+	
 	@RequestMapping(value ="/getGroupLists",produces={"text/html;charset=UTF-8;"})
 	public  void  getMonitorLists( HttpServletResponse response, String data){
 		

@@ -51,5 +51,17 @@
 		<!-- 内存中的最大值 -->
 		<property name="maxInMemorySize" value="40960" />
 	</bean>
+	
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+                <prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error_fileupload</prop>  
+            </props>  
+        </property>  
+    </bean>
+	
+	
+	
+	
 	<!-- <bean id="newrf" class="com.newrmgps.mybatis.sdk.factory.NewRmgpsFacotry"/> -->
 </beans>

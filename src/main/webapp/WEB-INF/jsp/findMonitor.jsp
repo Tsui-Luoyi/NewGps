@@ -53,7 +53,9 @@ th, td {
 	text-align: center;
 }
 thead,tfoot{
-border:2px #000 solid;}
+border:2px #9e9797 solid;
+background-color:#a6d3ec;
+}
 thead tr{
 height:35px;}
 tfoot tr{
@@ -67,6 +69,9 @@ height:28px;}
 	#userTable tbody td a:hover{
 		background-color:#fff;
 	}
+	#userTable{
+	background-color:#c4e0e0;
+}
 #pageSizeDiv, #sortDiv {
 	font-size: 16px;
 	font-weight: bolder;
@@ -320,7 +325,7 @@ height:28px;}
 						var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 						var td2=$("<td>"+data.results[i].userName+"</td>");
 						var td3=$("<td>"+data.results[i].creattime+"</td>");
-						var td4=$("<td><a href='changeUser.jsp?id="+data.results[i].id+"&userName="+data.results[i].userName+"' target='_self' onClick='changeThisUser(this)' data-id='"
+						var td4=$("<td><a href='/NewRmgps/User/ToChangeUser?id="+data.results[i].id+"&userName="+data.results[i].userName+"' target='_self' onClick='changeThisUser(this)' data-id='"
 								+data.results[i].id+"' class='down btn btn-default btn-xs'>修改</a><a href='javascript:void(0);' onClick='stopThisUser(this)' data-id='"
 								+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
 								+"<a href='javascript:void(0);' onClick='deleteThisUser(this)' data-id='"

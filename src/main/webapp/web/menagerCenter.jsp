@@ -133,10 +133,10 @@
 							<div class="panel-body">
 								<ul class="nav nav-pills nav-stacked">
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','${pagecontext.request.getcontextpath}/Customer/toAddCustomer')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Vehicle/toAddVehicle')"
 										href="javascript:void(0);">添加车辆</a></li>
 										<li><a
-										onClick="changeIframe('#managerInnerIframe','importVerhicle.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Vehicle/toImportVehicles')"
 										href="javascript:void(0);">批量导入车辆</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','findVerhicle.jsp')"

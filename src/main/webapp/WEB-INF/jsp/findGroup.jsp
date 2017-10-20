@@ -52,13 +52,19 @@ th, td {
 	text-align: center;
 }
 thead,tfoot{
-border:2px #000 solid;}
+border:2px #9e9797 solid;
+background-color:#a6d3ec;
+}
 thead tr{
 height:35px;}
 tfoot tr{
 height:35px;}
 tr{
 height:28px;}
+/* 表格样式 */
+#groupTable{
+	background-color:#c4e0e0;
+}
 #groupTable tbody td a{
 	margin-left:5px;
 	background-color:#f7d2d2;
@@ -130,6 +136,12 @@ height:28px;}
 #currentPage {
 	width: 30px;
 }
+#groupTable tbody td .a-disable{
+    margin-left: 5px;
+    background-color: #fff;
+    color:#5a5959;
+    }
+#groupTable tbody td .a-disable:hover{cursor:not-allowed;}
 </style>
 </head>
 <body>
@@ -152,6 +164,12 @@ height:28px;}
 			</select>条数据
 		</div>
 		<div id="sortDiv">
+		查看<select name="del" id="del">
+				<option  value="" selected="selected">所有</option>
+				<option value=0>未停用</option>
+				<option value=1>已停用</option>
+			</select>
+			分组，
 			按<select name="sortBy" id="sortBy">
 				<option value="createtime" selected="selected">添加时间</option>
 				<option value="name">分组名字</option>
@@ -209,7 +227,7 @@ height:28px;}
 				ajaxPaging();
 			});
 			//每页条数改变时
-			$("#pageSize,#sortBy,#sortType").change(function(){
+			$("#pageSize,#sortBy,#sortType,#del").change(function(){
 				$("#currentPage").val("1");
 				ajaxPaging();
 			})
@@ -282,6 +300,7 @@ height:28px;}
 			"pageSize":$("#pageSize").val(),
 			"pageNo":$("#currentPage").val(),
 			"name":$("#searchGroup").val(),
+			"del":$("#del").val(),
 			/* "contact_phone":$("#searchTel").val(), */
 			/* "user_name":$("#searchAdmin").val(), */
 			"orderBy":$("#sortBy").val(),
@@ -298,11 +317,12 @@ height:28px;}
 					tr.append(td);
 				}else{
 				for(var i=0;i<data.results.length;i++){
+					if(!data.results[i].del){
 					var tr=$("<tr></tr>");
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 					var td2=$("<td>"+data.results[i].name+"</td>");
 					var td3=$("<td>"+data.results[i].createtime+"</td>");
-					var td4=$("<td><a href='changeGroup.jsp?id="+data.results[i].id+"&name="+data.results[i].name+"' target='_blank' onClick='changeThisGroup(this)' data-id='"
+					var td4=$("<td><a href='/NewRmgps/Group/toChangeGroup?id="+data.results[i].id+"&name="+data.results[i].name+"' target='_self' onClick='changeThisGroup(this)' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs'>修改</a><a href='javascript:void(0);' onClick='stopThisGroup(this)' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
 							+"<a href='javascript:void(0);' onClick='deleteThisGroup(this)' data-id='"
@@ -312,6 +332,22 @@ height:28px;}
 					tr.append(td2);
 					tr.append(td3);
 					tr.append(td4);
+				}else{
+					var tr=$("<tr class='tr-disable'></tr>");
+					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
+					var td2=$("<td>"+data.results[i].name+"</td>");
+					var td3=$("<td>"+data.results[i].createtime+"</td>");
+					var td4=$("<td><a  href=' javascript:void(0);'  target='_self' onClick='' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs a-disable'>修改</a><a href='javascript:void(0);' onClick='restartThisGroup(this)' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs '>重启</a>"
+							+"<a href='javascript:void(0);' onClick='' data-id='"
+							+data.results[i].id+"' class='down btn btn-default btn-xs del a-disable'> 删除</a>");
+					$("#groupTable tbody").append(tr);
+					tr.append(td1);
+					tr.append(td2);
+					tr.append(td3);
+					tr.append(td4);
+				}
 				}
 				}
 			},
@@ -324,9 +360,9 @@ height:28px;}
 		}
 		//删除函数
 		function deleteThisGroup(obj){
-			if(confirm("是否要删该分组?")){
+			if(confirm("是否要删该分组和他的所属车辆?")){
 				$.ajax({
-				url:"data/grouplist.json",
+				url:"/NewRmgps/Group/deleteGroup",
 				type:"get",
 				dataType:"json",
 				data:{
@@ -347,11 +383,32 @@ height:28px;}
 		function stopThisGroup(obj){
 			if(confirm("是否要停用所选分组?")){
 				$.ajax({
-				url:"data/grouplist.json",
+				url:"/NewRmgps/Group/nonGroup",
 				type:"get",
 				dataType:"json",
 				data:{
 				"id":obj.getAttribute("data-id")
+				},
+				success:function(data){
+					$(obj).parents("tr").remove();
+					ajaxPaging();
+				},
+				error:function(error){
+					alert("操作失败，请重新操作！");
+				},
+				async:false
+				})
+			}
+		}
+		//重启函数
+		function restartThisGroup(obj){
+			if(confirm("是否要重新启用所选分组?")){
+				$.ajax({
+				url:"/NewRmgps/Group/restartGroup",
+				type:"post",
+				dataType:"json",
+				data:{
+					"id":obj.getAttribute("data-id")
 				},
 				success:function(data){
 					$(obj).parents("tr").remove();
@@ -381,7 +438,7 @@ height:28px;}
 			}else{
 				if(confirm("是否要删除所选分组?")){
 					$.ajax({
-						url:"data/userlist.json",
+						url:"/NewRmgps/Group/deleteGroups",
 						type:"get",
 						dataType:"json",
 						data:{

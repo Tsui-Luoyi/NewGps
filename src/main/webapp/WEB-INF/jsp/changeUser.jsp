@@ -204,8 +204,8 @@ label.error {
 			<div class="row">
 				<ul class="userTab">
 					<li class="active">基本信息</li>
-					<li>分组设置</li>
-					<li>权限设置</li>
+					<!-- <li>分组设置</li>
+					<li>权限设置</li> -->
 				</ul>
 			</div>
 			<div class="row formDiv">
@@ -270,16 +270,16 @@ label.error {
 						<div class="form-group">
 							<div
 								class="col-lg-push-1 col-md-push-1 col-sm-push-1 col-lg-7 col-md-7 col-sm-7 col-xs-10 text-center">
-								<input type="submit" class="btn btn-info" value="添加" /> <input
+								<input type="submit" class="btn btn-info" value="修改" /> <input
 									type="reset" class="btn btn-danger reset" />
 							</div>
 						</div>
 					</form>
 				</div>
-				<div class="row userGroupDiv">
-					<!-- <form id="groupSetForm" action="http://127.0.0.1/ceshi.php"
-						class="form-horizontal" role="form" method="post"> -->
-					<!-- 分组设置 -->
+				<!-- <div class="row userGroupDiv">
+					<form id="groupSetForm" action="http://127.0.0.1/ceshi.php"
+						class="form-horizontal" role="form" method="post">
+					分组设置
 					<div class="form-group checkBox">
 						<label
 							class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">请选择分组:</label>
@@ -291,14 +291,15 @@ label.error {
 							<ul id="groupSetTree" class="ztree"></ul>
 						</div>
 					</div>
-					<!-- 提交按钮 -->
+					提交按钮
 					<div
 						class="col-lg-push-1 col-md-push-1 col-sm-push-1 col-lg-7 col-md-7 col-sm-7 col-xs-10 text-center">
 						<input type="button" class="btn btn-info" value="提交" />
 					</div>
-					<!-- </form> -->
-				</div>
-				<div class="row userJurisdictionDiv">
+					</form>
+				</div> -->
+				<!-- 权限设置 -->
+				<!-- <div class="row userJurisdictionDiv">
 					<form id="changeUserForm" action="/NewRmgps/User/updateMonitor"
 						class="form-horizontal" role="form" method="post">
 						<div class="row">
@@ -314,13 +315,13 @@ label.error {
 							</div>
 						</div>
 					</form>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
 	<script src="/NewRmgps/web/js/jquery.min.js"></script>
 	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
-	<!-- <script src="https://cdn.bootcss.com/jquery-validate/1.17.0/jquery.validate.js"></script> -->
+	<script src="/NewRmgps/web/js/jquery.ztree.all.js"></script>
 	<script src="/NewRmgps/web/js/jquery.validate.js"></script>
 	<script src="/NewRmgps/web/js/messages_zh.js"></script>
 	<script src="/NewRmgps/web/js/jquery.form.js"></script>
@@ -463,7 +464,7 @@ label.error {
 			submitHandler:function(){
 				$("#changeUserForm").ajaxSubmit(function(){
 					alert("信息修改成功!");
-					userGroupSet();
+					/* userGroupSet(); */
 				});
 				return false;
 			},

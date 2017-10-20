@@ -75,7 +75,7 @@ public class TuserController {
 		return "findMonitor";
 	}
 	@RequestMapping(value ="/ToChangeUser",produces={"text/html;charset=UTF-8;"})
-	public  String  changeUser(int id, Model model){
+	public  String  ToChangeUser(int id, Model model){
 		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
 		//假设登录成功changeUser
 		 JsdCustomerImpl jsdCustomerImpl = new JsdCustomerImpl();
