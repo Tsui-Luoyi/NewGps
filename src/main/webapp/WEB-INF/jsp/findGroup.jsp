@@ -143,6 +143,7 @@ height:28px;}
     }
 #groupTable tbody td .a-disable:hover{cursor:not-allowed;}
 </style>
+<!--10月26日添加  -->
 </head>
 <body>
 <h4>查询分组:</h4>
@@ -219,6 +220,19 @@ height:28px;}
 	<script src="/NewRmgps/web/js/jquery.min.js"></script>
 	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
 	<script>
+	function getDateTime(date) {
+		if(date==null){
+			return "1970-01-01 00:00:00";
+		}
+		var date=new Date(date);
+	    var year = date.getFullYear();
+	    var month = date.getMonth() + 1;
+	    var day = date.getDate();
+	    var hh = date.getHours();
+	    var mm = date.getMinutes();
+	    var ss = date.getSeconds();
+	    return year + "-" + month + "-" + day + " " + hh + ":" + mm + ":" + ss;
+	}
 		$(function(){
 			ajaxPaging();
 			//查询时
@@ -321,7 +335,9 @@ height:28px;}
 					var tr=$("<tr></tr>");
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 					var td2=$("<td>"+data.results[i].name+"</td>");
-					var td3=$("<td>"+data.results[i].createtime+"</td>");
+					/* getDateTime(ConvertJSONDateToJSDate(data.results[i].createtime)) */
+					/* var td3=$("<td>"+data.results[i].createtime+"</td>"); */
+					 var td3=$("<td>"+getDateTime((data.results[i].createtime))+"</td>"); 
 					var td4=$("<td><a href='/NewRmgps/Group/toChangeGroup?id="+data.results[i].id+"&name="+data.results[i].name+"' target='_self' onClick='changeThisGroup(this)' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs'>修改</a><a href='javascript:void(0);' onClick='stopThisGroup(this)' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"
@@ -336,7 +352,7 @@ height:28px;}
 					var tr=$("<tr class='tr-disable'></tr>");
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 					var td2=$("<td>"+data.results[i].name+"</td>");
-					var td3=$("<td>"+data.results[i].createtime+"</td>");
+					var td3=$("<td>"+getDateTime((data.results[i].createtime))+"</td>");
 					var td4=$("<td><a  href=' javascript:void(0);'  target='_self' onClick='' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs a-disable'>修改</a><a href='javascript:void(0);' onClick='restartThisGroup(this)' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs '>重启</a>"

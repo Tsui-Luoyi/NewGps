@@ -187,7 +187,9 @@ public class GroupController {
 		System.out.println(data);
 		JsdGroup jsdGroupImpl = new JsdGroupImpl();
 	    Page<GroupVo> groupLists = jsdGroupImpl.getGroupLists(data, 1);
-		String jsonString = JSON.toJSONString(groupLists);
+	    
+	String jsonString = JSON.toJSONString(groupLists);
+//	    String jsonString = JSONArray.fromObject(groupLists).toString();
 		response.setContentType("application/json; charset=UTF-8");
 			try {
 				response.getWriter().print(jsonString);

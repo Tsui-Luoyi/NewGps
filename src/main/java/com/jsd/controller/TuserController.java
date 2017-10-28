@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.jsd.db.pojo.Group;
+import com.jsd.db.pojo.Tcustomer;
 import com.jsd.db.pojo.Tuser;
+import com.jsd.domain.factory.BeanFactory;
 import com.jsd.service.JsdCustomer;
 import com.jsd.service.JsdGroup;
 import com.jsd.service.JsdTuser;
@@ -89,15 +91,24 @@ public class TuserController {
 		return "changeUser";
 	}
 	@RequestMapping(value ="/addCustomAdmin",produces={"text/html;charset=UTF-8;"})
-	public  @ ResponseBody String addCustomer( TuserVo u){
+	public  @ ResponseBody String addCustomAdmin( TuserVo u){
 		System.out.println(u.getUserCode());
 		System.out.println(u.getCustomerid());
 		//通过session获取id,
 		System.out.println("添加管理员");
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
+		JsdCustomer jsdCustomerImpl = new JsdCustomerImpl();
 		System.out.println(u.getCustomerid());
 		u.setUserTypeid(1);
 		int addTuser = jsdTuserImpl.addTuser(1, u);
+		if (addTuser==0) {
+			return "false";
+		}
+		Tuser user = jsdTuserImpl.selectTuserByUserCode(u.getUserCode());
+		Tcustomer tcustomer2 = new Tcustomer();
+		tcustomer2.setId(u.getCustomerid());
+		tcustomer2.setAdminid(user.getId());
+		 jsdCustomerImpl.updateByPrimaryKeySelective(tcustomer2);
 		System.out.println(addTuser);
 		if (addTuser==1) {
 			return "true";
@@ -113,7 +124,11 @@ public class TuserController {
 		//通过session获取id,
 		System.out.println("添加监控员");
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
-		System.out.println(u.getCustomerid());
+		//通过创建者用户id获得客户id.
+		JsdCustomer jsdCustomerImpl = new JsdCustomerImpl();
+		int customerId = jsdCustomerImpl.selectCustomerIdByAdminId(10);
+		System.out.println(customerId);
+		u.setCustomerid(customerId);
 		int addTuser = jsdTuserImpl.addMonitor(u);
 		System.out.println(addTuser);
 		Tuser tuser = jsdTuserImpl.selectTuserByUserCode(u.getUserCode());

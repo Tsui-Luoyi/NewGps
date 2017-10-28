@@ -190,6 +190,7 @@ position:absolute;
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jedate/jedate.min.js"></script>
+	
 	<script>
 		$(function(){
 			jeDate({
@@ -202,7 +203,7 @@ position:absolute;
 			});
 			jeDate({
 				dateCell:"#endTime",
-				format:"YYYY/MM/DD hh:mm:ss",
+				format:"YYYY-MM-DD hh:mm:ss",
 				//isinitVal:true,
 				isTime:true, //isClear:false,
 				minDate:"2000-01-01 00:00:00",

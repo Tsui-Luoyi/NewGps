@@ -209,6 +209,19 @@ width:120px;}
 	<script src="/NewRmgps/web/js/jquery.min.js"></script>
 	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
 	<script>
+	function getDateTime(date) {
+		var date=new Date(date);
+		if(date==null){
+			return "";
+		}
+	    var year = date.getFullYear();
+	    var month = date.getMonth() + 1;
+	    var day = date.getDate();
+	    var hh = date.getHours();
+	    var mm = date.getMinutes();
+	    var ss = date.getSeconds();
+	    return year + "-" + month + "-" + day + " " + hh + ":" + mm + ":" + ss;
+	}
 		$(function(){
 			ajaxPaging();
 			//查询时
@@ -311,7 +324,7 @@ width:120px;}
 					var td1=$("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 					var td2=$("<td>"+data.results[i].customername+"</td>");
 					var td3=$("<td>"+data.results[i].contact_phone+"</td>");
-					var td4=$("<td>"+data.results[i].createtime+"</td>");
+					var td4=$("<td>"+getDateTime((data.results[i].createtime))+"</td>");
 					var td5=$("<td>"+data.results[i].user_name+"</td>");
 					var td6=$("<td><a href='javascript:void(0);' onClick='stopThisCustomer(this)' data-name='"+data.results[i].customername+"' data-id='"
 							+data.results[i].id+"' class='down btn btn-default btn-xs'>停用</a>"

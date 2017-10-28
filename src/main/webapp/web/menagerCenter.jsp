@@ -139,10 +139,10 @@
 										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Vehicle/toImportVehicles')"
 										href="javascript:void(0);">批量导入车辆</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','findVerhicle.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Vehicle/toFindVehicles')"
 										href="javascript:void(0);">查询车辆</a></li>
 									<li><a
-										onClick="changeIframe('#managerInnerIframe','moveVerhicle.jsp')"
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Vehicle/toMoveVehicles')"
 										href="javascript:void(0);">移动车辆</a></li>
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','stopVerhicle.jsp')"
@@ -151,6 +151,33 @@
 							</div>
 						</div>
 					</div>
+					
+					<!-- 终端管理 -->
+					<div class="panel ">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a data-toggle="collapse" data-parent="#managerParent"
+									href="#terminal"> <span
+									class="glyphicon glyphicon-chevron-down right"></span>终端管理
+								</a>
+							</h4>
+						</div>
+						<div id="terminal" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="nav nav-pills nav-stacked">
+									<li><a
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Terminal/toFindTerminal')"
+										href="javascript:void(0);">查询终端</a></li>
+									<li><a
+										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Terminal/toMoveTerminal')"
+										href="javascript:void(0);">移动终端</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					
+					
 				</div>
 			</div>
 			<!-- <div id="midToggleBar"></div> -->
