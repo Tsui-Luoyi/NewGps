@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.json.JsonString;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,11 +28,11 @@ public class CustomerController {
 
 	@RequestMapping("/checkCustomer")
 	
-	public  @ResponseBody String checkCustomer( String name){
+	public  @ResponseBody String checkCustomer( String name,HttpSession session){
 		
 		System.out.println(name);
 		JsdCustomer customer = new JsdCustomerImpl();
-		int flag = customer.checkCustomerName(1, name);
+		int flag = customer.checkCustomerName((int) session.getAttribute("userId"), name);
 		System.out.println(flag);
 		if (flag==0) {
 			System.out.println("没有false页面");
@@ -40,29 +41,30 @@ public class CustomerController {
 		return "tRue";
 	}
 	@RequestMapping("/toAddCustomer")
-	public String toAddCustomer( ){
+	public String toAddCustomer( HttpSession session){
 	   System.out.println("登录成功");
 	   //如果登录失败跳转到其他的页面
+	   System.out.println(session.getAttribute("userId"));
 		return "addCustomer";
 	}
 	
 @RequestMapping(value ="/addCustomer",produces={"text/html;charset=UTF-8;"})
-	public  @ResponseBody String addCustomer( CustomerVo c){
+	public  @ResponseBody String addCustomer( CustomerVo c,HttpSession session){
 		System.out.println(c.getPhone());
-		JsdCustomer customer = new JsdCustomerImpl();               
-		int addCustomer = customer.addCustomer(1,c);
+		JsdCustomer customer = new JsdCustomerImpl();    
+		int addCustomer = customer.addCustomer((int) session.getAttribute("userId"),c);
 		System.out.println(addCustomer);
 		return "success";
 	}
 
 
 @RequestMapping(value ="/selecTcustomersByCAId",produces={"text/html;charset=UTF-8;"})
-	public void selecTcustomersByCAId( HttpServletResponse response){
+	public void selecTcustomersByCAId( HttpServletResponse response,HttpSession session){
 		//userId从session中获得,现在先假设已经获得了.
 		System.out.println("开始查询所有客户");
 		
 	    JsdCustomer customer = new JsdCustomerImpl();               
-	    List<Tcustomer> Customers = customer.selecTcustomersByCAId(1);
+	    List<Tcustomer> Customers = customer.selecTcustomersByCAId((int) session.getAttribute("userId"));
 	    String jsonString = JSON.toJSONString(Customers);
 		response.setContentType("application/json; charset=UTF-8");
 		try {
@@ -89,14 +91,14 @@ public String toFindCustomer (){
 "user_name":$("#searchAdmin").val(),
 "orderBy":$("#sortBy").val(),
 "order":*/
-public void getCustomerLists ( HttpServletResponse response, String data  ){
+public void getCustomerLists ( HttpServletResponse response, String data,HttpSession session  ){
 	
 	System.out.println("进入查询");
 	System.out.println(data);
 
 	JsdCustomer customer = new JsdCustomerImpl();
 	//通过Session获取userId,通过
-	Page<TcustomerList> page = customer.getCustomerLists(1, data);
+	Page<TcustomerList> page = customer.getCustomerLists((int) session.getAttribute("userId"), data);
 	String string = JSON.toJSONString(page);
 	response.setContentType("application/json; charset=UTF-8");
 		try {

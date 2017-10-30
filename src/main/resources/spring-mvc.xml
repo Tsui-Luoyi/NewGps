@@ -13,6 +13,7 @@
 	 <context:component-scan base-package="com.jsd.controller" />
 	<!--配置可以扫描静态资源.可以将直接访问的jsp放在web下面.如果不想经过后台 -->
 	<mvc:resources location="/web/" mapping="/web/**" />
+	
 	<!--代替映射器和适配器. -->
 	<mvc:annotation-driven />
 	<!--避免IE执行AJAX时，返回JSON出现下载文件 ,pom中有jackson所以指定了mvc:annotation-driven的默认json转换器可以省略? 
