@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	<!-- 自动扫描该包,多个包之间使用,隔开省去了配置controler类的繁琐. -->
 	 <context:component-scan base-package="com.jsd.controller" />
-	<!--配置可以扫描静态资源. -->
+	<!--配置可以扫描静态资源.可以将直接访问的jsp放在web下面.如果不想经过后台 -->
 	<mvc:resources location="/web/" mapping="/web/**" />
 	<!--代替映射器和适配器. -->
 	<mvc:annotation-driven />

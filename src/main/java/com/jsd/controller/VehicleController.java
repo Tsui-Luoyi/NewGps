@@ -262,20 +262,17 @@ public class VehicleController {
 	}
 
 	@RequestMapping("toChangeVehicle")
-	public String toUpdateVehicles(Model model, String license_plate) {
+	public String toChangeVehicle(Model model, String license_plate) {
 		try {
-			System.out.println(license_plate);
+			System.out.println("车牌号为"+license_plate);
 			String string = new String(license_plate.getBytes("iso8859-1"),
 					"utf-8");
 			System.out.println(string);
-			model.addAttribute("license_plate", license_plate);
+			model.addAttribute("license_plate", string);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("判定登录是否成功");
-		System.out.println("进入去修改车辆的方法");
-		System.out.println("批量删除操作完成");
 		return "changeVehicle";
 
 	}

@@ -76,7 +76,7 @@
 						onClick="changeIframe('#mainIframe','menagerCenter.jsp')"
 						href="javascript:void(0);">管理中心</a></li>
 					<li><a
-						onClick="changeIframe('#mainIframe','positionCenter.jsp')"
+						onClick="changeIframe('#mainIframe','/NewRmgps/Positence/positionCenter')"
 						href="javascript:void(0);">位置监测</a></li>
 					<li><a
 						onClick="changeIframe('#mainIframe','statisticalTable.jsp')"

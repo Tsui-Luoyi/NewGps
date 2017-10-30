@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -380,7 +381,7 @@ hr {
 								class="col-lg-3 col-md-3 col-sm-3 col-xs-3 control-label text-right">车牌号：</label>
 							<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left">
 								<input type="text" class="form-control" name="licensePlate"
-									id="verhicleNum2" disabled="disabled" />
+						   value="${license_plate}"	id="verhicleNum2" disabled="disabled" />
 							</div>
 						</div>
 						<!-- 车辆名称 -->
@@ -631,7 +632,7 @@ hr {
 					var license_plate=getQueryString("license_plate");
 					console.log(license_plate)
 			/*  车辆详细信息操作*/
-				$("#verhicleNum2").val(license_plate);
+				/* $("#verhicleNum2").val(license_plate); */
 				$("#addVerhicleDetailForm input:button").unbind("click").bind("click",function(){
 					$("#addVerhicleDetailForm").ajaxSubmit({
 					type:'post',

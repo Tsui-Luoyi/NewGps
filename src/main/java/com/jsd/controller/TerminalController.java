@@ -22,6 +22,9 @@ import com.jsd.service.JsdVehicle;
 import com.jsd.service.impl.JsdTerminalImpl;
 import com.jsd.service.impl.JsdTuserImpl;
 import com.jsd.service.impl.JsdVehicleImpl;
+import com.jsd.service.vo.ShowCommandsVo;
+import com.jsd.service.vo.ShowGVT;
+import com.jsd.service.vo.VehicleGoupVo;
 import com.jsd.service.vo.VehicleVo;
 import com.jsd.test.newCustomerTest;
 import com.jsd.utils.Page;
@@ -37,6 +40,9 @@ public class TerminalController {
 		JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
 		//假设已经获得了创建者用户id
 		List<Terminal> terminals = jsdTerminalImpl.selectTerminalsByUserId(97);
+		for (Terminal terminal : terminals) {
+			System.out.println(terminal.getCode());
+		}
 		String jsonString = JSON.toJSONString(terminals);
 		System.out.println(jsonString);
 		response.setContentType("application/json; charset=UTF-8");
@@ -213,18 +219,26 @@ public class TerminalController {
 		
 		//通过终端code的内容来转到命令主页面
 		@RequestMapping("toCommandPage")
-		public  String toCommandPage( String code,Model model){
+		public  void  toCommandPage( String code,Model model ,HttpServletResponse response){
 			System.out.println("进入跳转到命令页面页面");
 	      JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
 	      JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
-	      System.out.println(code);
+	      System.out.println("传递过来的终端编号为"+code);
 		 Terminal terminal = jsdTerminalImpl.getTerminalByCode(code);
-		 model.addAttribute("terminal", terminal);
 		System.out.println(terminal.getTypeid());
 		 List<Command> commands = jsdVehicleImpl.selectCommandsByTerminalType(terminal.getTypeid());
-		 model.addAttribute("commandList", commands);
+		  ShowCommandsVo vo = new ShowCommandsVo(terminal, commands);
+		  String jsonString = JSON.toJSONString(vo);
+		  System.out.println(jsonString);
 		 System.out.println("能跳转就过去");
-		  return "command";
+		 response.setContentType("application/json; charset=UTF-8");
+			try {
+				response.getWriter().print(jsonString);
+				response.getWriter().flush();// 刷新流.
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		//添加命令的历史记录
@@ -237,6 +251,24 @@ public class TerminalController {
 			return ""+num ;
 			
 		}
+		//展示出当前用户的GVT
+		@RequestMapping("showGVT")
+		public  void  showGVT( String code,Model model ,HttpServletResponse response){
+			System.out.println("进入展示分组车辆终端页面页面");
+	      JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
+	      List<ShowGVT> showGVT = jsdVehicleImpl.showGVT(5);
+		  String jsonString = JSON.toJSONString(showGVT);
+		 System.out.println("能跳转就过去");
+		 response.setContentType("application/json; charset=UTF-8");
+			try {
+				response.getWriter().print(jsonString);
+				response.getWriter().flush();// 刷新流.
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 				
 
 }

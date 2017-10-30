@@ -508,7 +508,7 @@ hr {
 										/* var td5 = $("<td>"
 												+ data.results[i].vehiclegroup
 												+ "</td>"); */
-										var td6 = $("<td><a href='javascript:void(0);' target='_self' title='修改车辆信息' onClick='changeThisVehicle(this)' data-name='"
+										var td6 = $("<td><a href='/NewRmgps/Vehicle/toChangeVehicle?license_plate="+data.results[i].license_plate+"' target='_self' title='修改车辆信息' onClick='' data-name='"
 												+ data.results[i].license_plate
 												+ "' data-id='"
 												+ data.results[i].id
@@ -676,7 +676,7 @@ hr {
 								$(obj).parents("td").append(ul);
 								if (data.length) {
 									for (var i = 0; i < data.length; i++) {
-										var li = $("<li>"+ data[i].tcode+"<a href='javascript:void(0); ' class='down btn btn-default btn-xs' onClick='unBindTerminal(this)' data-terminal='"+ data[i]
+										var li = $("<li>"+ data[i].tcode+"<a href='javascript:void(0); ' class='down btn btn-default btn-xs' onClick='unBindTerminal(this)' data-terminal='"+ data[i].tcode
 										+ "' data-id='"+ obj.getAttribute("data-id")+ "'>解绑</a><a href='/NewRmgps/Terminal/toCommandPage?code="+ data[i].tcode+" ' target='_self' class='down btn btn-default btn-xs' onClick='' data-terminal='"
 										+ data[i].tcode+ "' data-id='"+ obj.getAttribute("data-id")+"'>设置命令</a></li>");
 										$(obj).parents("td").find("ul").append(

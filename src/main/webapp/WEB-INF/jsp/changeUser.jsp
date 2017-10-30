@@ -217,7 +217,7 @@ label.error {
 							<label for="userName"
 								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员名称：</label>
 							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
-								<input type="text" class="form-control" name="userCode"
+								<input type="text" class="form-control" name="userName"
 									id="userName" placeholder="请输入监控员名称(3~16位)">
 							</div>
 						</div>
@@ -256,7 +256,6 @@ label.error {
 						<input type="hidden" value="2" name="userTypeid">
 						<input  type="hidden" value="${customerId}" name="customerid"> 
 						<input  type="hidden" value="${id}" name="id"> 
-						${id}
 						<!-- 用户密码确认 -->
 						<div class="form-group">
 							<label for="userLoginPwd1"
@@ -430,7 +429,7 @@ label.error {
 			onkeyup:false,
 			errorElement:"label",
 			rules:{
-				userCode:{
+			/* 	userCode:{
 			required:true,
 			rangelength:[3,16],
 			//远程验证
@@ -444,7 +443,7 @@ label.error {
 				}
 			}
 			}
-			},
+			}, */
 			userLoginPwd:{
 			required:true,
 			rangelength:[6,16],

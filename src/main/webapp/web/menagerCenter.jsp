@@ -60,9 +60,9 @@
 									<li><a
 										onClick="changeIframe('#managerInnerIframe','/NewRmgps/Customer/toFindCustomer')"
 										href="javascript:void(0);">查询客户</a></li>
-									<li><a
+									<!-- <li><a
 										onClick="changeIframe('#managerInnerIframe','stopCustom.jsp')"
-										href="javascript:void(0);">重启已停用客户</a></li>
+										href="javascript:void(0);">重启已停用客户</a></li> -->
 								</ul>
 							</div>
 						</div>

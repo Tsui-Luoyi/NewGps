@@ -129,6 +129,7 @@ public class TuserController {
 		int customerId = jsdCustomerImpl.selectCustomerIdByAdminId(10);
 		System.out.println(customerId);
 		u.setCustomerid(customerId);
+		u.setCreaterUserid(1);
 		int addTuser = jsdTuserImpl.addMonitor(u);
 		System.out.println(addTuser);
 		Tuser tuser = jsdTuserImpl.selectTuserByUserCode(u.getUserCode());
@@ -142,15 +143,19 @@ public class TuserController {
 	public  @ ResponseBody String updateMonitor( Tuser u){
 		System.out.println("进入修改监控员页面");
 		//通过session获取id,
-	System.out.println("id是"+u.getId()+"客户id是"+u.getCustomerid()+"用户类型id是"+u.getUserTypeid());
+		
+	System.out.println("监控员名称是是"+u.getUserName());
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
 		int addTuser = jsdTuserImpl.updateUserByuserId(u);
 		System.out.println(addTuser);
-		Tuser tuser = jsdTuserImpl.selectTuserByUserCode(u.getUserCode());
+		if (addTuser==1) {
+			return "success";
+		}
+	/*	Tuser tuser = jsdTuserImpl.selectTuserByUserCode(u.getUserCode());
 		System.out.println(tuser.getId());
 		if (addTuser==1) {
 			return tuser.getId()+"";
-		}
+		}*/
 		return "false";
 	}
 	@RequestMapping(value ="/getMonitorLists",produces={"text/html;charset=UTF-8;"})
