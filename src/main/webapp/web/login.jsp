@@ -72,14 +72,14 @@
 			<!-- 右边表单 -->
 			<div
 				class="col-lg-4 col-lg-push-1 col-md-push-1 col-sm-push-1 col-md-4 col-sm-4 col-xs-12">
-				<form id="loginForm" action="<%=request.getContextPath() %>/LoginAction" class="form-horizontal"
-					role="form" onsubmit="javascript:return true;">
+				<form id="loginForm" action="/NewRmgps/User/login" class="form-horizontal"
+			method="post"		role="form" onsubmit="javascript:return true;">
 					<div class="form-group userName">
 						<label for="userName"
 							class="col-sm-3 col-xs-3 control-label text-right">用户名：</label>
 						<div class="col-sm-9 col-xs-9">
 							<input type="text" class="form-control" id="userName"
-								placeholder="请输入用户名">
+							name="userCode"	placeholder="请输入用户名">
 						</div>
 					</div>
 					<div class="form-group pwd">

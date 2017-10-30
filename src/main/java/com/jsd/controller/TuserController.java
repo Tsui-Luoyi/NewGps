@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.json.Json;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -34,20 +35,35 @@ import com.jsd.utils.Page;
 @RequestMapping("/User")
 public class TuserController {
 	
-	@RequestMapping("toAddCustomAdmin")
-	public String toAddUserAdmin(){
-		System.out.println("登录成功");
-		return "addCustomerAdmin";
+	
+	
+	@RequestMapping("login")
+	public String toLogin(String userCode, HttpSession session){
+		     JsdTuser jsdTuserImpl = new JsdTuserImpl();
+		     System.out.println("登录code为"+userCode);
+		     if (userCode==null) {
+				return "error";
+			}
+      Tuser tuser = jsdTuserImpl.selectTuserByUserCode(userCode);
+      System.out.println(tuser.getId());
+         if (null!=tuser) {
+	   System.out.println("登录成功");
+	  session.setAttribute("userId", tuser.getId()); 
+	  session.setAttribute("userName", tuser.getUserName());
+	  return "center";
+}
+		System.out.println("登录失败");
+		return "error";
 	}
 	
 	@RequestMapping("checkUserCode")
-	public  @ResponseBody String checkUserCode( String userCode){
+	public  @ResponseBody String checkUserCode( String userCode,HttpSession session){
 		//进行检测
 		//通过session获取id
 		System.out.println("进行验证");
 		System.out.println(userCode);
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
-		int checkUserCode = jsdTuserImpl.checkUserCode(1, userCode);
+		int checkUserCode = jsdTuserImpl.checkUserCode((int) session.getAttribute("userId"), userCode);
 		System.out.println(checkUserCode);
 		if (checkUserCode==1) {
 			return "true";
@@ -56,10 +72,10 @@ public class TuserController {
 		}
 	}
 	@RequestMapping(value ="/toAddMonitor",produces={"text/html;charset=UTF-8;"})
-	public  String  toAddMonitor(Model model ){
+	public  String  toAddMonitor(Model model,HttpSession session){
 		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
 		 JsdCustomerImpl jsdCustomerImpl = new JsdCustomerImpl();
-		 int id = jsdCustomerImpl.selectCustomerIdByAdminId(10);
+		 int id = jsdCustomerImpl.selectCustomerIdByAdminId((int) session.getAttribute("userId"));
 		 System.out.println(id);
 		 model.addAttribute("customerId", id);
 		System.out.println("进入跳转页面");
@@ -67,6 +83,45 @@ public class TuserController {
 		return "addMonitor";
 	}
 	
+	
+	@RequestMapping("/toLogin")
+	public  String  toLogin(){
+		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
+		//假设登录成功
+		
+		System.out.println("进入login页面");
+		return "login";
+	}
+	@RequestMapping("/tomanager")
+	public  String  tomanager(){
+		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
+		//假设登录成功
+		
+		System.out.println("进入login页面");
+		return "manager";
+	}
+	@RequestMapping("/toPositionCenter")
+	public  String  toPositionCenter(){
+		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
+		//假设登录成功
+		System.out.println("进入login页面");
+		return "positionCenter";
+	}
+	
+	@RequestMapping("/toAddCustomAdmin")
+	public  String  toAddCustomAdmin(){
+		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
+		//假设登录成功
+		System.out.println("进入login页面");
+		return "addCustomerAdmin";
+	}
+	@RequestMapping("/toManagerCenter")
+	public  String  toManagerCenter(){
+		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
+		//假设登录成功
+		System.out.println("进入login页面");
+		return "managerCenter";
+	}
 	@RequestMapping(value ="/toFindMonitor",produces={"text/html;charset=UTF-8;"})
 	public  String  toFindMonitor(){
 		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
@@ -77,11 +132,11 @@ public class TuserController {
 		return "findMonitor";
 	}
 	@RequestMapping(value ="/ToChangeUser",produces={"text/html;charset=UTF-8;"})
-	public  String  ToChangeUser(int id, Model model){
+	public  String  ToChangeUser(int id, Model model,HttpSession session){
 		//判断登录,并且使用用户id查询出用户的所属客户传递到前台页面
 		//假设登录成功changeUser
 		 JsdCustomerImpl jsdCustomerImpl = new JsdCustomerImpl();
-		 int customerId = jsdCustomerImpl.selectCustomerIdByAdminId(10);
+		 int customerId = jsdCustomerImpl.selectCustomerIdByAdminId((int) session.getAttribute("userId"));
 		 System.out.println(customerId);
 		 model.addAttribute("customerId", customerId);
 		System.out.println("进入跳转页面");
@@ -91,7 +146,7 @@ public class TuserController {
 		return "changeUser";
 	}
 	@RequestMapping(value ="/addCustomAdmin",produces={"text/html;charset=UTF-8;"})
-	public  @ ResponseBody String addCustomAdmin( TuserVo u){
+	public  @ ResponseBody String addCustomAdmin( TuserVo u,HttpSession session){
 		System.out.println(u.getUserCode());
 		System.out.println(u.getCustomerid());
 		//通过session获取id,
@@ -100,7 +155,7 @@ public class TuserController {
 		JsdCustomer jsdCustomerImpl = new JsdCustomerImpl();
 		System.out.println(u.getCustomerid());
 		u.setUserTypeid(1);
-		int addTuser = jsdTuserImpl.addTuser(1, u);
+		int addTuser = jsdTuserImpl.addTuser((int) session.getAttribute("userId"), u);
 		if (addTuser==0) {
 			return "false";
 		}
@@ -116,7 +171,7 @@ public class TuserController {
 		return "false";
 	}
 	@RequestMapping(value ="/addCustomMonitor",produces={"text/html;charset=UTF-8;"})
-	public  @ ResponseBody String addCustomerMonitor( Tuser u){
+	public  @ ResponseBody String addCustomerMonitor( Tuser u,HttpSession session){
 		System.out.println(u.getUserCode());
 		System.out.println(u.getCustomerid());
 		System.out.println(u.getUserPassword());
@@ -126,7 +181,7 @@ public class TuserController {
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
 		//通过创建者用户id获得客户id.
 		JsdCustomer jsdCustomerImpl = new JsdCustomerImpl();
-		int customerId = jsdCustomerImpl.selectCustomerIdByAdminId(10);
+		int customerId = jsdCustomerImpl.selectCustomerIdByAdminId((int) session.getAttribute("userId"));
 		System.out.println(customerId);
 		u.setCustomerid(customerId);
 		u.setCreaterUserid(1);
@@ -159,12 +214,12 @@ public class TuserController {
 		return "false";
 	}
 	@RequestMapping(value ="/getMonitorLists",produces={"text/html;charset=UTF-8;"})
-	public  void  getMonitorLists( HttpServletResponse response, String data){
+	public  void  getMonitorLists( HttpServletResponse response, String data,HttpSession session){
 		
 		System.out.println("进入查询监控员列表方法");
 		System.out.println(data);
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
-	    Page<Tuser> tuserLists = jsdTuserImpl.getTuserLists(data, 1);
+	    Page<Tuser> tuserLists = jsdTuserImpl.getTuserLists(data, (int) session.getAttribute("userId"));
 		String jsonString = JSON.toJSONString(tuserLists);
 		response.setContentType("application/json; charset=UTF-8");
 			try {
@@ -236,12 +291,12 @@ public class TuserController {
 //showMonitorsForPage
 	
 	@RequestMapping(value = "showMonitorsForPage", produces={"text/html;charset=UTF-8;"})
-	public void	showMonitorsForPage(HttpServletResponse response){
+	public void	showMonitorsForPage(HttpServletResponse response,HttpSession session){
 		
 		System.out.println("假设已经获取到了登录用户的id");
 		System.out.println("展示出用户的所有监控员");
 	    JsdTuser jsdTuserImpl = new JsdTuserImpl();
-	    List<Tuser> tusers = jsdTuserImpl.showMonitorsForPage(2);
+	    List<Tuser> tusers = jsdTuserImpl.showMonitorsForPage((int) session.getAttribute("userId"));
 	    for (Tuser tuser : tusers) {
 			System.out.println(JSON.toJSONString(tuser));
 		}

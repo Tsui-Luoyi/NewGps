@@ -21,13 +21,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <!-- 页面按原比例显示 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link rel="stylesheet" href="css/positionCenter.css">
-<link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css"
+<link href="/NewRmgps/web/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link rel="stylesheet" href="/NewRmgps/web/css/positionCenter.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/zTreeStyle/zTreeStyle.css"
 	type="text/css">
-<link rel="stylesheet" href="css/media.css">
-<link rel="stylesheet" href="css/color.css">
-<link rel="stylesheet" href="css/jedate.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/media.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/color.css">
+<link rel="stylesheet" href="/NewRmgps/web/css/jedate.css">
 <style>
 html, body {
 	width: 100%;
@@ -147,57 +147,57 @@ float:right;
 
 .ztree li span.button.group_ico_open, .ztree li span.button.group_ico_close
 	{
-	background-image: url("css/zTreeStyle/img/diy/group.png")
+	background-image: url("/NewRmgps/web/css/zTreeStyle/img/diy/group.png")
 }
 
 .ztree li span.button.all_ico_open {
-	background-image: url("images/all-2.png")
+	background-image: url("/NewRmgps/web/images/all-2.png")
 }
 
 .ztree li span.button.all_ico_close {
-	background-image: url("images/all-1.png")
+	background-image: url("/NewRmgps/web/images/all-1.png")
 }
 
 .ztree li span.button.group_ico_docu {
-	background-image: url("css/zTreeStyle/img/diy/group.png")
+	background-image: url("/NewRmgps/web/css/zTreeStyle/img/diy/group.png")
 }
 
 .ztree li span.button.offLine_ico_open, .ztree li span.button.offLine_ico_close
 	{
-	background-image: url("css/zTreeStyle/img/diy/offline.png");
+	background-image: url("/NewRmgps/web/css/zTreeStyle/img/diy/offline.png");
 }
 
 .ztree li span.button.offLine_ico_docu {
-	background-image: url("css/zTreeStyle/img/diy/offline.png");
+	background-image: url("/NewRmgps/web/css/zTreeStyle/img/diy/offline.png");
 }
 
 .ztree li span.button.onLine_ico_docu {
-	background-image: url("css/zTreeStyle/img/diy/online.png");
+	background-image: url("/NewRmgps/web/css/zTreeStyle/img/diy/online.png");
 }
 
 .ztree li span.button.onLine_ico_open, .ztree li span.button.onLine_ico_close
 	{
-	background-image: url("css/zTreeStyle/img/diy/online.png");
+	background-image: url("/NewRmgps/web/css/zTreeStyle/img/diy/online.png");
 }
 
 .ztree li span.button.terminal_ico_docu {
-	background-image: url("images/GPS.png")
+	background-image: url("/NewRmgps/web/images/GPS.png")
 }
 /* 矩形围栏图标 */
 .ztree li span.button.rect_ico_docu {
-	background-image: url("images/rect.png")
+	background-image: url("/NewRmgps/web/images/rect.png")
 }
 
 .ztree li span.button.round_ico_docu {
-	background-image: url("images/round.png")
+	background-image: url("/NewRmgps/web/images/round.png")
 }
 
 .ztree li span.button.polygon_ico_docu {
-	background-image: url("images/polygon.png")
+	background-image: url("/NewRmgps/web/images/polygon.png")
 }
 
 .ztree li span.button.marker_ico_docu {
-	background-image: url("images/marker.png");
+	background-image: url("/NewRmgps/web/images/marker.png");
 }
 /* 搜索框 */
 #searchCar, #searchMarker, #searchFence {
@@ -391,19 +391,19 @@ float:right;
 				id="positionInnerIframeContainer">
 				<div id="midToggleBar"></div>
 				<iframe id="positionInnerIframe" name="positionInnerIframe"
-					src="baidu.jsp" frameborder="0" scrolling="yes"
+					src="/NewRmgps/Terminal/tobaidu" frameborder="0" scrolling="yes"
 					style="width: 100%; height: 100%">浏览器不支持，请升级或更换浏览器</iframe>
 			</div>
 		</div>
 	</div>
 
 
-	<script src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/jquery.ztree.all.js"></script>
-	<script type="text/javascript" src="js/jquery.ztree.exhide.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/positionCenter.js"></script>
-	<script src="js/jedate.js"></script>
+	<script src="/NewRmgps/web/js/jquery.min.js"></script>
+	<script type="text/javascript" src="/NewRmgps/web/js/jquery.ztree.all.js"></script>
+<!-- 	<script type="text/javascript" src="/NewRmgps/web/js/jquery.ztree.exhide.js"></script> -->
+	<script src="/NewRmgps/web/js/bootstrap.min.js"></script>
+	<script src="/NewRmgps/web/js/positionCenter.js"></script>
+	<script src="/NewRmgps/web/js/jedate.js"></script>
 	<script>
 		/* 参数设置菜单 */
 		function commandWindow(obj) {
@@ -477,7 +477,7 @@ $("#emergencyState").on("change",function(){
 	/* 命令提交按钮 */
 	$("#commindSubmit").on("click",function(){
 		$.ajax({
-			"url":"data/data1.json",
+			"url":"NewRmgps/Terminal/addCommandhistory",
 			"data":{
 				"code":$("#commandDiv h4 span.code").html()
 				/* 还有标题的终端code和隐藏域的命令id */
@@ -495,10 +495,10 @@ $("#emergencyState").on("change",function(){
 	})
 	})
 	//命令窗口信息
-	ajaxPaging();
+	/* ajaxPaging(); */
 	function ajaxPaging() {
 			$.ajax({
-						url : "data/grouplist.json",
+						url : "",
 						type : "get",
 						dataType : "json",
 						contextType : "application/json;charset=utf-8",
@@ -605,9 +605,8 @@ $("#emergencyState").on("change",function(){
 						},
 						async:{
 							enable:true,
-							dataType:"text",
-							type:"get",
-							url:"data/data2.json",
+							type:"post",
+							url:"/NewRmgps/Terminal/showGVT",
 							dataFilter:ajaxDataFilter
 						},
 						callback:{
@@ -615,7 +614,7 @@ $("#emergencyState").on("change",function(){
 								if(treeNode.type){//是终端
 									console.log(treeNode.name)
 									$.ajax({
-										"url":"data/command.json",
+										"url":"/NewRmgps/Terminal/toCommandPage",
 										"data":{
 											"code":treeNode.name
 										},

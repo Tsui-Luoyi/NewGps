@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,11 +36,11 @@ public class TerminalController {
 	
 	//查询出当前用户的所有未绑定的终端.
 	@RequestMapping(value="/getUTerminals",produces={"text/html;charset=UTF-8;"})
-	public void  selectTerminalsByUserId(HttpServletResponse response) {
+	public void  selectTerminalsByUserId(HttpServletResponse response,HttpSession session) {
 		System.out.println("进入查询未绑定终端的列表");
 		JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
 		//假设已经获得了创建者用户id
-		List<Terminal> terminals = jsdTerminalImpl.selectTerminalsByUserId(97);
+		List<Terminal> terminals = jsdTerminalImpl.selectTerminalsByUserId((int) session.getAttribute("userId"));
 		for (Terminal terminal : terminals) {
 			System.out.println(terminal.getCode());
 		}
@@ -75,11 +76,11 @@ public class TerminalController {
 	}
 	//查询当前创建者用户的他的用户及其子用户.
 	@RequestMapping(value="/getUsers",produces={"text/html;charset=UTF-8;"})
-	public void  getUsers(HttpServletResponse response) {
+	public void  getUsers(HttpServletResponse response,HttpSession session) {
 		System.out.println("进入查询用户的列表");
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
 		//假设已经获得了创建者用户id,假设已经获取到了当期用户
-		List<Tuser> list = jsdTuserImpl.selectUserandChildUser(97);
+		List<Tuser> list = jsdTuserImpl.selectUserandChildUser((int) session.getAttribute("userId"));
 		String jsonString = JSON.toJSONString(list);
 		System.out.println(jsonString);
 		response.setContentType("application/json; charset=UTF-8");
@@ -143,12 +144,12 @@ public class TerminalController {
 	}
 	//获取终端的列表
 	@RequestMapping(value = "/getTerminals", produces = { "text/html;charset=UTF-8;" })
-	public void getTerminals(HttpServletResponse response, String data) {
+	public void getTerminals(HttpServletResponse response, String data,HttpSession session) {
 
 		System.out.println("进入查询车辆的列表方法");
 		System.out.println(data);
 		  JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
-		  Page<Terminal> terminalLists = jsdTerminalImpl.getTerminalLists(97, data);
+		  Page<Terminal> terminalLists = jsdTerminalImpl.getTerminalLists((int) session.getAttribute("userId"), data);
 		String jsonString = JSON.toJSONString(terminalLists);
 		System.out.println(jsonString);
 		jsdTerminalImpl.updateTerminalStatus(1, 0);
@@ -182,7 +183,8 @@ public class TerminalController {
 					System.out.println("终端codes为"+codes);
 					  JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
 					  int num = jsdTerminalImpl.deleteTerminalsByCodes(codes);
-					  System.out.println("共删除了"+num+"个终端");					 return   ""+num;
+					  System.out.println("共删除了"+num+"个终端");				
+					  return   ""+num;
 			}
 	
 	//取消退货或者退后失败
@@ -230,7 +232,6 @@ public class TerminalController {
 		  ShowCommandsVo vo = new ShowCommandsVo(terminal, commands);
 		  String jsonString = JSON.toJSONString(vo);
 		  System.out.println(jsonString);
-		 System.out.println("能跳转就过去");
 		 response.setContentType("application/json; charset=UTF-8");
 			try {
 				response.getWriter().print(jsonString);
@@ -253,11 +254,12 @@ public class TerminalController {
 		}
 		//展示出当前用户的GVT
 		@RequestMapping("showGVT")
-		public  void  showGVT( String code,Model model ,HttpServletResponse response){
+		public  void  showGVT( HttpServletResponse response,HttpSession session){
 			System.out.println("进入展示分组车辆终端页面页面");
 	      JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
-	      List<ShowGVT> showGVT = jsdVehicleImpl.showGVT(5);
+	      List<ShowGVT> showGVT = jsdVehicleImpl.showGVT((int) session.getAttribute("userId"));
 		  String jsonString = JSON.toJSONString(showGVT);
+		  System.out.println(jsonString);
 		 System.out.println("能跳转就过去");
 		 response.setContentType("application/json; charset=UTF-8");
 			try {
@@ -268,6 +270,27 @@ public class TerminalController {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		@RequestMapping("positionCenter")
+		public  String positionCenter( ){
+		
+		System.out.println("进入positionCenter方法");
+		
+			return "positionCenter";
+		}
+		
+		@RequestMapping("tobaidu")
+		public  String tobaidu( ){
+			
+		System.out.println("进入tobaidu方法");
+			
+		return "baidu";
+		}
+		
+		
+		
+		
 		
 				
 

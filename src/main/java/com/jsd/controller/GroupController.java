@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -32,11 +33,11 @@ import com.jsd.utils.Page;
 public class GroupController {
 	
 	@RequestMapping("showGV")
-	public void  showGV(HttpServletResponse response){
+	public void  showGV(HttpServletResponse response,HttpSession session){
 		System.out.println("假设已经获取到了登录用户的id");
 		System.out.println("展示出用户的所有分组");
 	JsdGroup jsdGroupImpl = new JsdGroupImpl();
-	List<Group> groups = jsdGroupImpl.selectGroupsforpageBycreateUserId(1);
+	List<Group> groups = jsdGroupImpl.selectGroupsforpageBycreateUserId((int) session.getAttribute("userId"));
 	String jsonString = JSONArray.fromObject(groups).toString();
 	System.out.println(jsonString);
 		response.setContentType("application/json; charset=UTF-8");
@@ -95,12 +96,12 @@ public class GroupController {
 		return "changeGroup";
 	}
 	@RequestMapping("addGroup")
-	public  @ResponseBody String  addGroup(Group group,String selectedUser){
+	public  @ResponseBody String  addGroup(Group group,String selectedUser,HttpSession session){
 		System.out.println("进入添加分组方法");
 		System.out.println(group.getName());
 		System.out.println("为分组添加字符串的列表为: "+selectedUser);
 		JsdGroup jsdGroupImpl = new JsdGroupImpl();
-		int addGroup = jsdGroupImpl.addGroup(1, group);
+		int addGroup = jsdGroupImpl.addGroup((int) session.getAttribute("userId"), group);
 		if (addGroup!=1) {
 			//添加失败
 			return "0";
@@ -181,12 +182,12 @@ public class GroupController {
 	}
 	
 	@RequestMapping(value ="/getGroupLists",produces={"text/html;charset=UTF-8;"})
-	public  void  getMonitorLists( HttpServletResponse response, String data){
+	public  void  getMonitorLists( HttpServletResponse response, String data,HttpSession session){
 		
 		System.out.println("进入查询分组列表方法");
 		System.out.println(data);
 		JsdGroup jsdGroupImpl = new JsdGroupImpl();
-	    Page<GroupVo> groupLists = jsdGroupImpl.getGroupLists(data, 1);
+	    Page<GroupVo> groupLists = jsdGroupImpl.getGroupLists(data, (int) session.getAttribute("userId"));
 	    
 	String jsonString = JSON.toJSONString(groupLists);
 //	    String jsonString = JSONArray.fromObject(groupLists).toString();

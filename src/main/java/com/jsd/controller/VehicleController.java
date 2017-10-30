@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 
@@ -80,12 +81,12 @@ public class VehicleController {
 	}
 
 	@RequestMapping("addVehicle")
-	public @ResponseBody String addVehicle(Vehicle vehicle, String selectedGroup) {
+	public @ResponseBody String addVehicle(Vehicle vehicle, String selectedGroup,HttpSession session) {
 		System.out.println("进入添加车辆方法");
 		System.out.println(vehicle.getLicensePlate());
 		System.out.println("为车辆添加分组字符串的列表为: " + selectedGroup);
 		JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
-		int addVehicle = jsdVehicleImpl.addVehicle(1, vehicle);
+		int addVehicle = jsdVehicleImpl.addVehicle((int) session.getAttribute("userId"), vehicle);
 
 		if (addVehicle != 1) {
 			// 添加失败
@@ -197,12 +198,12 @@ public class VehicleController {
 
 	// getVehicles
 	@RequestMapping(value = "/getVehicles", produces = { "text/html;charset=UTF-8;" })
-	public void getVehicles(HttpServletResponse response, String data) {
+	public void getVehicles(HttpServletResponse response, String data,HttpSession session) {
 
 		System.out.println("进入查询车辆的列表方法");
 		System.out.println(data);
 		JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
-		Page<VehicleVo> vehicleLists = jsdVehicleImpl.getVehicleLists(data, 1);
+		Page<VehicleVo> vehicleLists = jsdVehicleImpl.getVehicleLists(data, (int) session.getAttribute("userId"));
 		String jsonString = JSON.toJSONString(vehicleLists);
 		System.out.println(jsonString);
 		response.setContentType("application/json; charset=UTF-8");
@@ -289,12 +290,12 @@ public class VehicleController {
 	}
 
 	@RequestMapping("showGVs")
-	public void showGVs(HttpServletResponse response) {
+	public void showGVs(HttpServletResponse response,HttpSession session) {
 		System.out.println("假设已经获取到了登录用户的id");
 		System.out.println("展示出所有的用户车辆");
 		JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
 
-		List<ShowGV> showGVs = jsdVehicleImpl.showGVs(5);
+		List<ShowGV> showGVs = jsdVehicleImpl.showGVs((int) session.getAttribute("userId"));
 		/*
 		 * for (Tuser tuser : tusers) {
 		 * System.out.println(JSON.toJSONString(tuser)); }
@@ -312,12 +313,12 @@ public class VehicleController {
 	}
 
 	@RequestMapping("selectCGVByCreaterUserId")
-	public void selectCGVByCreaterUserId(HttpServletResponse response) {
+	public void selectCGVByCreaterUserId(HttpServletResponse response,HttpSession session) {
 		System.out.println("假设已经获取到了登录用户的id");
 		System.out.println("展示出所有的客户用户车辆");
 		JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
 
-		List<ShowCGV> selectCGV = jsdVehicleImpl.selectCGVByCreaterUserId(5);
+		List<ShowCGV> selectCGV = jsdVehicleImpl.selectCGVByCreaterUserId((int) session.getAttribute("userId"));
 		String jsonString = JSONArray.fromObject(selectCGV).toString();
 		System.out.println(jsonString);
 		response.setContentType("application/json; charset=UTF-8");
@@ -429,12 +430,12 @@ public class VehicleController {
 	
 	// //查询出所有的客户来.可能出错因为去掉了;
 	@RequestMapping(value = "/getCustomers", produces = { "text/html;charset=UTF-8" })
-	public void getCustomers(HttpServletResponse response) {
+	public void getCustomers(HttpServletResponse response,HttpSession session) {
 		System.out.println("展示出当前用户的所有客户以及他的父客户来.");
 
 		JsdCustomer jsdCustomerImpl = new JsdCustomerImpl();
 		// 假如已经知道了创建者用户id.
-		List<Tcustomer> customers = jsdCustomerImpl.selecTcustomersByCAId(2);
+		List<Tcustomer> customers = jsdCustomerImpl.selecTcustomersByCAId((int) session.getAttribute("userId"));
          System.out.println(customers.size());
 		String jsonString = JSONArray.fromObject(customers).toString();
 		System.out.println(jsonString);
