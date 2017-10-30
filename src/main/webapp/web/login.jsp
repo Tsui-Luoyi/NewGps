@@ -32,6 +32,28 @@
        		<script src="js/HTML5Shiv.min.js"></script>
        		<script src="js/response.js"></script>
        		<![endif]-->
+       		
+<!-- 触发JS刷新-->
+<%
+	String idError = (String)request.getAttribute("idError");
+	String Token = (String)request.getAttribute("Token");
+	String kong = (String)request.getAttribute("kong");
+	%>
+<script type="text/javascript">
+    function changeImg(){
+        var img = document.getElementById("img"); 
+        img.src = "<%=request.getContextPath() %>/AuthImage?date=" + new Date();
+        var checkNum = document.getElementById("checkNum");
+        /* var s=<%=session.getAttribute("checkImg") %>;
+        checkNum.text=s;
+        */
+    }
+    
+    function login(){
+    	
+    }
+</script>
+       		
 </head>
 <body>
 	<!-- 标题 -->
@@ -50,7 +72,7 @@
 			<!-- 右边表单 -->
 			<div
 				class="col-lg-4 col-lg-push-1 col-md-push-1 col-sm-push-1 col-md-4 col-sm-4 col-xs-12">
-				<form id="loginForm" action="index.jsp" class="form-horizontal"
+				<form id="loginForm" action="<%=request.getContextPath() %>/LoginAction" class="form-horizontal"
 					role="form" onsubmit="javascript:return true;">
 					<div class="form-group userName">
 						<label for="userName"
@@ -72,18 +94,34 @@
 						<label for="check-num"
 							class="col-sm-3 col-xs-3 control-label text-right">验证码:</label>
 						<div class="col-sm-4 col-xs-4 checkNumDiv">
-							<input type="text" class="form-control" id="checkNum"
+							<input type="text" class="form-control" id="checkNum" 
 								placeholder="请输入验证码">
 						</div>
 						<div class="col-sm-4 col-xs-4 checkRefreshDiv">
 							<div class="row">
-								<div class="col-xs-9" id="inputCheckNum">1324</div>
+								<div class="col-xs-9" id="inputCheckNum"><img id="img"
+															src="<%=request.getContextPath() %>/AuthImage"
+															onclick="javascript:changeImg()" /></div>
 								<div class="col-xs-3" id="refreshBtn">
-									<a href="#"><span class="glyphicon glyphicon-refresh"></span></a>
+									<a href="#" onclick="javascript:changeImg()"><span class="glyphicon glyphicon-refresh"></span></a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="form-group pwd">
+						<label for="pwd"
+							class="col-sm-3 col-xs-3 control-label text-right">密码：</label>
+						<div class="col-sm-9 col-xs-9">
+												<% if (idError == null && Token == null && kong == null) {%> <span
+												id="logining_info" class='ErrorMsg'></span> <%} else if(Token != null && idError == null && kong == null){ %>
+												<span id="logining_info" class='ErrorMsg'><%=Token %></span>
+												<%}else if(Token == null && idError == null && kong != null) {%>
+												<span id="logining_info" class='ErrorMsg'><%=kong %></span>
+												<%}else if(Token == null && idError != null && kong ==null) {%>
+												<span id="logining_info" class='ErrorMsg'><%=idError %></span>
+												<%}%>
+						</div>
+					</div>					
 					<div class="form-group">
 						<div
 							class="col-md-offset-4 col-sm-offset-3 col-xs-offset-3 col-md-4 col-sm-5 col-xs-3 rememberMe">
