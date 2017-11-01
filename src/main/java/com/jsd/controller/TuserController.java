@@ -173,7 +173,7 @@ public class TuserController {
 	@RequestMapping(value ="/addCustomMonitor",produces={"text/html;charset=UTF-8;"})
 	public  @ ResponseBody String addCustomerMonitor( Tuser u,HttpSession session){
 		System.out.println(u.getUserCode());
-		System.out.println(u.getCustomerid());
+		System.out.println(u.getUserName());
 		System.out.println(u.getUserPassword());
 		System.out.println(u.getUserTypeid());
 		//通过session获取id,
@@ -184,7 +184,7 @@ public class TuserController {
 		int customerId = jsdCustomerImpl.selectCustomerIdByAdminId((int) session.getAttribute("userId"));
 		System.out.println(customerId);
 		u.setCustomerid(customerId);
-		u.setCreaterUserid(1);
+		u.setCreaterUserid((int) session.getAttribute("userId"));
 		int addTuser = jsdTuserImpl.addMonitor(u);
 		System.out.println(addTuser);
 		Tuser tuser = jsdTuserImpl.selectTuserByUserCode(u.getUserCode());
@@ -235,7 +235,7 @@ public class TuserController {
 		System.out.println("进入删除监控员方法");
 		
 		JsdTuser jsdTuserImpl = new JsdTuserImpl();
-		int num = jsdTuserImpl.deleteAdminByAdminId(id);
+		int num = jsdTuserImpl.deleteMonitorByMonitorId(id);
 		
 		System.out.println("删除操作完成");
 		return num+"";

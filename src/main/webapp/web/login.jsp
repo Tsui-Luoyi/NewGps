@@ -50,7 +50,7 @@
     }
     
     function login(){
-    	
+    	return true;
     }
 </script>
        		
@@ -73,7 +73,7 @@
 			<div
 				class="col-lg-4 col-lg-push-1 col-md-push-1 col-sm-push-1 col-md-4 col-sm-4 col-xs-12">
 				<form id="loginForm" action="/NewRmgps/User/login" class="form-horizontal"
-			method="post"		role="form" onsubmit="javascript:return true;">
+			method="post"		role="form" onsubmit="javascript:return login();">
 					<div class="form-group userName">
 						<label for="userName"
 							class="col-sm-3 col-xs-3 control-label text-right">用户名：</label>
@@ -108,7 +108,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group pwd">
+				<%-- 	<div class="form-group pwd">
 						<label for="pwd"
 							class="col-sm-3 col-xs-3 control-label text-right">密码：</label>
 						<div class="col-sm-9 col-xs-9">
@@ -121,7 +121,7 @@
 												<span id="logining_info" class='ErrorMsg'><%=idError %></span>
 												<%}%>
 						</div>
-					</div>					
+					</div>	 --%>				
 					<div class="form-group">
 						<div
 							class="col-md-offset-4 col-sm-offset-3 col-xs-offset-3 col-md-4 col-sm-5 col-xs-3 rememberMe">

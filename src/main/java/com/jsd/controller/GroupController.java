@@ -101,6 +101,7 @@ public class GroupController {
 		System.out.println(group.getName());
 		System.out.println("为分组添加字符串的列表为: "+selectedUser);
 		JsdGroup jsdGroupImpl = new JsdGroupImpl();
+		group.setDel(false);
 		int addGroup = jsdGroupImpl.addGroup((int) session.getAttribute("userId"), group);
 		if (addGroup!=1) {
 			//添加失败

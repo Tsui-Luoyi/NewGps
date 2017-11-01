@@ -23,6 +23,7 @@ import com.jsd.db.pojo.Driver;
 import com.jsd.db.pojo.Group;
 import com.jsd.db.pojo.Tcustomer;
 import com.jsd.db.pojo.Tuser;
+import com.jsd.db.pojo.VVehicleGroup;
 import com.jsd.db.pojo.Vehicle;
 import com.jsd.db.pojo.Vehicledetail;
 import com.jsd.domain.factory.BeanFactory;
@@ -36,6 +37,7 @@ import com.jsd.service.impl.JsdTuserImpl;
 import com.jsd.service.impl.JsdVehicleImpl;
 import com.jsd.service.vo.ShowCGV;
 import com.jsd.service.vo.ShowGV;
+import com.jsd.service.vo.VehicleGoupVo;
 import com.jsd.service.vo.VehicleVo;
 import com.jsd.utils.Page;
 import com.jsd.utils.StringUtils;
@@ -202,10 +204,13 @@ public class VehicleController {
 
 		System.out.println("进入查询车辆的列表方法");
 		System.out.println(data);
+		
 		JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
-		Page<VehicleVo> vehicleLists = jsdVehicleImpl.getVehicleLists(data, (int) session.getAttribute("userId"));
+	/*	Page<VVehicleGroup> vehicleLists =  jsdVehicleImpl.getGehicleListsByUserId(data, (int) session.getAttribute("userId"));*/
+	    Page<VVehicleGroup> vehicleLists = jsdVehicleImpl.getGehicleListsByUserId(data,  (int) session.getAttribute("userId"));
 		String jsonString = JSON.toJSONString(vehicleLists);
-		System.out.println(jsonString);
+		System.out.println((int) session.getAttribute("userId"));
+		System.out.println(vehicleLists.getResults().size());
 		response.setContentType("application/json; charset=UTF-8");
 		try {
 			response.getWriter().print(jsonString);

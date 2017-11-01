@@ -61,10 +61,10 @@ public class CustomerController {
 @RequestMapping(value ="/selecTcustomersByCAId",produces={"text/html;charset=UTF-8;"})
 	public void selecTcustomersByCAId( HttpServletResponse response,HttpSession session){
 		//userId从session中获得,现在先假设已经获得了.
-		System.out.println("开始查询所有客户");
+		System.out.println("开始查询没有管理员的客户");
 		
 	    JsdCustomer customer = new JsdCustomerImpl();               
-	    List<Tcustomer> Customers = customer.selecTcustomersByCAId((int) session.getAttribute("userId"));
+	    List<Tcustomer> Customers = customer.selectTcustomersByCnA((int) session.getAttribute("userId"));
 	    String jsonString = JSON.toJSONString(Customers);
 		response.setContentType("application/json; charset=UTF-8");
 		try {

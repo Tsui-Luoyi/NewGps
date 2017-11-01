@@ -129,7 +129,7 @@ color:red}
 					}
 				},
 				submitHandler:function(){
-					if(confirm("是否添加客户/r/r"+$("#customName").val()+"?")){
+					if(confirm("是否添加客户\r\r"+$("#customName").val()+"?")){
 						$("#addCustomForm").ajaxSubmit({
 							url:"/NewRmgps/Customer/addCustomer",
 							data:{"aa":"dd"},

@@ -48,7 +48,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<!-- logo -->
-				<a class="navbar-brand logo" href="#"><img src="imgs/jsd_50.png"
+				<a class="navbar-brand logo" href="#"><img src="/NewRmgps/web/imgs/jsd_50.png"
 					class="img-responsive" alt="logo"></a>
 			</div>
 			<div class="pull-left" id="comName">

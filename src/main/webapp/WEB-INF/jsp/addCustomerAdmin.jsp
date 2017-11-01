@@ -115,9 +115,12 @@ label.error {
 	<script>
 		$(function(){
 			$('#customSelectName').comboSelect();
-			 $.ajax({
+			ajaxFrash();
+			function ajaxFrash(){
+				$("#customSelectName option:lt(0)").remove();
+				$.ajax({
 				url:"/NewRmgps/Customer/selecTcustomersByCAId",
-				type:"get",
+				type:"post",
 				cache:'true',
 				dateType:"json",
 				success:function(data){
@@ -131,6 +134,7 @@ label.error {
 				},
 				async:false
 			}) 
+			}
 			//表单验证,表单验证的时候有一定的问题.
 			$("#addCustomAdminForm").validate({
 			errorClass:"error",
@@ -182,6 +186,7 @@ label.error {
 					/*获取返回数据进行林场的判断,或者在做一个接口查询出没有管理员的用户前台默认添加用户类型  */
 					alert("添加客户管理员成功!");
 					$("#addCustomAdminForm .reset").trigger("click");
+					ajaxFrash();
 				});
 				}
 				return false;

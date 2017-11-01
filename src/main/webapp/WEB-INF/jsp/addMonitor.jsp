@@ -204,7 +204,7 @@ label.error {
 <body>
 	<div class="container-fluid">
 		<div class="row-fluid">
-			<h4>添加用户:</h4>
+			<h4>添加监控员:</h4>
 			<div class="row">
 				<ul class="userTab">
 					<li class="active">基本信息</li>
@@ -222,7 +222,15 @@ label.error {
 								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员账号：</label>
 							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
 								<input type="text" class="form-control" name="userCode"
-									id="userName" placeholder="请输入监控员账户(3~16位)">
+									id="userCode" placeholder="请输入监控员账户(3~16位)">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="userName"
+								class="col-lg-3 col-md-3 col-sm-3 col-xs-4 control-label text-right">监控员名字：</label>
+							<div class="col-lg-7 col-md-7 col-sm-7 col-xs-8 text-left">
+								<input type="text" class="form-control" name="userName"
+									id="userName" >
 							</div>
 						</div>
 						<!-- 用户类型 -->
@@ -433,7 +441,7 @@ label.error {
 			cache:false,
 			data:{
 				userCode:function(){
-					return $("#userName").val();
+					return $("#userCode").val();
 				}
 			}
 			}

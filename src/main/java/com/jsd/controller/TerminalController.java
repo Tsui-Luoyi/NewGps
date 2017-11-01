@@ -1,10 +1,13 @@
 package com.jsd.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sf.json.JSONArray;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +28,7 @@ import com.jsd.service.impl.JsdTuserImpl;
 import com.jsd.service.impl.JsdVehicleImpl;
 import com.jsd.service.vo.ShowCommandsVo;
 import com.jsd.service.vo.ShowGVT;
+import com.jsd.service.vo.ShowVT;
 import com.jsd.service.vo.VehicleGoupVo;
 import com.jsd.service.vo.VehicleVo;
 import com.jsd.test.newCustomerTest;
@@ -226,7 +230,15 @@ public class TerminalController {
 	      JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
 	      JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
 	      System.out.println("传递过来的终端编号为"+code);
-		 Terminal terminal = jsdTerminalImpl.getTerminalByCode(code);
+	      String codestring=null;
+		try {
+			codestring = new String(code.getBytes("iso8859-1"), "utf-8");
+			System.out.println(codestring);
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		 Terminal terminal = jsdTerminalImpl.getTerminalByCode(codestring);
 		System.out.println(terminal.getTypeid());
 		 List<Command> commands = jsdVehicleImpl.selectCommandsByTerminalType(terminal.getTypeid());
 		  ShowCommandsVo vo = new ShowCommandsVo(terminal, commands);
@@ -258,7 +270,12 @@ public class TerminalController {
 			System.out.println("进入展示分组车辆终端页面页面");
 	      JsdVehicle jsdVehicleImpl = new JsdVehicleImpl();
 	      List<ShowGVT> showGVT = jsdVehicleImpl.showGVT((int) session.getAttribute("userId"));
-		  String jsonString = JSON.toJSONString(showGVT);
+	      for (ShowGVT showGVT2 : showGVT) {
+			System.out.println(showGVT2.getpId()+"###");
+		}
+	      
+	      String jsonString = JSONArray.fromObject(showGVT).toString();
+		
 		  System.out.println(jsonString);
 		 System.out.println("能跳转就过去");
 		 response.setContentType("application/json; charset=UTF-8");

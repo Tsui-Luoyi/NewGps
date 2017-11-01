@@ -44,10 +44,7 @@ body {
 	top: 0;
 	right: 0;
 	bottom: 0;
-	/* background-color: #000;
-	opacity: 0.7; */
-	background-color:RGBA(0,0,0,0.7);
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=70);
+	background:url("/NewRmgps/web/images/black.png")  no-repeat 0 0;
 	display: none;
 }
 /* 绑定的div */
@@ -418,7 +415,7 @@ float:right;
 			$(".command").hide();
 			var commandSrc=$(obj).attr("data-src");
 			switch(commandSrc){
-				case "aa":
+				case "00101.jsp":
 					$("#aa").show();
 					/* 初始化 */
 					$("#emergencyState").val("safe");
@@ -477,12 +474,13 @@ $("#emergencyState").on("change",function(){
 	/* 命令提交按钮 */
 	$("#commindSubmit").on("click",function(){
 		$.ajax({
-			"url":"NewRmgps/Terminal/addCommandhistory",
-			"data":{
-				"code":$("#commandDiv h4 span.code").html()
+			url:"/NewRmgps/Terminal/addCommandhistory",
+			data:{
+				"code":$("#commandDiv h4 span.code").html(),
+				"commandName":$("#commandDiv h4 span.type").html(),
 				/* 还有标题的终端code和隐藏域的命令id */
 			},
-			"type":"get",
+			type:"post",
 			success:function(data) {
 				if(data){
 					alert("命令提交成功！");
@@ -611,15 +609,16 @@ $("#emergencyState").on("change",function(){
 						},
 						callback:{
 							onRightClick:function (event,treeId,treeNode) {
-								if(treeNode.type){//是终端
-									console.log(treeNode.name)
+								if(treeNode.type=="terminal"){//是终端
+									console.log(treeNode.id)
 									$.ajax({
 										"url":"/NewRmgps/Terminal/toCommandPage",
 										"data":{
-											"code":treeNode.name
+											"code":treeNode.id
 										},
-										"type":"get",
+										"type":"post",
 										success:function(data) {
+											console.log(data.commandList)
 											$("#rMenu").remove();
 											var aid=treeNode.tId+"_span";
 											var div=$("<div id='rMenu'></div>");
@@ -635,11 +634,11 @@ $("#emergencyState").on("change",function(){
 												"position":"relative",
 												"z-index":"10"
 											}); */
-											for(var i=0;i<data.command.length;i++){
+											for(var i=0;i<data.commandList.length;i++){
 												ul.append(
-														$("<li onClick='commandWindow(this)' data-command='"+data.command[i]+"' data-src='"
-																+data.src[i]+"' data-code='"+treeNode.name
-																+"'>"+data.command[i]+"</li>"));
+														$("<li onClick='commandWindow(this)' data-commandId='"+data.commandList[i].id+"' data-command='"+data.commandList[i].commandName+"' data-src='"
+																+data.commandList[i].src+"' data-code='"+treeNode.id
+																+"'>"+data.commandList[i].commandName+"</li>"));
 											}
 										},
 										error:function(e) {

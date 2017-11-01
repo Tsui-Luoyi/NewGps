@@ -617,7 +617,7 @@ hr {
 	<script src="/NewRmgps/web/js/jquery.ztree.all.js"></script>
 	<script src="/NewRmgps/web/js/messages_zh.js"></script>
 	<script src="/NewRmgps/web/js/jquery.form.js"></script>
-	<script src="/NewRmgps/web/js/uploader.js"></script>
+	<!-- <script src="/NewRmgps/web/js/uploader.js"></script> -->
 	<script src="/NewRmgps/web/js/jedate/jedate.min.js"></script>
 	<script>
 		$(function(){
@@ -883,8 +883,8 @@ hr {
 			/*  车辆详细信息操作*/
 			function verhicleDetail(){
 				$("#verhicleNum2").val(($("#verhicleNum").val()));
-				/*  车辆图片上传*/
-				var upload=layui.upload;
+			
+			/* 	var upload=layui.upload;
 				//普通图片上传
 				var uploadInst=upload
 						.render({
@@ -900,12 +900,10 @@ hr {
 							});
 						},
 						done:function(res){
-							//如果上传失败
 							if(res.code>0){
 								return layer.msg('上传失败');
 							}
 							//上传成功
-							/*  return layer.msg('上传成功'); */
 							alert('车辆图片上传成功');
 						},
 						error:function(){
@@ -917,7 +915,7 @@ hr {
 								uploadInst.upload();
 							});
 						}
-						});
+						}); */
 				/*  提交*/
 				$("#addVerhicleDetailForm input:button").unbind("click").bind("click",function(){
 					$("#addVerhicleDetailForm").ajaxSubmit({
@@ -951,39 +949,7 @@ hr {
 				minDate:"2000-01-01 00:00:00",
 				//okfun:function(val){alert(val)}
 				}) */
-				var upload=layui.upload;
-				//普通图片上传
-				var uploadInst=upload
-						.render({
-						elem:'#imgUserUp',
-						url:'data/data11.json',
-						accept:'images',
-						exts:'jpg|png|gif|bmp|jpeg',
-						method:"get",
-						before:function(obj){
-							//预读本地文件示例，不支持ie8
-							obj.preview(function(index,file,result){
-								$('#verhicleUserImg').attr('src',result); //图片链接（base64）
-							});
-						},
-						done:function(res){
-							//如果上传失败
-							if(res.code>0){
-								return layer.msg('上传失败');
-							}
-							/* return layer.msg('图片上传成功'); */
-							alert('车主图片上传成功');
-						},
-						error:function(){
-							//演示失败状态，并实现重传
-							var demoText=$('#alertText1');
-							demoText
-									.html('<span style="color: #FF5722; ">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
-							demoText.find('.demo-reload').on('click',function(){
-								uploadInst.upload();
-							});
-						}
-						});
+				
 				/* 车主信息提交 */
 				$("#addVerhicleUserForm input:button").unbind("click").bind("click",function(){
 					$("#addVerhicleUserForm").ajaxSubmit({

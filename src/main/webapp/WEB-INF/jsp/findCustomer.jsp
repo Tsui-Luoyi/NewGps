@@ -157,7 +157,7 @@ width:120px;}
 			按<select name="sortBy" id="sortBy">
 				<option value="createtime" selected="selected">添加时间</option>
 				<option value="customername">客户名字</option>
-				<option value="user_name">客户管理员</option>
+				<!-- <option value="user_name">客户管理员</option> -->
 			</select> <select name="sortType" id="sortType">
 				<option value="asc">升序</option>
 				<option value="desc" selected="selected">降序</option>
@@ -357,7 +357,10 @@ width:120px;}
 					"id":obj.getAttribute("data-id")
 				},
 				success:function(data){
-					alert(data)
+					
+					if(data=="0") {
+						alert("请先去删除他的管理员")
+					}
 					$(obj).parents("tr").remove();
 					ajaxPaging();
 				},
@@ -377,9 +380,12 @@ width:120px;}
 				"id":obj.getAttribute("data-id")
 				},
 				success:function(data){
+		
+				
+					if(data=="0") {
+						alert("请先去停用他的管理员")
+					}
 					$(obj).parents("tr").remove();
-					alert(data)
-					alert("停用成功")
 					ajaxPaging();
 				},
 				error:function(error){

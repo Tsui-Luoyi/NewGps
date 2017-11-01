@@ -74,7 +74,7 @@ input.reset{
 				</div>
 				
 				<input  type="hidden" value="${id}" name="id">
-				${id}
+				
 				<!-- 客户地址 -->
 				<!-- <div class="form-group">
 					<label for="customAdd"
@@ -131,7 +131,7 @@ input.reset{
 				submitHandler:function(){
 					$("#changeGroupForm").ajaxSubmit(function(){
 						alert("修改分组成功!");
-						window.parent.document.getElementById("managerInnerIframe").src="addGroup.jsp"
+						/* window.parent.document.getElementById("managerInnerIframe").src="addGroup.jsp" */
 					});
 					return false;
 				},
