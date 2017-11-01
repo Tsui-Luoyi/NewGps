@@ -96,6 +96,7 @@ hr {
 }
 /* 命令窗口 */
 #logWindow{
+display:none;
     width: 600px;
     height: 120px;
     overflow:scroll;
@@ -103,8 +104,20 @@ hr {
     bottom: 5px;
     right: 182px;
     border: 2px red solid;
-    background-color:#fff;
+    background-color:#c4e0e0;
     z-index: 50;}
+    #logWindow th{
+    background-color:#6699cc;
+    }
+    #logWindow h5{
+    font-weight:bolder;
+    margin:0;
+    padding:2px 0 10px 5px;
+    background-color:#9ac6ea;
+    }
+    #windowmin,#windowmax{
+    margin-right:5px;
+    float:right;}
 /* aa 模式选择 */
 #time,#times,#uploadtime{
 display:none;
@@ -221,10 +234,11 @@ float:right;
        <![endif]-->
 </head>
 <body>
-<!-- 日志窗口 -->
-	<div id='mengBan'>
-	<div id="logWindow">
-	<h5>命令日志</h5>
+<div id="logWindow">
+	<h5>命令日志 
+	<span id="windowmax"><img title="最大化" src="/NewRmgps/web/images/windowmax.png"/></span>
+	<span id="windowmin"><img  title="最小化" src="/NewRmgps/web/images/windowmin.png"/></span>
+	</h5>
 		<table id="commandTable" border="1px" class="hover" cellspacing="0"
 				width="99.5%">
 				<thead>
@@ -238,6 +252,9 @@ float:right;
 				<tbody></tbody>
 				</table>
 	</div>
+<!-- 日志窗口 -->
+	<div id='mengBan'>
+	
 	<div id="commandDiv">
 		<div class="container-fluid">
 			<div class="row-fluid">
@@ -250,6 +267,7 @@ float:right;
 			<div class="row-fluid" id="commandWrap">
 				<div
 					class="col-lg-push-1 col-md-push-1 col-sm-push-1 col-lg-7 col-md-7 col-sm-7 col-xs-10">
+					<input type="hidden" id="commandId" value=""/>
 					<!-- src="aa" -->
 					<div class="command" id="aa">
 					<p>模式选择: <select name="emergencyState" id="emergencyState">
@@ -298,7 +316,7 @@ float:right;
 				<div class="col-lg-push-1 col-md-push-1 col-sm-push-1 col-lg-7 col-md-7 col-sm-7 col-xs-10 text-center">
 				<!-- 保存命令ID，终端号在标题 -->
 				<input type="hidden" value="">
-					<button class="btn btn-info" id="commindSubmit">设置</button>
+					<button class="btn btn-info" id="commandSubmit">设置</button>
 				</div>
 			</div>
 		</div>
@@ -407,6 +425,8 @@ float:right;
 			/* var _iframe = document.getElementById('positionInnerIframe').contentWindow;
 	        var _div =_iframe.document.getElementById('mengban1');
 	        _div.style.display = 'block'; */
+	        console.log($(obj).attr("data-commandId"));
+	        $("#commandDiv #commandId").val($(obj).attr("data-commandId"));
 			$("#commandDiv .type").html($(obj).attr("data-command"));
 			$("#commandDiv .code").html($(obj).attr("data-code"));
 			$("#mengBan").width($("#positionInnerIframe").width());
@@ -472,12 +492,13 @@ $("#emergencyState").on("change",function(){
     }
 })
 	/* 命令提交按钮 */
-	$("#commindSubmit").on("click",function(){
+	$("#commandSubmit").on("click",function(){
 		$.ajax({
 			url:"/NewRmgps/Terminal/addCommandhistory",
 			data:{
-				"code":$("#commandDiv h4 span.code").html(),
+				"tcode":$("#commandDiv h4 span.code").html(),
 				"commandName":$("#commandDiv h4 span.type").html(),
+				"commandId":$("#commandDiv #commandId").val()
 				/* 还有标题的终端code和隐藏域的命令id */
 			},
 			type:"post",
@@ -485,6 +506,7 @@ $("#emergencyState").on("change",function(){
 				if(data){
 					alert("命令提交成功！");
 					$("#mengBan,#commandDiv").hide();
+					$("#logWindow").show();
 					$("#rMenu").remove();
 				}else{
 					alert("命令未设置成功，请重试！")
@@ -612,11 +634,12 @@ $("#emergencyState").on("change",function(){
 								if(treeNode.type=="terminal"){//是终端
 									console.log(treeNode.id)
 									$.ajax({
-										"url":"/NewRmgps/Terminal/toCommandPage",
-										"data":{
+										url:"/NewRmgps/Terminal/toCommandPage",
+										data:{
 											"code":treeNode.id
 										},
-										"type":"post",
+										type:"post",
+										timeout:3000,
 										success:function(data) {
 											console.log(data.commandList)
 											$("#rMenu").remove();
@@ -625,15 +648,7 @@ $("#emergencyState").on("change",function(){
 											ul=$("<ul></ul>");
 											ul.css("padding","0");
 											$("#"+aid+"").after(div);
-											div.append(ul)
-											/* $("#rMenu").css({
-												"float":"right",
-												"border":"1px #000 solid",
-												"marginLeft":"3px",
-												"backgroundColor":"#fff",
-												"position":"relative",
-												"z-index":"10"
-											}); */
+											div.append(ul);
 											for(var i=0;i<data.commandList.length;i++){
 												ul.append(
 														$("<li onClick='commandWindow(this)' data-commandId='"+data.commandList[i].id+"' data-command='"+data.commandList[i].commandName+"' data-src='"
@@ -665,23 +680,18 @@ $("#emergencyState").on("change",function(){
 					function ajaxDataFilter(treeId,parentNode,responseData) {
 						if(responseData){
 							for(var i=0;i<responseData.length;i++){
-								if(responseData[i].pId==null){
+								if(!responseData[i].pId){
 									responseData[i].iconSkin="all"
 								}else if(responseData[i].pId=="0"){
 									responseData[i].iconSkin="group";
 									responseData[i].isParent==true;
 								}else{
-									if(responseData[i].type){
+									if(responseData[i].type=="vehicle"){
+										responseData[i].iconSkin="vehicle";
+										responseData[i].isParent==true;
+									}else{
 										responseData[i].iconSkin="terminal";
 										responseData[i].nocheck=true;
-									}else{
-										responseData[i].isParent==true;
-										if(responseData[i].state=="1"){
-											responseData[i].iconSkin="onLine"
-										};
-										if(responseData[i].state=="0"){
-											responseData[i].iconSkin="offLine"
-										}
 									}
 								}
 							}

@@ -2,6 +2,7 @@ package com.jsd.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -256,9 +257,13 @@ public class TerminalController {
 		
 		//添加命令的历史记录
 		@RequestMapping("addCommandhistory")
-		public @ResponseBody String addCommandhistory(Commandhistory commandhistory){
+		public @ResponseBody String addCommandhistory(Commandhistory commandhistory,HttpSession session){
 			System.out.println("进入添加命令列表的页面");
 			JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
+			commandhistory.setSendTime(new Date());
+			byte b =1;
+			commandhistory.setStatus(b);
+			commandhistory.setUserid((int) session.getAttribute("userId"));
 			int num = jsdTerminalImpl.addCommandhistory(commandhistory);
 			System.out.println("添加个数为"+num+"个");
 			return ""+num ;
