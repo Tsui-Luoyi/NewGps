@@ -495,10 +495,10 @@ hr {
 										var tr = $("<tr></tr>");
 										var td1 = $("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 										var td2 = $("<td>"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "</td>");
 										var td3 = $("<td class='changeTeminal'><a class='terminalClose' onClick='checkTerminal(this)' title='查看车辆绑定终端'  data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "'><img src='/NewRmgps/web/images/plus.png'/>查看绑定终端</a></td>");
@@ -508,23 +508,23 @@ hr {
 										/* var td5 = $("<td>"
 												+ data.results[i].vehiclegroup
 												+ "</td>"); */
-										var td6 = $("<td><a href='/NewRmgps/Vehicle/toChangeVehicle?license_plate="+data.results[i].license_plate+"' target='_self' title='修改车辆信息' onClick='' data-name='"
-												+ data.results[i].license_plate
+										var td6 = $("<td><a href='/NewRmgps/Vehicle/toChangeVehicle?license_plate="+data.results[i].licensePlate+"' target='_self' title='修改车辆信息' onClick='' data-name='"
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs'>修改</a>"
 												+ "<a href='javascript:void(0);' onClick='stopThisVehicle(this)' data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs'>停用</a>"
 												+ "<a href='javascript:void(0);' onClick='bindThisVehicle(this)' data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs'>绑定</a>"
 												+ "<a href='javascript:void(0);' onClick='stopThisVehicle(this)' data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs del'> 删除</a></td>");
@@ -539,10 +539,10 @@ hr {
 										var tr = $("<tr class='tr-disable'></tr>");
 										var td1 = $("<td><input type='checkbox' data-id='"+data.results[i].id+"'/></td>");
 										var td2 = $("<td>"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "</td>");
 										var td3 = $("<td class='changeTeminal'><a class='terminalClose a-disable-one' onClick='' title='查看车辆绑定终端'  data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "'><img src='/NewRmgps/web/images/plus.png'/>查看绑定终端</a></td>");
@@ -553,22 +553,22 @@ hr {
 												+ data.results[i].vehiclegroup
 												+ "</td>"); */
 										var td6 = $("<td><a href='javascript:void(0);' title='修改车辆信息' data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs a-disable'>修改</a>"
 												+ "<a href='javascript:void(0);'data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs' onClick='restartThisVehicle(this)'>重启</a>"
 												+ "<a href='javascript:void(0);' data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs a-disable'>绑定</a>"
 												+ "<a href='javascript:void(0);' data-name='"
-												+ data.results[i].license_plate
+												+ data.results[i].licensePlate
 												+ "' data-id='"
 												+ data.results[i].id
 												+ "' class='down btn btn-default btn-xs a-disable'> 删除</a></td>");

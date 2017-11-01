@@ -292,6 +292,32 @@ public class TerminalController {
 				e.printStackTrace();
 			}
 		}
+		//展示出当前用户的GVT
+		@RequestMapping("showComandhistories")
+		public  void  showComandhistories( HttpServletResponse response,HttpSession session,String tcode){
+			System.out.println("进入展示分组车辆终端页面页面");
+			JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
+	//		List<Commandhistory> commandhistories = jsdTerminalImpl.selectCommandhistoriesByTcode(tcode);
+			List<Commandhistory> selectCommandhistoriesByTcode = jsdTerminalImpl.selectCommandhistoriesByTcode(tcode);
+		for (Commandhistory commandhistory : selectCommandhistoriesByTcode) {
+			System.out.println(commandhistory.getCommandName());
+			System.out.println(commandhistory.getSendTime());
+			System.out.println(commandhistory.getStatus());
+			
+		}
+			String jsonString = JSONArray.fromObject(selectCommandhistoriesByTcode).toString();
+			System.out.println(jsonString);
+			
+			System.out.println("能跳转就过去");
+			response.setContentType("application/json; charset=UTF-8");
+			try {
+				response.getWriter().print(jsonString);
+				response.getWriter().flush();// 刷新流.
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		
 		@RequestMapping("positionCenter")

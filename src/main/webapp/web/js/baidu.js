@@ -280,14 +280,38 @@ window.onload=function(){
 	//点击车辆地图中心点改变
 	$("#clickCarId").change(function(){
 		$.ajax({
-			url:"data/clickId.json",
+			url:"/NewRmgps/Vehicle/selectCurrentlocationsByVehicleId",
 			data:{
-				"clickCarId":$("#clickCarId").val()
+				"vehicleId":$("#clickCarId").val()
 			},
-			type:"get",
+			type:"post",
 			async:true,
 			success:function(data){
-				map.setCenter(new BMap.Point(data.lng,data.lat))
+				map.clearOverlays();
+				if(data){
+				map.setCenter(new BMap.Point(data.longitudeB,data.latitudeB));
+				var marker=new BMap.Marker(new BMap.Point(data.longitudeB,data.latitudeB),{
+					icon:new BMap.Icon("/NewRmgps/web/images/carOnline.png",new BMap.Size(48,48),{
+						imageOffset:new BMap.Size(0,0)
+					})
+				});
+				map.addOverlay(marker);
+				var content=[];
+				content.push("<li><strong>车辆ID：</strong>"+data.id+"</li>");
+				content.push("<li><strong>车辆经度：</strong>"+data.longitudeB+"</li>");
+				content.push("<li><strong>车辆经度：</strong>"+data.latitudeB+"</li>");
+				/*content.push("<li><strong>GPS时间：</strong>"+data.GPStime+"</li>");*/
+				content.push("<li><strong>车辆地址：</strong>"+data.addr+"</li>");
+				}
+				
+				var infoWindow=new BMap.InfoWindow(content.join(""),{
+					width:240, // 信息窗口宽度
+					height:210, // 信息窗口高度
+					title:"车辆详细信息"
+					}); // 创建信息窗口对象
+				map.addEventListener("click",function(e){
+					map.openInfoWindow(infoWindow,new BMap.Point(e.point.lng,e.point.lat))
+				})
 				}		
 		})
 	});

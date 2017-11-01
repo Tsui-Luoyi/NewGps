@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+import javax.json.Json;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
+import com.jsd.db.pojo.Currentlocation;
 import com.jsd.db.pojo.Driver;
 import com.jsd.db.pojo.Group;
 import com.jsd.db.pojo.Tcustomer;
@@ -29,10 +31,12 @@ import com.jsd.db.pojo.Vehicledetail;
 import com.jsd.domain.factory.BeanFactory;
 import com.jsd.service.JsdCustomer;
 import com.jsd.service.JsdGroup;
+import com.jsd.service.JsdTerminal;
 import com.jsd.service.JsdTuser;
 import com.jsd.service.JsdVehicle;
 import com.jsd.service.impl.JsdCustomerImpl;
 import com.jsd.service.impl.JsdGroupImpl;
+import com.jsd.service.impl.JsdTerminalImpl;
 import com.jsd.service.impl.JsdTuserImpl;
 import com.jsd.service.impl.JsdVehicleImpl;
 import com.jsd.service.vo.ShowCGV;
@@ -495,5 +499,24 @@ public class VehicleController {
 			e.printStackTrace();
 		}
 	}
+	
+	// 根据分组id查询所属车辆.
+		@RequestMapping(value = "/selectCurrentlocationsByVehicleId", produces = { "text/html;charset=UTF-8" })
+		public void selectCurrentlocationsByVehicleId(HttpServletResponse response, Integer vehicleId) {
+			System.out.println("展示出某个车的当前位置来");
+			System.out.println("车辆id为"+vehicleId);
+			JsdTerminal jsdTerminalImpl = new JsdTerminalImpl();
+			List<Currentlocation> currentlocations = jsdTerminalImpl.selectCurrentlocationsByVehicleId(Integer.parseInt(	vehicleId.toString().substring(2)));
+			String jsonString = JSON.toJSONString(currentlocations.get(0));
+			System.out.println(jsonString);
+			response.setContentType("application/json; charset=UTF-8");
+			try {
+				response.getWriter().print(jsonString);
+				response.getWriter().flush();// 刷新流.
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 }

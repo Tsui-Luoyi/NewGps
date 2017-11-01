@@ -243,10 +243,10 @@ float:right;
 				width="99.5%">
 				<thead>
 					<tr>
-						<th width='20%'>命令id</th>
-						<th width='25%'>设置时间</th>
-						<th width='20%'>命令状态</th>
-						<th width='35%'>操作</th>
+						<th width='30%'>命令id</th>
+						<th width='35%'>设置时间</th>
+						<th width='35%'>命令状态</th>
+						<!-- <th width='35%'>操作</th> -->
 					</tr>
 				</thead>
 				<tbody></tbody>
@@ -421,6 +421,19 @@ float:right;
 	<script src="/NewRmgps/web/js/jedate.js"></script>
 	<script>
 		/* 参数设置菜单 */
+		function getDateTime(date) {
+		var date=new Date(date);
+		if(date==null){
+			return "";
+		}
+	    var year = date.getFullYear();
+	    var month = date.getMonth() + 1;
+	    var day = date.getDate();
+	    var hh = date.getHours();
+	    var mm = date.getMinutes();
+	    var ss = date.getSeconds();
+	    return year + "-" + month + "-" + day + " " + hh + ":" + mm + ":" + ss;
+	}
 		function commandWindow(obj) {
 			/* var _iframe = document.getElementById('positionInnerIframe').contentWindow;
 	        var _div =_iframe.document.getElementById('mengban1');
@@ -508,6 +521,7 @@ $("#emergencyState").on("change",function(){
 					$("#mengBan,#commandDiv").hide();
 					$("#logWindow").show();
 					$("#rMenu").remove();
+					ajaxPaging() ;
 				}else{
 					alert("命令未设置成功，请重试！")
 				}
@@ -518,41 +532,35 @@ $("#emergencyState").on("change",function(){
 	/* ajaxPaging(); */
 	function ajaxPaging() {
 			$.ajax({
-						url : "",
-						type : "get",
+						url : "/NewRmgps/Terminal/showComandhistories",
+						type : "post",
 						dataType : "json",
-						contextType : "application/json;charset=utf-8",
-						data : {
-							data : JSON.stringify({
-								"pageSize" : $("#pageSize").val(),
-								"pageNo" : $("#currentPage").val(),
-								"groupName" : $("#searchGroup").val(),
-								/* "contact_phone":$("#searchTel").val(), */
-								/* "user_name":$("#searchAdmin").val(), */
-								"orderBy" : $("#sortBy").val(),
-								"order" : $("#sortType").val()
-							})
-						},
+				/* 		contextType : "application/json;charset=utf-8", */
+					data:{
+					"tcode":$("#commandDiv h4 span.code").html(),
+				},
 						success : function(data) {
 							$("#commandTable tbody").empty();
 							$("#totalPage").html(data.totalPage);
 							$("#totalRecord").html(data.totalRecord)
-							if (data.results.length == "0") {
+							if (data.length == "0") {
 								var tr = $("<tr></tr>");
-								var td = $("<td colspan='4'>没有记录</td>")
+								var td = $("<td colspan='3'>没有记录</td>")
 								$("#commandTable tbody").append(tr);
 								tr.append(td);
 							} else {
-								for (var i = 0; i < data.results.length; i++) {
+								console.log("else")
+								for (var i = 0; i < data.length; i++) {
+									console.log(i);
 									var tr = $("<tr></tr>");
 									var td1 = $("<td>"
-											+ data.results[i].groupName
+											+ data[i].commandName
 											+ "</td>");
 									var td2 = $("<td>"
-											+ data.results[i].creattime
+											+ getDateTime(data[i].sendTime.time)
 											+ "</td>");
-									var td3=$("<td>未发送</td>");
-									var td4=$("<td><a href='changeGroup.jsp?id="
+									var td3=$("<td>待处理</td>");
+									/* var td4=$("<td><a href='changeGroup.jsp?id="
 											+ data.results[i].id
 											+ "&groupName="
 											+ data.results[i].groupName
@@ -563,12 +571,12 @@ $("#emergencyState").on("change",function(){
 											+ "' class='down btn btn-default btn-xs'>停用</a>"
 											+ "<a href='javascript:void(0);' onClick='deleteThisGroup(this)' data-id='"
 											+ data.results[i].id
-											+ "' class='down btn btn-default btn-xs del'> 删除</a>");
+											+ "' class='down btn btn-default btn-xs del'> 删除</a>"); */
 									$("#commandTable tbody").append(tr);
 									tr.append(td1);
 									tr.append(td2);
 									tr.append(td3);
-									tr.append(td4);
+									/* tr.append(td4); */
 								}
 							}
 						},
@@ -664,12 +672,8 @@ $("#emergencyState").on("change",function(){
 								}
 							},
 							onClick:function(event,treeId,treeNode) {
-								if((treeNode.pId!=null)&(treeNode.pId!=0)){
-									if(treeNode.type){//是终端
-										/* alert(this) */
-									}else{//是车辆
+									if(treeNode.type=="vehicle"){//是终端
 										sessionStorage.setItem("clickCarId",treeNode.id);
-									}
 								}
 							},
 							onCheck:zTreeOnCheck,
