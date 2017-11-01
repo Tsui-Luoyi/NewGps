@@ -37,7 +37,7 @@ public class TuserController {
 	
 	
 	
-	@RequestMapping("login")
+	@RequestMapping("/login")
 	public String toLogin(String userCode, HttpSession session){
 		     JsdTuser jsdTuserImpl = new JsdTuserImpl();
 		     System.out.println("登录code为"+userCode);

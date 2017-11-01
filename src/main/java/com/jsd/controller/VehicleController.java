@@ -210,7 +210,8 @@ public class VehicleController {
 	    Page<VVehicleGroup> vehicleLists = jsdVehicleImpl.getGehicleListsByUserId(data,  (int) session.getAttribute("userId"));
 		String jsonString = JSON.toJSONString(vehicleLists);
 		System.out.println((int) session.getAttribute("userId"));
-		System.out.println(vehicleLists.getResults().size());
+		System.out.println(vehicleLists.getResults());
+		System.out.println(jsonString);
 		response.setContentType("application/json; charset=UTF-8");
 		try {
 			response.getWriter().print(jsonString);
